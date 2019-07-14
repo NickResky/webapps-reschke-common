@@ -3,23 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const zenkit_element_types_1 = require("./zenkit-element-types");
 const _ = require("lodash");
 require("rxjs/Rx");
-class ZenkitDataService {
-    constructor() {
-        // production
-        this.apiUrl = 'https://zenkit.com/api/v1/';
-        this.headers = {
-            'content-type': 'application/json; charset=UTF-8'
-        };
-    }
+exports.ZenkitDataService = {
+    // production
+    apiUrl: 'https://zenkit.com/api/v1/',
+    headers: {
+        'content-type': 'application/json; charset=UTF-8'
+    },
     // development
     // apiUrl = 'https://localhost:9000/api/v1/';
     // Only necessary if zenkit collection is not public
     // TODO: Remove before release
-    // headers.append('Authorization', 'Bearer ' + this.apiToken);
-    getTestDataWithPromise(listId) {
-        const url = this.apiUrl + 'lists/' + listId + '/elements';
+    // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
+    getZenkitListData: (params) => {
+        return exports.ZenkitDataService.fetchAndTransformZenkitListData(params);
+    },
+    getTestDataWithPromise: (listId) => {
+        const url = exports.ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
         const httpParams = {
-            headers: this.headers,
+            headers: exports.ZenkitDataService.headers,
             // body: Data,
             method: "GET"
         };
@@ -29,7 +30,7 @@ class ZenkitDataService {
                 return resolve(res.json());
             });
         });
-    }
+    },
     /*
       params
       {
@@ -37,41 +38,41 @@ class ZenkitDataService {
           requiredElements: {}[]
       }
     */
-    fetchAndTransformZenkitListData(params) {
+    fetchAndTransformZenkitListData: (params) => {
         if (_.isNil(params.listShortId)) {
             throw new Error('Parameter "listShortId" not defined!');
         }
         if (_.isNil(params.requiredElements)) {
             throw new Error('Parameter "requiredElements" not defined!');
         }
-        return this.fetchZenkitListData(params)
+        return exports.ZenkitDataService.fetchZenkitListData(params)
             .then((results) => {
-            return this.transformZenkitListData(results);
+            return exports.ZenkitDataService.transformZenkitListData(results);
         });
-    }
-    fetchList(listId) {
-        const url = this.apiUrl + 'lists/' + listId;
+    },
+    fetchList: (listId) => {
+        const url = exports.ZenkitDataService.apiUrl + 'lists/' + listId;
         const httpParams = {
-            headers: this.headers,
+            headers: exports.ZenkitDataService.headers,
             // body: Data,
             method: "GET"
         };
-        // httpParams.headers.append('Authorization', 'Bearer ' + this.apiToken);
+        // httpParams.headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
         return fetch(url, httpParams);
-    }
-    fetchListElements(listId) {
-        const url = this.apiUrl + 'lists/' + listId + '/elements';
+    },
+    fetchListElements: (listId) => {
+        const url = exports.ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
         const httpParams = {
-            headers: this.headers,
+            headers: exports.ZenkitDataService.headers,
             // body: Data,
             method: "GET"
         };
-        // headers.append('Authorization', 'Bearer ' + this.apiToken);
+        // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
         return fetch(url, httpParams);
-    }
-    fetchListEntriesInKanbanMode(elementIdX, listShortId) {
-        const url = this.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
-        // headers.append('Authorization', 'Bearer ' + this.apiToken);
+    },
+    fetchListEntriesInKanbanMode: (elementIdX, listShortId) => {
+        const url = exports.ZenkitDataService.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
+        // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
         const httpRequestBody = {
             filter: {
                 AND: {
@@ -81,14 +82,14 @@ class ZenkitDataService {
             elementIdX: elementIdX
         };
         const httpParams = {
-            headers: this.headers,
+            headers: exports.ZenkitDataService.headers,
             body: JSON.stringify(httpRequestBody),
             method: "POST"
         };
         return fetch(url, httpParams);
-    }
-    fetchZenkitListData(params) {
-        return Promise.all([this.fetchList(params.listShortId), this.fetchListElements(params.listShortId)]).then((results) => {
+    },
+    fetchZenkitListData: (params) => {
+        return Promise.all([exports.ZenkitDataService.fetchList(params.listShortId), exports.ZenkitDataService.fetchListElements(params.listShortId)]).then((results) => {
             const listResponse = results[0];
             const elementsResponse = results[1];
             if (listResponse.status === 403 || listResponse.status === 403) {
@@ -108,7 +109,7 @@ class ZenkitDataService {
                     // tslint:disable-next-line:max-line-length
                     throw new Error('Missing Section Field! Please define a field called "Labels" for the Zenkit Collection ' + listJson.name + '.');
                 }
-                return this.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
+                return exports.ZenkitDataService.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
                     .then((entriesResponse) => {
                     if (entriesResponse.status === 403) {
                         throw new Error('It seems like you do not have permission to access this collection (Collection ID:' + params.listId + ').');
@@ -128,8 +129,8 @@ class ZenkitDataService {
                 });
             });
         });
-    }
-    transformZenkitListData(params) {
+    },
+    transformZenkitListData: (params) => {
         const predefinedCategories = {};
         const modifiedRequiredElements = _
             .map(params.requiredElements, (requiredElement) => {
@@ -194,8 +195,4 @@ class ZenkitDataService {
             });
         });
     }
-    getFileSrc(fileShortId, listShortId) {
-        return (fileShortId && listShortId) ? this.apiUrl + 'lists/' + listShortId + '/files/' + fileShortId : '';
-    }
-}
-exports.ZenkitDataService = ZenkitDataService;
+};

@@ -1,12 +1,11 @@
 import { ZenkitDataService } from './zenkit-data-service';
 
-const zenkitDataService = new ZenkitDataService();
-
 export function printMsg () {
     console.log("This is a message from the demo package");
 }
 
 export { UtilityService } from './utility.service';
+export { ZenkitDataService } from './zenkit-data-service';
 
 /*
     params
@@ -16,5 +15,5 @@ export { UtilityService } from './utility.service';
     }
 */
 export function getZenkitListData(params: any): Promise<any> {
-    return zenkitDataService.fetchAndTransformZenkitListData(params);
+    return ZenkitDataService.fetchAndTransformZenkitListData(params);
 }

@@ -2,26 +2,28 @@ import { ElementTypes } from './zenkit-element-types';
 import * as _ from 'lodash';
 import 'rxjs/Rx';
 
-export class ZenkitDataService {
-
-    constructor() { }
+export const ZenkitDataService = {
 
     // production
-    apiUrl = 'https://zenkit.com/api/v1/';
-    headers =  {
+    apiUrl: 'https://zenkit.com/api/v1/',
+    headers: {
       'content-type': 'application/json; charset=UTF-8'
-    };
+    },
     // development
     // apiUrl = 'https://localhost:9000/api/v1/';
   
     // Only necessary if zenkit collection is not public
     // TODO: Remove before release
-    // headers.append('Authorization', 'Bearer ' + this.apiToken);
+    // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
+
+    getZenkitListData: (params: any): Promise<any> => {
+        return ZenkitDataService.fetchAndTransformZenkitListData(params);
+    },
   
-    getTestDataWithPromise(listId: string): Promise<any> {
-      const url = this.apiUrl + 'lists/' + listId + '/elements';
+    getTestDataWithPromise: (listId: string): Promise<any> => {
+      const url = ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
       const httpParams = {
-          headers: this.headers,
+          headers: ZenkitDataService.headers,
           // body: Data,
           method: "GET"
       };
@@ -31,7 +33,7 @@ export class ZenkitDataService {
             return resolve(res.json());
           });
         });
-    }
+    },
   
     /*
       params
@@ -40,44 +42,44 @@ export class ZenkitDataService {
           requiredElements: {}[]
       }
     */
-    fetchAndTransformZenkitListData(params: any): Promise<any> {
+    fetchAndTransformZenkitListData: (params: any): Promise<any> => {
       if (_.isNil(params.listShortId)) {
         throw new Error('Parameter "listShortId" not defined!');
       }
       if (_.isNil(params.requiredElements)) {
           throw new Error('Parameter "requiredElements" not defined!');
       }
-      return this.fetchZenkitListData(params)
+      return ZenkitDataService.fetchZenkitListData(params)
         .then((results) => {
-          return this.transformZenkitListData(results);
+          return ZenkitDataService.transformZenkitListData(results);
         });
-    }
+    },
   
-    fetchList(listId: string): Promise<any> {
-      const url = this.apiUrl + 'lists/' + listId;
+    fetchList: (listId: string): Promise<any> => {
+      const url = ZenkitDataService.apiUrl + 'lists/' + listId;
       const httpParams = {
-          headers: this.headers,
+          headers: ZenkitDataService.headers,
           // body: Data,
           method: "GET"
       };
-      // httpParams.headers.append('Authorization', 'Bearer ' + this.apiToken);
+      // httpParams.headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
       return fetch(url, httpParams)
-    }
+    },
   
-    fetchListElements(listId: any): Promise<any> {
-      const url = this.apiUrl + 'lists/' + listId + '/elements';
+    fetchListElements: (listId: any): Promise<any> => {
+      const url = ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
       const httpParams = {
-          headers: this.headers,
+          headers: ZenkitDataService.headers,
           // body: Data,
           method: "GET"
       };
-      // headers.append('Authorization', 'Bearer ' + this.apiToken);
+      // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
       return fetch(url, httpParams);
-    }
+    },
   
-    fetchListEntriesInKanbanMode(elementIdX: string, listShortId:string): Promise<any> {
-      const url = this.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
-      // headers.append('Authorization', 'Bearer ' + this.apiToken);
+    fetchListEntriesInKanbanMode: (elementIdX: string, listShortId:string): Promise<any> => {
+      const url = ZenkitDataService.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
+      // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
       const httpRequestBody: any = {
         filter: {
           AND: {
@@ -87,16 +89,16 @@ export class ZenkitDataService {
         elementIdX: elementIdX
       };
       const httpParams = {
-          headers: this.headers,
+          headers: ZenkitDataService.headers,
           body: JSON.stringify(httpRequestBody),
           method: "POST"
       };
       return fetch(url, httpParams);
-    }
+    },
   
-    fetchZenkitListData(params: any): Promise<any> {
+    fetchZenkitListData: (params: any): Promise<any> => {
   
-        return Promise.all([this.fetchList(params.listShortId), this.fetchListElements(params.listShortId)]).then((results: any) => {
+        return Promise.all([ZenkitDataService.fetchList(params.listShortId), ZenkitDataService.fetchListElements(params.listShortId)]).then((results: any) => {
           const listResponse: any = results[0];
           const elementsResponse: any = results[1];
   
@@ -122,7 +124,7 @@ export class ZenkitDataService {
               throw new Error('Missing Section Field! Please define a field called "Labels" for the Zenkit Collection ' + listJson.name + '.');
             }
   
-            return this.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
+            return ZenkitDataService.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
               .then((entriesResponse) => {
   
                 if (entriesResponse.status === 403) {
@@ -145,9 +147,9 @@ export class ZenkitDataService {
               });
             });
       });
-    }
+    },
   
-    transformZenkitListData(params: any): Promise<{}> {
+    transformZenkitListData: (params: any): Promise<{}> => {
   
       const predefinedCategories: any = {};
   
@@ -217,10 +219,6 @@ export class ZenkitDataService {
           prefefinedCategories: predefinedCategories
         });
       });
-    }
-  
-    getFileSrc(fileShortId: string, listShortId: string) {
-      return (fileShortId && listShortId) ? this.apiUrl + 'lists/' + listShortId + '/files/' + fileShortId : '';
     }
 }
   

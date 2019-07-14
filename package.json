@@ -2,9 +2,10 @@
   "name": "webapps-reschke-common",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,14 @@
   },
   "homepage": "https://github.com/NickResky/webapps-reschke-common#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.112"
+  },
+  "dependencies": {
+    "@types/core-js": "^2.5.2",
+    "core-js": "^3.1.4",
+    "lodash": "^4.17.14",
+    "rxjs": "6.0.0",
+    "rxjs-compat": "6.0.0",
     "typescript": "^3.5.3"
   }
 }

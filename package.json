@@ -2,7 +2,7 @@
   "name": "webapps-reschke-common",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/NickResky/webapps-reschke-common/issues"
   },
-  "homepage": "https://github.com/NickResky/webapps-reschke-common#readme"
+  "homepage": "https://github.com/NickResky/webapps-reschke-common#readme",
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
 }

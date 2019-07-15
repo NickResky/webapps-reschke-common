@@ -1,0 +1,163 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font: 400 15px/1.8 "Raleway", sans-serif;
+    color:$main-text-color;
+    background-color: $main-background-color;
+}
+
+input,
+textarea,
+button,
+select,
+div,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-image {
+    .header-image-title {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+        color: #fff;
+        h1 {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: rgba(#000, 0.6);
+            margin: 0;            
+        }
+    }
+}
+
+.nav-spacer {
+    height: 70px;
+}
+
+.main-content-container {
+    color: $main-text-color;
+}
+
+.main-content-container-padding {
+    padding-left: 20px;
+    padding-right: 20px; 
+}
+
+.main-content-navbar-spacer {
+    margin-top: 80px;
+}
+
+.main-title, .title-medium {
+    margin: 0;
+    font-size: 1.9em;
+    line-height: 1.4em;
+    text-transform: uppercase;
+}
+
+.tth-button {
+    border: 1px solid $main-text-color;
+    padding: 3px 12px;
+    margin: 5px 0;
+    border-radius: 18px;
+    display: inline-block;
+    @include transition(background-color 0.3s ease);
+    .tth-button-icon {
+        margin-right: 10px;
+    }
+    &:hover {
+        cursor: pointer;
+        color: $main-background-color;
+        background-color: $main-text-color;
+    }
+    .tth-button-label {
+        display: inline-block !important;
+    }
+}
+
+.app-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/*************
+* ANIMATIONS *
+**************/
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(15px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-15px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slow-zoom-image-out {
+    from {
+        transform: scale(1.1);
+    }
+    to {
+        transform: scale(1.0);
+    }
+}
+
+@media (min-width: $media-breakpoint-md) {
+    .main-content-container {
+        .main-content {
+            max-width: $media-breakpoint-md;
+            margin: 0 auto;
+        }
+    }
+    .main-content-container-padding {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .main-title, .title-medium {
+        text-align: center;
+    }
+}
+
+@media (min-width: $media-breakpoint-lg) {
+    .main-content-container {
+        .main-content {
+            max-width: $media-breakpoint-lg;
+        }
+    }
+}

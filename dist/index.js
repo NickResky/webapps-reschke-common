@@ -1,22 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const zenkit_data_service_1 = require("./zenkit-data-service");
-function printMsg() {
-    console.log("This is a message from the demo package");
-}
-exports.printMsg = printMsg;
 var utility_service_1 = require("./utility.service");
 exports.UtilityService = utility_service_1.UtilityService;
-var zenkit_data_service_2 = require("./zenkit-data-service");
-exports.ZenkitDataService = zenkit_data_service_2.ZenkitDataService;
-/*
-    params
-    {
-        listShortId: string
-        requiredElements: {}[]
-    }
-*/
-function getZenkitListData(params) {
-    return zenkit_data_service_1.ZenkitDataService.fetchAndTransformZenkitListData(params);
-}
-exports.getZenkitListData = getZenkitListData;
+var zenkit_data_service_1 = require("./zenkit-data-service");
+exports.ZenkitDataService = zenkit_data_service_1.ZenkitDataService;
+var zenkit_element_types_1 = require("./zenkit-element-types");
+exports.ElementTypes = zenkit_element_types_1.ElementTypes;
+var teacher_1 = require("./school-common/classes/teacher");
+exports.Teacher = teacher_1.Teacher;
+var location_1 = require("./school-common/classes/location");
+exports.Location = location_1.Location;
+var location_data_1 = require("./school-common/classes/location-data");
+exports.LocationData = location_data_1.LocationData;
+var appointment_1 = require("./school-common/classes/appointment");
+exports.Appointment = appointment_1.Appointment;
+var blog_posts_1 = require("./school-common/classes/blog-posts");
+exports.BlogPost = blog_posts_1.BlogPost;
+var contact_1 = require("./school-common/classes/contact");
+exports.Contact = contact_1.Contact;
+var course_data_1 = require("./school-common/classes/course-data");
+exports.CourseData = course_data_1.CourseData;
+var course_information_1 = require("./school-common/classes/course-information");
+exports.CourseInformation = course_information_1.CourseInformation;
+var imprint_1 = require("./school-common/classes/imprint");
+exports.Imprint = imprint_1.Imprint;
+var main_page_data_1 = require("./school-common/classes/main-page-data");
+exports.MainPageData = main_page_data_1.MainPageData;
+var main_page_section_1 = require("./school-common/classes/main-page-section");
+exports.MainPageSection = main_page_section_1.MainPageSection;
+var performance_1 = require("./school-common/classes/performance");
+exports.Performance = performance_1.Performance;
+var schedule_1 = require("./school-common/classes/schedule");
+exports.ScheduleData = schedule_1.ScheduleData;

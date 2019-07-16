@@ -1,4 +1,16 @@
-export declare function printMsg(): void;
 export { UtilityService } from './utility.service';
 export { ZenkitDataService } from './zenkit-data-service';
-export declare function getZenkitListData(params: any): Promise<any>;
+export { ElementTypes } from './zenkit-element-types';
+export { Teacher } from './school-common/classes/teacher';
+export { Location } from './school-common/classes/location';
+export { LocationData } from './school-common/classes/location-data';
+export { Appointment } from './school-common/classes/appointment';
+export { BlogPost } from './school-common/classes/blog-posts';
+export { Contact } from './school-common/classes/contact';
+export { CourseData } from './school-common/classes/course-data';
+export { CourseInformation } from './school-common/classes/course-information';
+export { Imprint } from './school-common/classes/imprint';
+export { MainPageData } from './school-common/classes/main-page-data';
+export { MainPageSection } from './school-common/classes/main-page-section';
+export { Performance } from './school-common/classes/performance';
+export { ScheduleData } from './school-common/classes/schedule';

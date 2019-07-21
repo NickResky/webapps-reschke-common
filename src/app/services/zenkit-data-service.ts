@@ -9,6 +9,7 @@ export const ZenkitDataService = {
     headers: {
       'content-type': 'application/json; charset=UTF-8'
     },
+    useLocalStorage: true
     // development
     // apiUrl = 'https://localhost:9000/api/v1/';
   
@@ -54,97 +55,138 @@ export const ZenkitDataService = {
           return ZenkitDataService.transformZenkitListData(results);
         });
     },
+
+    fetchAndSaveToLocalStorage(params: any) {
+      return fetch(params.url, params.httpParams).then((fetchResponse: any) => {
+        return fetchResponse.json().then((json: any) => {
+          json.status = fetchResponse.status;
+          localStorage.setItem('tth-zenkit-' + params.localStorageSuffix + '-' + params.listId, JSON.stringify(json));
+          return json;
+        });
+      });
+    },
   
     fetchList: (listId: string): Promise<any> => {
-      const url = ZenkitDataService.apiUrl + 'lists/' + listId;
-      const httpParams = {
-          headers: ZenkitDataService.headers,
-          // body: Data,
-          method: "GET"
-      };
-      // httpParams.headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
-      return fetch(url, httpParams)
+      const listDataString = localStorage.getItem('tth-zenkit-list-' + listId);
+      if (!ZenkitDataService.useLocalStorage || !listDataString) {
+        const url = ZenkitDataService.apiUrl + 'lists/' + listId;
+        const httpParams = {
+            headers: ZenkitDataService.headers,
+            // body: Data,
+            method: "GET"
+        };
+        // httpParams.headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
+        return ZenkitDataService.fetchAndSaveToLocalStorage({
+          url: url,
+          httpParams: httpParams,
+          listId: listId,
+          localStorageSuffix: 'list'
+        });
+      } else {
+        const json = JSON.parse(listDataString);
+        return new Promise((resolve: any, reject: any) => {
+          return resolve(json);
+        }); 
+      }
     },
   
     fetchListElements: (listId: any): Promise<any> => {
-      const url = ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
-      const httpParams = {
-          headers: ZenkitDataService.headers,
-          // body: Data,
-          method: "GET"
-      };
-      // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
-      return fetch(url, httpParams);
+      const listDataString = localStorage.getItem('tth-zenkit-list-elements-' + listId);
+      if (!ZenkitDataService.useLocalStorage || !listDataString) {
+        const url = ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
+        const httpParams = {
+            headers: ZenkitDataService.headers,
+            // body: Data,
+            method: "GET"
+        };
+        // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
+        return ZenkitDataService.fetchAndSaveToLocalStorage({
+          url: url,
+          httpParams: httpParams,
+          listId: listId,
+          localStorageSuffix: 'list-elements'
+        });
+      } else {
+        const json = JSON.parse(listDataString);
+        return new Promise((resolve: any, reject: any) => {
+          return resolve(json);
+        }); 
+      }
     },
   
     fetchListEntriesInKanbanMode: (elementIdX: string, listShortId:string): Promise<any> => {
-      const url = ZenkitDataService.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
-      // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
-      const httpRequestBody: any = {
-        filter: {
-          AND: {
-            TERMS: []
-          }
-        },
-        elementIdX: elementIdX
-      };
-      const httpParams = {
-          headers: ZenkitDataService.headers,
-          body: JSON.stringify(httpRequestBody),
-          method: "POST"
-      };
-      return fetch(url, httpParams);
+      const listDataString = localStorage.getItem('tth-zenkit-list-entries-' + listShortId);
+      if (!ZenkitDataService.useLocalStorage || !listDataString) {
+        const url = ZenkitDataService.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
+        // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);
+        const httpRequestBody: any = {
+          filter: {
+            AND: {
+              TERMS: []
+            }
+          },
+          elementIdX: elementIdX
+        };
+        const httpParams = {
+            headers: ZenkitDataService.headers,
+            body: JSON.stringify(httpRequestBody),
+            method: "POST"
+        };
+        return ZenkitDataService.fetchAndSaveToLocalStorage({
+          url: url,
+          httpParams: httpParams,
+          listId: listShortId,
+          localStorageSuffix: 'list-entries'
+        });
+      } else {
+        const json = JSON.parse(listDataString);
+        return new Promise((resolve: any, reject: any) => {
+          return resolve(json);
+        }); 
+      }
     },
   
     fetchZenkitListData: (params: any): Promise<any> => {
   
         return Promise.all([ZenkitDataService.fetchList(params.listShortId), ZenkitDataService.fetchListElements(params.listShortId)]).then((results: any) => {
-          const listResponse: any = results[0];
-          const elementsResponse: any = results[1];
+          const listJson: any = results[0];
+          const elementsJson: any = results[1];
   
-          if (listResponse.status === 403  || listResponse.status === 403) {
-            throw new Error('It seems like you do not have permission to access this collection');
+          if (listJson.status === 403  || elementsJson.status === 403) {
+            throw new Error('It seems like you do not have permission to access this collection. ID: ' + params.listShortId);
           }
-          if (listResponse.status !== 200 || listResponse.status !== 200) {
-            throw new Error('Collection not found.');
+          if (listJson.status !== 200 || elementsJson.status !== 200) {
+            // throw new Error('Collection not found. ID: ' + params.listShortId);
           }
-  
-          return Promise.all([listResponse.json(), elementsResponse.json()]).then((results: any) => {
-  
-            const listJson = results[0];
-            const elementsJson = results[1];
-  
-            const sectionElement: any = _.find(elementsJson, {
-              name: 'Labels',
-              elementcategory: 6
-            });
-  
-            if (_.has(sectionElement, ['id']) === false) {
-              // tslint:disable-next-line:max-line-length
-              throw new Error('Missing Section Field! Please define a field called "Labels" for the Zenkit Collection ' + listJson.name + '.');
-            }
-  
-            return ZenkitDataService.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
-              .then((entriesResponse) => {
-  
-                if (entriesResponse.status === 403) {
-                  throw new Error('It seems like you do not have permission to access this collection (Collection ID:' + params.listId + ').');
-                }
-  
-                if (entriesResponse.status !== 200) {
-                  throw new Error('Collection not found (Collection ID: ' + params.listShortId + ').');
-                }
-  
-                return entriesResponse.json().then((entriesJsonResponse: any) => {
-                  return {
-                    list: listJson,
-                    elements: elementsJson,
-                    kanbanEntries: entriesJsonResponse,
-                    sectionElement: sectionElement,
-                    requiredElements: params.requiredElements
-                  };
-                });
-              });
+
+          const sectionElement: any = _.find(elementsJson, {
+            name: 'Labels',
+            elementcategory: 6
+          });
+
+          if (_.has(sectionElement, ['id']) === false) {
+            // tslint:disable-next-line:max-line-length
+            throw new Error('Missing Section Field! Please define a field called "Labels" for the Zenkit Collection ' + listJson.name + '.');
+          }
+
+          return ZenkitDataService.fetchListEntriesInKanbanMode(sectionElement.id, params.listShortId)
+            .then((entriesJson) => {
+
+              if (entriesJson.status === 403) {
+                throw new Error('It seems like you do not have permission to access this collection (Collection ID:' + params.listId + ').');
+              }
+
+              if (entriesJson.status !== 200) {
+                throw new Error('Collection not found (Collection ID: ' + params.listShortId + ').');
+              }
+
+              return {
+                list: listJson,
+                elements: elementsJson,
+                kanbanEntries: entriesJson,
+                sectionElement: sectionElement,
+                requiredElements: params.requiredElements
+              };
             });
       });
     },

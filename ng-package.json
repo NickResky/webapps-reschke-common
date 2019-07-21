@@ -1,0 +1,23 @@
+{
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+      "entryFile": "public_api.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+        "@angular/cli",
+        "@angular/common",
+        "@angular/core",
+        "@angular/compiler",
+        "@angular/compiler-cli",
+        "@angular/platform-browser",
+        "@angular/router",
+        "@types/core-js",
+        "@types/node",
+        "core-js",
+        "lodash",
+        "rollup",
+        "rxjs",
+        "rxjs-compat",
+        "typescript"
+      ]
+  }

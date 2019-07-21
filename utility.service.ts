@@ -4,7 +4,7 @@ export const UtilityService = {
     
     apiUrl : 'https://zenkit.com/api/v1/',
 
-    convertStringToUrlId: (string: string) => {
+    convertStringToUrlId: (string: any) => {
 
         const convertedString = _
           .chain(string.toLowerCase())

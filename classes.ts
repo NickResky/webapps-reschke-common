@@ -1,5 +1,3 @@
-export { UtilityService } from './utility.service';
-export { ZenkitDataService } from './zenkit-data-service';
 export { ElementTypes } from './zenkit-element-types';
 export { Teacher } from './school-common/classes/teacher';
 export { Location } from './school-common/classes/location';

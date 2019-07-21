@@ -2,8 +2,8 @@ import { MainPageSectionTypes } from './../constants/main-page-section-types';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { CourseInformation, MainPageData, MainPageSection } from '../../../classes';
-import { ZenkitDataService } from '../../../zenkit-data-service';
-import { UtilityService } from '../../../utility.service';
+import { ZenkitDataService } from './zenkit-data-service';
+import { UtilityService } from './utility.service';
 
 @Injectable()
 export class MainPageService {

@@ -1,8 +1,8 @@
 import { RequiredElements } from './../constants/required-elements';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { UtilityService } from '../../../utility.service';
-import { ZenkitDataService } from '../../../zenkit-data-service';
+import { UtilityService } from './utility.service';
+import { ZenkitDataService } from './zenkit-data-service';
 import { Contact } from '../../../classes';
 
 @Injectable()

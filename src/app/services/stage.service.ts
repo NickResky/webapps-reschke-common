@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Performance } from '../../../classes';
-import { ZenkitDataService } from '../../../zenkit-data-service';
-import { UtilityService } from '../../../utility.service';
+import { ZenkitDataService } from './zenkit-data-service';
+import { UtilityService } from './utility.service';
 
 @Injectable()
 export class StageService {

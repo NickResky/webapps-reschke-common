@@ -9,8 +9,8 @@ import {
     ScheduleData,
     Teacher
 } from '../../../classes';
-import { UtilityService } from '../../../utility.service';
-import { ZenkitDataService } from '../../../zenkit-data-service';
+import { UtilityService } from './utility.service';
+import { ZenkitDataService } from './zenkit-data-service';
 
 @Injectable()
 export class ScheduleService {

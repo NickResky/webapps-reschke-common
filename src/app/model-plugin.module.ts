@@ -17,11 +17,11 @@ import { CommonModule } from '@angular/common';
 import { PluginComponent } from './plugin.component';
 
 @NgModule()
-export class PluginModule { 
+export class ModelPluginModule { 
 
     static forRoot() {
         return {
-            ngModule: PluginModule,
+            ngModule: ModelPluginModule,
             providers: [
                 ModelService,
                 ContactService,

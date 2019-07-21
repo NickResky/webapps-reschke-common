@@ -1,4 +1,4 @@
-import { ElementTypes } from '../../../zenkit-element-types';
+import { ElementTypes } from './zenkit-element-types';
 
 export const RequiredElements  = {
     home: [

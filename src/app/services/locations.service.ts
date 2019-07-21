@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import {  Appointment, LocationData, Location } from '../../../classes';
-import { UtilityService } from '../../../utility.service';
-import { ZenkitDataService } from '../../../zenkit-data-service';
+import { UtilityService } from './utility.service';
+import { ZenkitDataService } from './zenkit-data-service';
 
 @Injectable()
 export class LocationsService {

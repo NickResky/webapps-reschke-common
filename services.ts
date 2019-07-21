@@ -1,5 +1,5 @@
-export { UtilityService } from './utility.service';
-export { ZenkitDataService } from './zenkit-data-service';
+export { UtilityService } from './src/app/services/utility.service';
+export { ZenkitDataService } from './src/app/services/zenkit-data-service';
 export { ContactService } from './src/app/services/contact.service';
 export { CoursesService } from './src/app/services/courses.service';
 export { CurrentService } from './src/app/services/current.service';

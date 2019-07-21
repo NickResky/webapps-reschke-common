@@ -46,7 +46,9 @@ export class ModelService {
         private currentService: CurrentService,
         private imprintService: ImprintService,
         private scheduleService: ScheduleService
-    ) { }
+    ) { 
+        console.log("ModelService created");
+    }
 
     setZenkitCollection(collection: any) {
         this.zenkitCollection = collection;

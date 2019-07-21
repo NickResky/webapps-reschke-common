@@ -1,4 +1,4 @@
-import { ElementTypes } from './zenkit-element-types';
+import { ElementTypes } from './../constants/zenkit-element-types';
 import * as _ from 'lodash';
 import 'rxjs/Rx';
 

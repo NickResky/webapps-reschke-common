@@ -1,4 +1,4 @@
-import { ZenkitCollectionsTTH } from './../constants/zenkit-collections';
+import { ZenkitCollectionsConfigService } from './../constants/zenkit-collections-config.service';
 import { Observable } from 'rxjs/Observable';
 import { CurrentService } from './current.service';
 import { ContactService } from './contact.service';
@@ -13,7 +13,9 @@ import * as _ from 'lodash';
 import { ImprintService } from './imprint.service';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { InjectionToken } from '@angular/core';
 import { Appointment, BlogPost, Contact, CourseData, CourseInformation, Imprint, LocationData, MainPageData, ScheduleData, Teacher, Performance } from '../../../classes';
+import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
 
 @Injectable()
 export class ModelService {
@@ -28,7 +30,6 @@ export class ModelService {
     imprintData: Promise<Imprint[]>|undefined;
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
-    zenkitCollection: any = ZenkitCollectionsTTH;
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -37,6 +38,7 @@ export class ModelService {
     // });
 
     constructor(
+        @Inject(ZenkitCollectionsConfigService) private zenkitCollectionsConfig: ZenkitCollectionsConfig,
         private mainPageService: MainPageService,
         private stageService: StageService,
         private coursesService: CoursesService,
@@ -48,14 +50,7 @@ export class ModelService {
         private scheduleService: ScheduleService
     ) { 
         console.log("ModelService created");
-    }
-
-    setZenkitCollection(collection: any) {
-        this.zenkitCollection = collection;
-    }
-
-    getZenkitCollection() {
-        return this.zenkitCollection;
+        console.log(zenkitCollectionsConfig);
     }
 
     isPlatformBrowser() {
@@ -74,7 +69,7 @@ export class ModelService {
 
     getMainPageSections(): Promise<MainPageData>|undefined {
         if (_.isNil(this.mainPageData)) {
-            this.mainPageData = this.mainPageService.getMainPageSections(this.zenkitCollection);
+            this.mainPageData = this.mainPageService.getMainPageSections(this.zenkitCollectionsConfig);
             return this.mainPageData;
         }
         return new Promise((resolve, reject) => {
@@ -84,7 +79,7 @@ export class ModelService {
 
     getPosts(): Promise<BlogPost[]> {
         if (_.isNil(this.blogPostsData)) {
-            this.blogPostsData = this.currentService.getPosts(this.zenkitCollection);
+            this.blogPostsData = this.currentService.getPosts(this.zenkitCollectionsConfig);
         }
         return this.blogPostsData;
     }
@@ -100,7 +95,7 @@ export class ModelService {
 
     getPerformances(): Promise<Performance[]> {
         if (_.isNil(this.performancesData)) {
-            this.performancesData = this.stageService.getPerformances(this.zenkitCollection);
+            this.performancesData = this.stageService.getPerformances(this.zenkitCollectionsConfig);
             return this.performancesData;
         }
         return new Promise((resolve, reject) => {
@@ -119,7 +114,7 @@ export class ModelService {
 
     getCourses(): Promise<CourseData> {
         if (_.isNil(this.coursesData)) {
-            this.coursesData = this.coursesService.getCourses(this.zenkitCollection);
+            this.coursesData = this.coursesService.getCourses(this.zenkitCollectionsConfig);
             return this.coursesData;
         }
         return new Promise((resolve, reject) => {
@@ -133,7 +128,7 @@ export class ModelService {
                 const courses: CourseInformation[] = _.get(result[0], ['courses']);
                 const teachers: Teacher[] = result[1];
                 const locationData: LocationData = result[2];
-                this.scheduleData = this.scheduleService.getScheduleData(this.zenkitCollection, courses, teachers, locationData);
+                this.scheduleData = this.scheduleService.getScheduleData(this.zenkitCollectionsConfig, courses, teachers, locationData);
                 return this.scheduleData;
             });
         }
@@ -144,7 +139,7 @@ export class ModelService {
 
     getTeam(): Promise<Teacher[]> {
         if (_.isNil(this.teamData)) {
-            this.teamData = this.teamService.getTeam(this.zenkitCollection);
+            this.teamData = this.teamService.getTeam(this.zenkitCollectionsConfig);
             return this.teamData;
         }
         return new Promise((resolve, reject) => {
@@ -164,7 +159,7 @@ export class ModelService {
 
     getLocationData(): Promise<LocationData> {
         if (_.isNil(this.locationData)) {
-            this.locationData = this.locationsService.getLocationData(this.zenkitCollection);
+            this.locationData = this.locationsService.getLocationData(this.zenkitCollectionsConfig);
             return this.locationData;
         }
         return new Promise((resolve, reject) => {
@@ -185,7 +180,7 @@ export class ModelService {
 
     getContact() {
         if (_.isNil(this.contactData)) {
-            this.contactData = this.contactService.getContact(this.zenkitCollection);
+            this.contactData = this.contactService.getContact(this.zenkitCollectionsConfig);
             return this.contactData;
         }
         return new Promise((resolve, reject) => {
@@ -195,7 +190,7 @@ export class ModelService {
 
     getEntries() {
         if (_.isNil(this.imprintData)) {
-            this.imprintData = this.imprintService.getEntries(this.zenkitCollection);
+            this.imprintData = this.imprintService.getEntries(this.zenkitCollectionsConfig);
             return this.imprintData;
         }
         return new Promise((resolve, reject) => {

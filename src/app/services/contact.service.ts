@@ -1,4 +1,4 @@
-import { RequiredElements } from './../constants/required-elements';
+import { RequiredElementsConfig } from '../constants/required-elements-config';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { UtilityService } from './utility.service';

@@ -1,4 +1,5 @@
 export * from './src/app/model-plugin.module';
+export * from './src/app/components-plugin.module';
 export { ModelService } from  './src/app/services/model.service';
 export { UtilityService } from './src/app/services/utility.service';
 export { ZenkitDataService } from './src/app/services/zenkit-data-service';

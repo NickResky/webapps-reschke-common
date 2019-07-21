@@ -1,4 +1,6 @@
+export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
 export * from './src/app/model-plugin.module';
+export * from './src/app/components-plugin.module';
 export { ModelService } from  './src/app/services/model.service';
 export { UtilityService } from './src/app/services/utility.service';
 export { ZenkitDataService } from './src/app/services/zenkit-data-service';
@@ -26,3 +28,4 @@ export { MainPageData } from './src/app/school-common/classes/main-page-data';
 export { MainPageSection } from './src/app/school-common/classes/main-page-section';
 export { Performance } from './src/app/school-common/classes/performance';
 export { ScheduleData } from './src/app/school-common/classes/schedule';
+export { MainPageSectionTypes } from './src/app/constants/main-page-section-types';

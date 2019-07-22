@@ -18,6 +18,8 @@
         "rollup",
         "rxjs",
         "rxjs-compat",
-        "typescript"
+        "typescript",
+        "copyfiles",
+        "zone.js"
       ]
   }

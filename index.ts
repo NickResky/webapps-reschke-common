@@ -1,6 +1,6 @@
-export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
 export * from './src/app/model-plugin.module';
 export * from './src/app/components-plugin.module';
+export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
 export { ModelService } from  './src/app/services/model.service';
 export { UtilityService } from './src/app/services/utility.service';
 export { ZenkitDataService } from './src/app/services/zenkit-data-service';
@@ -11,7 +11,6 @@ export { ImprintService } from './src/app/services/imprint.service';
 export { LocationsService } from './src/app/services/locations.service';
 export { MainPageService } from './src/app/services/main-page.service';
 export { ScheduleService } from './src/app/services/schedule.service';
-export { SeoService } from './src/app/services/seo.service';
 export { StageService } from './src/app/services/stage.service';
 export { TeamService } from './src/app/services/team.service';
 export { ElementTypes } from './src/app/constants/zenkit-element-types';
@@ -29,3 +28,4 @@ export { MainPageSection } from './src/app/school-common/classes/main-page-secti
 export { Performance } from './src/app/school-common/classes/performance';
 export { ScheduleData } from './src/app/school-common/classes/schedule';
 export { MainPageSectionTypes } from './src/app/constants/main-page-section-types';
+export { ZenkitCollectionsConfigService } from './src/app/constants/zenkit-collections-config.service';

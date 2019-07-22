@@ -9,7 +9,7 @@ export const ZenkitDataService = {
     headers: {
       'content-type': 'application/json; charset=UTF-8'
     },
-    useLocalStorage: true,
+    useLocalStorage: false,
     // development
     // apiUrl = 'https://localhost:9000/api/v1/';
   

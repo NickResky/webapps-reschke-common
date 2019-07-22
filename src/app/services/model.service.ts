@@ -14,7 +14,20 @@ import { ImprintService } from './imprint.service';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { InjectionToken } from '@angular/core';
-import { Appointment, BlogPost, Contact, CourseData, CourseInformation, Imprint, LocationData, MainPageData, ScheduleData, Teacher, Performance } from '../../../classes';
+import { 
+    Appointment,
+    BlogPost,
+    Contact,
+    CourseData,
+    CourseInformation,
+    Imprint,
+    LocationData,
+    Location,
+    MainPageData,
+    ScheduleData,
+    Teacher,
+    Performance 
+} from '../../../classes';
 import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
 
 @Injectable()
@@ -157,6 +170,10 @@ export class ModelService {
         });
     }
 
+    convertTeacherToUrlId(teacher: Teacher) {
+        return this.teamService.convertTeacherToUrlId(teacher);
+      }
+
     getLocationData(): Promise<LocationData> {
         if (_.isNil(this.locationData)) {
             this.locationData = this.locationsService.getLocationData(this.zenkitCollectionsConfig);
@@ -175,6 +192,15 @@ export class ModelService {
                 return locationData.locationLB;
             }
             return undefined;
+        });
+    }
+
+    getLocationByShortId(shortId: string) {
+        return this.getLocationData().then((locationData: LocationData) => {
+            const location = _.find(locationData.allLocations, (l: any) => {
+                return l.shortId === shortId;
+            });
+            return location;
         });
     }
 

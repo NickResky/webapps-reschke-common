@@ -8,7 +8,7 @@
     "build": "tsc && npm run copy-scss",
     "copy-scss": "./node_modules/.bin/copyfiles --all scss/*.scss dist",
     "ng": "./node_modules/.bin/ng",
-    "packagr": "ng-packagr -p ng-package.json"
+    "packagr": "ng-packagr -p ng-package.json && npm run copy-scss"
   },
   "private": false,
   "repository": {
@@ -22,15 +22,15 @@
   },
   "homepage": "https://github.com/NickResky/webapps-reschke-common#readme",
   "devDependencies": {
-    "@types/lodash": "^4.14.112",
+    "@types/lodash": "^4.14.121",
     "ng-packagr": "^5.3.0"
   },
   "dependencies": {
-    "@angular/cli": "6.0.7",
+    "@angular/cli": "6.0.8",
     "@angular/common": "6.0.5",
-    "@angular/compiler": "6.0.7",
-    "@angular/compiler-cli": "6.0.7",
-    "@angular/core": "6.0.7",
+    "@angular/compiler": "6.0.5",
+    "@angular/compiler-cli": "6.0.5",
+    "@angular/core": "6.0.5",
     "@angular/platform-browser": "6.0.5",
     "@angular/router": "6.0.5",
     "@types/core-js": "^2.5.2",

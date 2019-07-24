@@ -1,4 +1,3 @@
-import { ZenkitCollectionsConfigService } from './../constants/zenkit-collections-config.service';
 import { Observable } from 'rxjs/Observable';
 import { CurrentService } from './current.service';
 import { ContactService } from './contact.service';
@@ -28,6 +27,7 @@ import {
     Teacher,
     Performance 
 } from '../../../classes';
+import { ZenkitCollectionsService } from './zenkit-collections.service';
 import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
 
 @Injectable()
@@ -51,7 +51,7 @@ export class ModelService {
     // });
 
     constructor(
-        @Inject(ZenkitCollectionsConfigService) private zenkitCollectionsConfig: ZenkitCollectionsConfig,
+        private zenkitCollectionsConfig: ZenkitCollectionsService,
         private mainPageService: MainPageService,
         private stageService: StageService,
         private coursesService: CoursesService,

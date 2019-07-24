@@ -28,4 +28,3 @@ export { MainPageSection } from './src/app/school-common/classes/main-page-secti
 export { Performance } from './src/app/school-common/classes/performance';
 export { ScheduleData } from './src/app/school-common/classes/schedule';
 export { MainPageSectionTypes } from './src/app/constants/main-page-section-types';
-export { ZenkitCollectionsConfigService } from './src/app/constants/zenkit-collections-config.service';

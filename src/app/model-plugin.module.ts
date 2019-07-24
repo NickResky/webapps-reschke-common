@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 @NgModule()
 export class ModelPluginModule { 
 
-    static forRoot(zenkitCollections: any) {
+    static forRoot() {
         return {
             ngModule: ModelPluginModule,
             providers: [

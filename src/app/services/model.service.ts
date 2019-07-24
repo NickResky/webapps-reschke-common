@@ -30,7 +30,9 @@ import {
 import { ZenkitCollectionsService } from './zenkit-collections.service';
 import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ModelService {
 
     mainPageData: Promise<MainPageData>|undefined;

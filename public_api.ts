@@ -1,6 +1,7 @@
 /* -------------- ANGULAR COMPONENTS ---------------*/
 export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
 export { FooterComponent } from './src/app/school-common/angular-components/footer/footer.component';
+export { App01Component } from './src/app/angular-components/app-01/app-01.component';
 
 /* -------------- SERVICES ---------------*/
 
@@ -17,7 +18,7 @@ export { MainPageService } from './src/app/services/main-page.service';
 export { ScheduleService } from './src/app/services/schedule.service';
 export { StageService } from './src/app/services/stage.service';
 export { TeamService } from './src/app/services/team.service';
-
+export { SeoService } from './src/app/services/seo.service';
 /* -------------- Constants / Enums ---------------*/
 export { ElementTypes } from './src/app/constants/zenkit-element-types';
 export { ApplicationIdentifier } from './src/app/constants/application-identifier';

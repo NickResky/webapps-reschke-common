@@ -1,0 +1,80 @@
+<div class="footer-container" *ngIf="footerContentLoaded && mainPageContentLoaded">
+  <div class="footer">
+    <div class="footer-section-container">
+      <div class="footer-section footer-section-contact">
+        <div class="footer-section-heading">
+          Kontakt
+        </div>
+        <div class="footer-section-content">
+          <div *ngIf="contact && isApplicationYW()">
+            <span class="footer-section-content-link">{{contact.name2}}</span>
+            <span class="footer-section-content-link">{{mainLocation.addressStreet}}</span>
+            <span class="footer-section-content-link footer-section-content-link-inline">{{mainLocation.addressZIP}}</span>
+            <span class="footer-section-content-link footer-section-content-link-inline">{{mainLocation.addressCity}}</span>
+          </div>
+          <div *ngIf="locations && isApplicationTTH()">
+            <div *ngFor="let location of locations">
+              <span class="footer-section-content-link">{{location.addressName}}</span>
+              <span class="footer-section-content-link">{{location.addressStreet}}</span>
+              <span class="footer-section-content-link footer-section-content-link-inline">{{location.addressZIP}}</span>
+              <span class="footer-section-content-link footer-section-content-link-inline">{{location.addressCity}}</span>
+              <span class="footer-section-content-link consultation-label" [routerLink]="['/standorte', location.shortId]">Beratungszeiten<i class="fas fa-arrow-right"></i></span>
+              <!-- <span class="footer-section-content-link">{{locationMG.consultationTime1}}</span>
+              <span class="footer-section-content-link" *ngIf="locationMG.consultationTime2">{{locationMG.consultationTime2}}</span>
+              <span class="footer-section-content-link" *ngIf="locationMG.consultationTime3">{{locationMG.consultationTime3}}</span> -->
+            </div>
+          </div>
+          <div class="footer-section-content-break"></div>
+          <span class="footer-section-content-link"><a [href]="['tel:', phone, '?']" target="_top">Tel. {{contact.phone}}</a></span>
+          <span class="footer-section-content-link"><a [href]="['mailto:', email, '?']" target="_top">{{contact.email}}</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-section-container">
+      <div class="footer-section footer-section-social" *ngIf="contact && isApplicationTTH()">
+        <div class="footer-section-heading">
+            Social Media
+        </div>
+        <div class="footer-section-content footer-section-content-social">
+          <a class="footer-section-content-link-icon" href="https://www.facebook.com/Tanztheater/">
+            <i class="fab fa-facebook-square fa-3x"></i>
+          </a>
+          <a class="footer-section-content-link-icon" href="https://www.instagram.com/das_tanztheater/">
+            <i class="fab fa-instagram fa-3x"></i>
+          </a>
+          <a class="footer-section-content-link-icon" href="https://www.youtube.com/user/TanztheaterAnitaHank/videos?view=0&sort=dd&flow=grid">
+            <i class="fab fa-youtube fa-3x"></i>
+          </a>
+        </div>
+      </div>
+      <div class="footer-section footer-section-social" *ngIf="contact && isApplicationYW()">
+          <div class="footer-section-heading">
+              Links
+          </div>
+          <div class="footer-section-content footer-section-content-social">
+            <a class="footer-section-content-link-icon" href="https://www.google.com/maps/place/Yogaraum+Wettersbach/@48.949579,8.4782207,15z/data=!4m2!3m1!1s0x0:0x19295d66d5791e70?sa=X&ved=2ahUKEwiG6OfkmdjhAhVKs4sKHTp8DnYQ_BIwD3oECA4QCA" title="Google Maps">
+              <i class="fas fa-map-marker-alt fa-3x"></i>
+            </a>
+          </div>
+        </div>
+    </div>
+    <div class="footer-section-container">
+      <div class="footer-section footer-section-legal">
+        <a class="footer-section-heading" routerLink="/impressum">
+            Impressum
+        </a><br>
+        <a class="footer-section-heading" routerLink="/datenschutz">
+          Datenschutz
+        </a>
+        <div class="footer-section-content" *ngIf="contact && isApplicationTTH()">
+          <div class="footer-section-content-link">Geschützt durch Tanztheater Anita Hanke 2017</div>
+          <div class="footer-section-content-link">Web Design: Niko Reschke und Yasmin Hollenbenders</div>
+        </div>
+        <div class="footer-section-content" *ngIf="contact && isApplicationYW()">
+          <div class="footer-section-content-link">Geschützt durch Arlette Cassin-Reschke</div>
+          <div class="footer-section-content-link">Web Design: Niko Reschke</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

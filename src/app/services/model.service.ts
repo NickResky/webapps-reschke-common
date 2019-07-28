@@ -248,7 +248,7 @@ export class ModelService {
     }
 
     getScssVariables() {
-        if (this.zenkitCollectionsConfig.workspaceName === ApplicationIdentifier.TTH) {
+        if (this.zenkitCollectionsConfig.applicationIdentifier === ApplicationIdentifier.TTH) {
             
         }
     }

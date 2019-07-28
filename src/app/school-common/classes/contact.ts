@@ -7,5 +7,9 @@ export class Contact {
     imprint: string|undefined;
     description: string|undefined;
     image: string|undefined;
-    privacy: string|undefined;    
+    privacy: string|undefined; 
+    youtubeLink: string|undefined;
+    facebookLink: string|undefined;
+    instagramLink: string|undefined;
+    googleMapsLink: string|undefined;   
 }

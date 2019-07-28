@@ -1,5 +1,6 @@
 /* -------------- ANGULAR COMPONENTS ---------------*/
 export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
+export { FooterComponent } from './src/app/school-common/angular-components/footer/footer.component';
 
 /* -------------- SERVICES ---------------*/
 

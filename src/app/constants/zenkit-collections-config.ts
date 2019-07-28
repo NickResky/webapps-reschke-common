@@ -1,9 +1,10 @@
+import { ApplicationIdentifier } from './application-identifier';
 import { RequiredElementsConfig } from './required-elements-config';
 import { ZenkitCollection } from './zenkit-collection';
 
 export interface ZenkitCollectionsConfig {
     apiUrl : string,
-    workspaceName: string,
+    applicationIdentifier: ApplicationIdentifier,
     home: ZenkitCollection,
     current: ZenkitCollection
     performances: ZenkitCollection

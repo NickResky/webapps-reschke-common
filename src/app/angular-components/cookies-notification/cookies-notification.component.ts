@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-cookies-notification',
   templateUrl: './cookies-notification.component.html',
-  styleUrls: ['./cookies-notification.component.scss']
+  styleUrls: []
 })
 export class CookiesNotificationComponent implements OnInit {
   

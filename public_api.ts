@@ -1,5 +1,9 @@
+/* -------------- ANGULAR COMPONENTS ---------------*/
+export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
+
+/* -------------- SERVICES ---------------*/
+
 export { ZenkitCollectionsService } from './src/app/services/zenkit-collections.service';
-export { ModelPluginModule } from './src/app/model-plugin.module';
 export { ModelService } from  './src/app/services/model.service';
 export { UtilityService } from './src/app/services/utility.service';
 export { ZenkitDataService } from './src/app/services/zenkit-data-service';
@@ -12,7 +16,12 @@ export { MainPageService } from './src/app/services/main-page.service';
 export { ScheduleService } from './src/app/services/schedule.service';
 export { StageService } from './src/app/services/stage.service';
 export { TeamService } from './src/app/services/team.service';
+
+/* -------------- Constants / Enums ---------------*/
 export { ElementTypes } from './src/app/constants/zenkit-element-types';
+export { ApplicationIdentifier } from './src/app/constants/application-identifier';
+
+/* -------------- Classes ---------------*/
 export { Teacher } from './src/app/school-common/classes/teacher';
 export { Location } from './src/app/school-common/classes/location';
 export { LocationData } from './src/app/school-common/classes/location-data';
@@ -29,3 +38,5 @@ export { ScheduleData } from './src/app/school-common/classes/schedule';
 export { MainPageSectionTypes } from './src/app/constants/main-page-section-types';
 export { ZenkitCollectionsConfig } from './src/app/constants/zenkit-collections-config';
 
+/* -------------- MODULES ---------------*/
+export { ModelPluginModule } from './src/app/model-plugin.module';

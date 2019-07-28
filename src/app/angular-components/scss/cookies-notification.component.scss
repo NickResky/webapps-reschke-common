@@ -1,10 +1,7 @@
-@import '../../../../scss/variables-tth';
-@import '../../../../scss/mixins';
-
 .cookies-notification-container {
     position: fixed;
     bottom: 0;
-    color: $main-text-color-on-dark-bg;
+    color: $main-text-color;
     text-align: center;
     opacity: 0;
     width: calc(100% - 20px);
@@ -12,7 +9,7 @@
     animation-duration: 0.5s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
-    animation-delay: 13s;
+    animation-delay: 1s;
     z-index: 2;
     padding: 10px;
     .cookies-notification {
@@ -39,7 +36,7 @@
                     text-align: left;
                     .cookies-notification-description-link {
                         text-decoration: underline;
-                        color: $main-text-color-on-dark-bg;
+                        color: $main-text-color;
                         &:hover {
                             cursor: pointer;
                             color: $accent-color-1;

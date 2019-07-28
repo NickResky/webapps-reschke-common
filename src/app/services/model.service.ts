@@ -1,3 +1,4 @@
+import { ApplicationIdentifier } from '../constants/application-identifier';
 import { Observable } from 'rxjs/Observable';
 import { CurrentService } from './current.service';
 import { ContactService } from './contact.service';
@@ -244,5 +245,11 @@ export class ModelService {
         return new Promise((resolve, reject) => {
             return resolve(this.imprintData);
         });
+    }
+
+    getScssVariables() {
+        if (this.zenkitCollectionsConfig.workspaceName === ApplicationIdentifier.TTH) {
+            
+        }
     }
 }

@@ -19,8 +19,10 @@ export class ContactService {
         const modifiedEntry: any = _.head(zenkitListData.entries);
         const contact = new Contact();
         contact.name = modifiedEntry.name;
+        contact.name2 = modifiedEntry.name2;
         contact.email = modifiedEntry.email;
         contact.phone = modifiedEntry.phone;
+        contact.phone2 = modifiedEntry.phone2;
         contact.imprint = modifiedEntry.imprint;
         contact.description = modifiedEntry.description;
         contact.image = _.head(modifiedEntry.image);

@@ -5,7 +5,7 @@ import { ModelService } from '../../services/model.service';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'wrc-root',
   templateUrl: './app-01.component.html',
   styleUrls: ['./app-01.component.scss'],
   encapsulation: ViewEncapsulation.None,

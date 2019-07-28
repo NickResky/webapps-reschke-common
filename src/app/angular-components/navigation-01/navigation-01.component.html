@@ -1,0 +1,54 @@
+<div class="navbar-container">
+  <div class="loading-animation-container" *ngIf="isBrowser">
+    <div class="loader-container" [ngClass]="[pageLoaded ? 'hide' : '']">
+      <div class="loader-circle"></div>
+      <div class="loader-line-mask">
+        <div class="loader-line"></div>
+      </div>
+    </div>
+    <div class="logo-container" [ngClass]="[pageLoaded ? 'show' : '', isApplicationYW() ? 'background-active' : '']">
+      <div class="logo-container-inner">  
+        <div class="logo" routerLink="/" *ngIf="isApplicationTTH()"></div>
+        <div class="logo" routerLink="/" *ngIf="isApplicationYW()" [innerHTML]='navigationConfig.titleHtml'></div>
+      </div>
+    </div>
+    <!-- <div class="logo-container" *ngIf="!pageIsHome">
+        <div class="logo" routerLink="/"></div>
+    </div> -->
+    <div class="title-container" *ngIf="pageIsHome && isApplicationTTH()" [ngClass]="[pageLoaded && pageInitiallyLoaded && isBrowser ? '' : '']">
+      <div class="title" routerLink="/" [innerHTML]='navigationConfig.titleHtml'></div>
+    </div> 
+  </div>
+  <div class="main-content-container main-content-container-padding">
+    <div class="navbar main-content" [ngClass]="isMobileNavOpen === true ? 'mobile-nav-open': ''">
+      <div routerLink="/" class="logo-container">
+        <div class="logo"></div>
+        <div class="logo-label-container">
+          <div class="logo-label">
+            <span [innerHTML]='navigationConfig.titleHtml'></span>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-menu-icon-container" (click)="toggleMobileNav()" *ngIf="isBrowser">
+        <div class="navbar-menu-icon">
+          <div class="bar bar1"></div>
+          <div class="bar bar2"></div>
+          <div class="bar bar3"></div>
+        </div>
+      </div>
+      <div class="navbar-page-overlay" [ngClass]="isMobileNavOpen === true ? 'show': ''" (click)="closeMobileNav()">
+
+      </div>
+      <div class="navbar-navigation">
+        <div class="dropdown" *ngFor="let element of navigationConfig.navigationElements">
+          <a class="navbar-navigation-link" [routerLink]="element.routerLink" (click)="closeMobileNav()">{{element.title}}
+            <i class="dropdown-arrow fa fa-caret-down" *ngIf="element.subelements"></i>
+          </a>
+          <div class="dropdown-content" *ngFor="let subelement of element.subelements">
+            <a class="navbar-navigation-link dropdown-link" [routerLink]="subelement.routerLink" (click)="closeMobileNav()">{{subelement.title}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

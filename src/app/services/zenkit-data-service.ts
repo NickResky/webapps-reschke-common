@@ -60,14 +60,19 @@ export const ZenkitDataService = {
       return fetch(params.url, params.httpParams).then((fetchResponse: any) => {
         return fetchResponse.json().then((json: any) => {
           json.status = fetchResponse.status;
-          localStorage.setItem('tth-zenkit-' + params.localStorageSuffix + '-' + params.listId, JSON.stringify(json));
+          if (ZenkitDataService.useLocalStorage) {
+            localStorage.setItem('tth-zenkit-' + params.localStorageSuffix + '-' + params.listId, JSON.stringify(json));
+          }
           return json;
         });
       });
     },
   
     fetchList: (listId: string): Promise<any> => {
-      const listDataString = localStorage.getItem('tth-zenkit-list-' + listId);
+      let listDataString;
+      if (ZenkitDataService.useLocalStorage) {
+        listDataString = localStorage.getItem('tth-zenkit-list-' + listId);
+      }
       if (!ZenkitDataService.useLocalStorage || !listDataString) {
         const url = ZenkitDataService.apiUrl + 'lists/' + listId;
         const httpParams = {
@@ -91,7 +96,10 @@ export const ZenkitDataService = {
     },
   
     fetchListElements: (listId: any): Promise<any> => {
-      const listDataString = localStorage.getItem('tth-zenkit-list-elements-' + listId);
+      let listDataString;
+      if (ZenkitDataService.useLocalStorage) {
+        listDataString = localStorage.getItem('tth-zenkit-list-elements-' + listId);
+      }
       if (!ZenkitDataService.useLocalStorage || !listDataString) {
         const url = ZenkitDataService.apiUrl + 'lists/' + listId + '/elements';
         const httpParams = {
@@ -115,7 +123,10 @@ export const ZenkitDataService = {
     },
   
     fetchListEntriesInKanbanMode: (elementIdX: string, listShortId:string): Promise<any> => {
-      const listDataString = localStorage.getItem('tth-zenkit-list-entries-' + listShortId);
+      let listDataString;
+      if (ZenkitDataService.useLocalStorage) {
+        listDataString = localStorage.getItem('tth-zenkit-list-entries-' + listShortId);
+      }
       if (!ZenkitDataService.useLocalStorage || !listDataString) {
         const url = ZenkitDataService.apiUrl + 'lists/' + listShortId + '/entries/filter/kanban';
         // headers.append('Authorization', 'Bearer ' + ZenkitDataService.apiToken);

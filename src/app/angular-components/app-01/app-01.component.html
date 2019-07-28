@@ -1,9 +1,9 @@
-<app-header></app-header>
+<wrc-navigation-01></wrc-navigation-01>
 <div class="nav-spacer">
 </div>  
 <div class="app-container">
   <router-outlet></router-outlet>
-  <app-footer></app-footer>
+  <wrc-footer-01></wrc-footer-01>
 </div>
 <div class="loading-overlay" [ngClass]="[pageLoaded && isBrowser ? 'hide-overlay' : '', removeOverlay && isBrowser ? 'remove-overlay' : '']">
   <div class="vertical-centered-box">
@@ -19,4 +19,4 @@
     </div> -->
   </div>
 </div>
-<app-cookies-notification></app-cookies-notification>
+<wrc-cookies-notification-01></wrc-cookies-notification-01>

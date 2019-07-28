@@ -3,11 +3,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-cookies-notification',
+  selector: 'wrc-cookies-notification-01',
   templateUrl: './cookies-notification.component.html',
   styleUrls: []
 })
-export class CookiesNotificationComponent implements OnInit {
+export class CookiesNotificationComponent01 implements OnInit {
   
   displayCookiesNotification = false;
   isBrowser = false;

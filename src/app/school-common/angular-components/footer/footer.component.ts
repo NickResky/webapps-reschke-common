@@ -7,11 +7,11 @@ import { Location } from '../../classes/location';
 import { ModelService } from '../../../services/model.service';
 
 @Component({
-  selector: 'app-footer',
+  selector: 'wrc-footer-01',
   templateUrl: 'footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class Footer01Component implements OnInit {
 
   locations: Location[]|undefined;
   mainLocation: Location|undefined;

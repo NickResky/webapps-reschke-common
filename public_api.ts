@@ -1,7 +1,13 @@
+/* -------------- MODULES ---------------*/
+export { ModelPluginModule } from './src/app/model-plugin.module';
+export { ComponentsPluginModule } from './src/app/components-plugin.module';
+
 /* -------------- ANGULAR COMPONENTS ---------------*/
-export { CookiesNotificationComponent } from './src/app/angular-components/cookies-notification/cookies-notification.component';
-export { FooterComponent } from './src/app/school-common/angular-components/footer/footer.component';
+export { CookiesNotificationComponent01 } from './src/app/angular-components/cookies-notification/cookies-notification.component';
+export { Footer01Component } from './src/app/school-common/angular-components/footer/footer.component';
 export { App01Component } from './src/app/angular-components/app-01/app-01.component';
+export { Navigation01Component } from './src/app/angular-components/navigation-01/navigation-01.component';
+
 
 /* -------------- SERVICES ---------------*/
 
@@ -19,6 +25,9 @@ export { ScheduleService } from './src/app/services/schedule.service';
 export { StageService } from './src/app/services/stage.service';
 export { TeamService } from './src/app/services/team.service';
 export { SeoService } from './src/app/services/seo.service';
+export { NavigationConfigService } from './src/app/services/navigation-config-service';
+
+
 /* -------------- Constants / Enums ---------------*/
 export { ElementTypes } from './src/app/constants/zenkit-element-types';
 export { ApplicationIdentifier } from './src/app/constants/application-identifier';
@@ -39,6 +48,6 @@ export { Performance } from './src/app/school-common/classes/performance';
 export { ScheduleData } from './src/app/school-common/classes/schedule';
 export { MainPageSectionTypes } from './src/app/constants/main-page-section-types';
 export { ZenkitCollectionsConfig } from './src/app/constants/zenkit-collections-config';
+export { NavigationConfigType } from './src/app/school-common/classes/navigation-config-type';
+export { NavigationElement } from './src/app/school-common/classes/navigation-element';
 
-/* -------------- MODULES ---------------*/
-export { ModelPluginModule } from './src/app/model-plugin.module';

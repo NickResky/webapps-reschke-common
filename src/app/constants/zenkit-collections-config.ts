@@ -3,6 +3,7 @@ import { ZenkitCollection } from './zenkit-collection';
 
 export interface ZenkitCollectionsConfig {
     apiUrl : string,
+    workspaceName: string,
     home: ZenkitCollection,
     current: ZenkitCollection
     performances: ZenkitCollection

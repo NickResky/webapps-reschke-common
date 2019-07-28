@@ -19,6 +19,7 @@ export class TeamService {
         const team = _.map(zenkitListData.entries, (modifiedEntry) => {
           const teacher = new Teacher();
           teacher.uuid = modifiedEntry.uuid;
+          teacher.shortId = modifiedEntry.shortId;
           teacher.firstName = modifiedEntry.firstName;
           teacher.lastName = modifiedEntry.lastName;
           teacher.task = modifiedEntry.task;
@@ -28,11 +29,5 @@ export class TeamService {
         });
         return team;
       });
-  }
-
-  convertTeacherToUrlId(teacher: Teacher) {
-    const convertedFirstName = UtilityService.convertStringToUrlId(teacher.firstName);
-    const convertedLastName = UtilityService.convertStringToUrlId(teacher.lastName);
-    return convertedFirstName + '-' + convertedLastName;
   }
 }

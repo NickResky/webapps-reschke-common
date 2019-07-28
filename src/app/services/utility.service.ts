@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { Teacher } from '../../../classes';
 
 export const UtilityService = {
     
@@ -55,6 +56,12 @@ export const UtilityService = {
         + date.getFullYear();
       return dateString;
   },
+
+  convertTeacherToUrlName(teacher: Teacher) {
+    const convertedFirstName = UtilityService.convertStringToUrlId(teacher.firstName);
+    const convertedLastName = UtilityService.convertStringToUrlId(teacher.lastName);
+    return convertedFirstName + '-' + convertedLastName;
+  }
 
   getRequiredElementsByList: (listShortId: string, zenkitCollections: any): any => {
     return UtilityService.getZenkitCollection(listShortId, zenkitCollections).requiredElements;

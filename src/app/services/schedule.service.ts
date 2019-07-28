@@ -17,7 +17,7 @@ export class ScheduleService {
 
   constructor() { }
 
-  getScheduleData (zenkitCollections: any, courses: CourseInformation[], teachers: Teacher[], locationData: LocationData) {
+  getScheduleData (zenkitCollections: any, courses: CourseInformation[], teachers: Teacher[], locations: Location[]) {
     const listShortId = zenkitCollections.schedule.shortId;
     return ZenkitDataService.getZenkitListData({
         listShortId: listShortId,
@@ -139,7 +139,6 @@ export class ScheduleService {
 
 
             const locationUuid = _.head(modifiedEntry.location);
-            const locations = [locationData.locationMG, locationData.locationLB];
             appointment.location = _.find(locations, (location: any) => {
                 return location.uuid === locationUuid;
             });

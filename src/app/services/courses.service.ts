@@ -37,10 +37,19 @@ export class CoursesService {
 
             const courseData = new CourseData();
             courseData.text = pricesEntry.description;
-            courseData.scheduleMG = _.head(scheduleMGEntry.file);
-            courseData.scheduleLB = _.head(scheduleLBEntry.file);
-            courseData.registrationChild = _.head(registrationChildEntry.file);
-            courseData.registrationAdult = _.head(registrationAdultEntry.file);
+            if (scheduleMGEntry) {
+                courseData.scheduleMG = _.head(scheduleMGEntry.file);
+            }
+            if (scheduleLBEntry) {
+                courseData.scheduleLB = _.head(scheduleLBEntry.file);
+            }
+            if (registrationChildEntry) {
+                courseData.registrationChild = _.head(registrationChildEntry.file);
+            }
+
+            if (registrationAdultEntry) {
+                courseData.registrationAdult = _.head(registrationAdultEntry.file);
+            }
 
             courseData.courses = _.map(courseEntries, (courseEntry) => {
                 const course = new CourseInformation();

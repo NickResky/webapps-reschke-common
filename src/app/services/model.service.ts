@@ -7,7 +7,7 @@ import { CoursesService } from './courses.service';
 import { StageService } from './stage.service';
 import { MainPageService } from './main-page.service';
 import { ScheduleService } from './schedule.service';
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import * as _ from 'lodash';
 import { ImprintService } from './imprint.service';
 import { BehaviorSubject } from 'rxjs';
@@ -29,6 +29,7 @@ import {
 } from '../../../classes';
 import { ZenkitCollectionsService } from './zenkit-collections.service';
 import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
+import { UtilityService } from './utility.service';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,7 @@ export class ModelService {
     performancesData: Promise<Performance[]>|undefined;
     teamData: Promise<Teacher[]>|undefined;
     locationData: Promise<LocationData>|undefined;
+    locations: Promise<Location[]>|undefined;
     imprintData: Promise<Imprint[]>|undefined;
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
@@ -53,6 +55,7 @@ export class ModelService {
     // });
 
     constructor(
+        @Inject(PLATFORM_ID) private platformId: Object,
         private zenkitCollectionsConfig: ZenkitCollectionsService,
         private mainPageService: MainPageService,
         private stageService: StageService,
@@ -69,8 +72,8 @@ export class ModelService {
     }
 
     isPlatformBrowser() {
-        return true;
-        //return isPlatformBrowser(this.platformId);
+        // return true;
+        return isPlatformBrowser(this.platformId);
     }
 
     isPageLoaded() {
@@ -139,11 +142,11 @@ export class ModelService {
 
     getScheduleData() {
         if (_.isNil(this.scheduleData)) {
-            return Promise.all([this.getCourses(), this.getTeam(), this.getLocationData()]).then((result: any) => {
+            return Promise.all([this.getCourses(), this.getTeam(), this.getLocations()]).then((result: any) => {
                 const courses: CourseInformation[] = _.get(result[0], ['courses']);
                 const teachers: Teacher[] = result[1];
-                const locationData: LocationData = result[2];
-                this.scheduleData = this.scheduleService.getScheduleData(this.zenkitCollectionsConfig, courses, teachers, locationData);
+                const locations: Location[] = result[2];
+                this.scheduleData = this.scheduleService.getScheduleData(this.zenkitCollectionsConfig, courses, teachers, locations);
                 return this.scheduleData;
             });
         }
@@ -162,19 +165,38 @@ export class ModelService {
         });
     }
 
-    getTeacherByUrlId(urlId: string) {
+    getTeacherByUrlName(urlName: string) {
         return this.getTeam().then((team) => {
             const teacher = _.find(team, (t: Teacher) => {
-                const teacherUrlId = this.teamService.convertTeacherToUrlId(t);
-                return teacherUrlId === urlId;
+                const teacherUrlName = UtilityService.convertTeacherToUrlName(t);
+                return teacherUrlName === urlName;
+            });
+            return teacher;
+        });
+    }
+
+    getTeacherByShortId(shortId: string) {
+        return this.getTeam().then((teachers: Teacher[]) => {
+            const teacher = _.find(teachers, (t: Teacher) => {
+                return t.shortId === shortId;
             });
             return teacher;
         });
     }
 
     convertTeacherToUrlId(teacher: Teacher) {
-        return this.teamService.convertTeacherToUrlId(teacher);
-      }
+        return UtilityService.convertTeacherToUrlName(teacher);
+    }
+
+    getLocations(): Promise<Location[]> {
+        if (_.isNil(this.locations)) {
+            this.locations = this.locationsService.getLocations(this.zenkitCollectionsConfig);
+            return this.locations;
+        }
+        return new Promise((resolve, reject) => {
+            return resolve(this.locations);
+        });
+    }
 
     getLocationData(): Promise<LocationData> {
         if (_.isNil(this.locationData)) {
@@ -187,19 +209,17 @@ export class ModelService {
     }
 
     getLocationByInitials(initials: string) {
-        return this.getLocationData().then((locationData: LocationData) => {
-            if (initials === 'MG') {
-                return locationData.locationMG;
-            } else if (initials === 'LB') {
-                return locationData.locationLB;
-            }
-            return undefined;
+        return this.getLocations().then((locations: Location[]) => {
+            const location = _.find(locations, (l: Location) => {
+                return l.initials === initials;
+            });
+            return location;
         });
     }
 
     getLocationByShortId(shortId: string) {
-        return this.getLocationData().then((locationData: LocationData) => {
-            const location = _.find(locationData.allLocations, (l: any) => {
+        return this.getLocations().then((locations: Location[]) => {
+            const location = _.find(locations, (l: Location) => {
                 return l.shortId === shortId;
             });
             return location;

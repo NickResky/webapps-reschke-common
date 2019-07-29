@@ -4,4 +4,6 @@ import { Injectable } from "@angular/core";
 export class ZenkitCollectionsService {
   apiUrl: string = "";
   applicationIdentifier: ApplicationIdentifier = ApplicationIdentifier.UNDEFINED;
+  home: any;
+  current: any;
 }

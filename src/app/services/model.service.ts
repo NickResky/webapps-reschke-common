@@ -86,7 +86,7 @@ export class ModelService {
         return value;
     }
 
-    getMainPageSections(): Promise<MainPageData>|undefined {
+    getMainPageSections(): Promise<MainPageData> {
         if (_.isNil(this.mainPageData)) {
             this.mainPageData = this.mainPageService.getMainPageSections(this.zenkitCollectionsConfig);
             return this.mainPageData;
@@ -100,7 +100,9 @@ export class ModelService {
         if (_.isNil(this.blogPostsData)) {
             this.blogPostsData = this.currentService.getPosts(this.zenkitCollectionsConfig);
         }
-        return this.blogPostsData;
+        return new Promise((resolve, reject) => {
+            return resolve(this.blogPostsData);
+        });
     }
 
     getPostByShortId(shortId: string): Promise<BlogPost> {

@@ -1,0 +1,131 @@
+.main-content-container {
+    //background-color: #ffffff;        
+    .blog-posts {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        .post-container {   
+            //color: #303030;
+            padding-bottom: 50px;        
+            .post {
+                .post-image-container {
+                    display: block;
+                    height: 300px;
+                    background-size: cover;
+                    background-position: center;
+                    background-color: $border-color-dark-2;
+                    @include flexbox();
+                    @include flex-direction(row);
+                    align-content: center;
+                    align-items: center;
+                    text-align: center;
+                    justify-content: center;
+                    .default-icon {
+                        width: 40px;
+                        height: 100px;
+                        background-image: url("../../../resources/Logo.png"); //no-repeat;
+                        background-size: 100% 100%;
+                    }
+                }
+                .post-date {
+                    margin-top: 30px;
+                    display: inline-block;
+                    font-size: 12px;
+                    padding: 0 10px;
+                    font-weight: 600;
+                    color: $main-background-color;
+                    background-color: $main-text-color; 
+                }
+                .post-heading {
+                    margin: 10px 0 5px 0;
+                    line-height: 30px;
+                }
+                .post-description-container {
+                    height: 150px;
+                    padding-bottom: 20px;
+                    text-overflow: ellipsis;
+                    position: relative;
+                    .post-description {
+                        height: 160px;
+                        overflow: hidden;
+                    }
+                    .post-description-overlay {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 75px;
+                        background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba($main-background-color,0)),color-stop(100%,$main-background-color));
+                        background: -webkit-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: -o-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: -ms-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: linear-gradient(to bottom,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                    }
+                }
+                .post-more-button {
+                    margin-top: 20px;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: $media-breakpoint-md) {
+    .main-content-container {
+        .blog-posts {
+            padding-top: 50px;
+            padding-bottom: 50px;        
+            @include flexbox();
+            @include flex-wrap(wrap);
+            .post-container {
+                opacity: 0;
+                animation-name: fade-in;
+                animation-delay: 1.3s;
+                animation-duration: 0.7s;
+                animation-timing-function: ease;
+                animation-fill-mode: forwards;
+                @include flexbox();
+                @include flex-direction(column);
+                padding-bottom: 0;
+                display: inline-block;
+                width: 49%;
+                border-bottom: 1px solid $border-color-dark-2;
+                .post {
+                    padding-bottom: 50px;
+                    padding-top: 50px;
+                }
+                &:nth-child(odd) {
+                    border-right: 1px solid $border-color-dark-2;          
+                    .post {
+                        padding-right: 50px;
+                    }
+                }
+                &:nth-child(even) {
+                    .post {
+                        padding-left: 50px;
+                    }
+                }
+                &:nth-child(-n+2) {
+                    .post {
+                        padding-top: 0;
+                    }
+                }
+                &:nth-last-child(-n+2) {
+                    border-bottom: none;            
+                    .post {
+                        padding-bottom: 0;            
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: $media-breakpoint-lg) {
+    .main-content-container {
+        .blog-posts {
+            max-width: $media-breakpoint-lg;
+            margin: 0 auto;
+        }
+    }
+}

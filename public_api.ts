@@ -7,7 +7,7 @@ export { CookiesNotificationComponent01 } from './src/app/angular-components/coo
 export { Footer01Component } from './src/app/school-common/angular-components/footer/footer.component';
 export { App01Component } from './src/app/angular-components/app-01/app-01.component';
 export { Navigation01Component } from './src/app/angular-components/navigation-01/navigation-01.component';
-
+export { PortfolioOverview01Component } from './src/app/angular-components/portfolio-overview-01/portfolio-overview-01.component';
 
 /* -------------- SERVICES ---------------*/
 

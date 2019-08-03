@@ -157,6 +157,20 @@
     }
 }
 
+@media (min-width: $media-breakpoint-sm) {
+    .main-content-container { 
+        .blog-posts {
+            .post-container { 
+                .post {
+                    .post-image-container {
+                        height: 150px
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (max-width: $media-breakpoint-md - 1) {
     .main-content-container { 
         .blog-posts {
@@ -209,9 +223,6 @@
                 @include childPostBorderBottomNone($portfolio-columns-medium); 
                 .post {
                     padding: 10px;
-                    .post-image-container {
-                        height: 150px
-                    }
                 }
             }
             &.showGrid {
@@ -239,9 +250,6 @@
                 @include childPostBorderBottomNone($portfolio-columns-large); 
                 .post {
                     padding: 20px;
-                    .post-image-container {
-                        height: 150px
-                    }
                 }
             }
             &.showGrid {

@@ -17,9 +17,10 @@ export class Navigation01Component implements OnInit {
   isMobileNavOpen = false;
   pageLoaded = false;
   pageInitiallyLoaded = false;
+  showLoadingAnimationAfterInitialLoad = false;
   pageIsHome = false;
   isBrowser = false;
-
+  
   constructor(
     private modelService: ModelService,
     private router: Router,
@@ -33,6 +34,7 @@ export class Navigation01Component implements OnInit {
     if (this.isBrowser) {
       this.pageLoaded = false;
       this.pageInitiallyLoaded = false;
+      this.showLoadingAnimationAfterInitialLoad = this.navigationConfig.showLoadingAnimationAfterInitialLoad;
     } else {
       this.pageLoaded = true;
       this.pageInitiallyLoaded = true;

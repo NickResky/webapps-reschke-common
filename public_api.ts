@@ -26,6 +26,7 @@ export { StageService } from './src/app/services/stage.service';
 export { TeamService } from './src/app/services/team.service';
 export { SeoService } from './src/app/services/seo.service';
 export { NavigationConfigService } from './src/app/services/navigation-config-service';
+export { PortfolioConfigService } from './src/app/services/portfolio-config-service';
 
 
 /* -------------- Constants / Enums ---------------*/
@@ -50,4 +51,5 @@ export { MainPageSectionTypes } from './src/app/constants/main-page-section-type
 export { ZenkitCollectionsConfig } from './src/app/constants/zenkit-collections-config';
 export { NavigationConfigType } from './src/app/school-common/classes/navigation-config-type';
 export { NavigationElement } from './src/app/school-common/classes/navigation-element';
+export { PortfolioConfigType } from './src/app/school-common/classes/portfolio-config-type';
 

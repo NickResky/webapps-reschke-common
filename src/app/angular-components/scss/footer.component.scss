@@ -10,13 +10,12 @@
             .footer-section {
                 text-align: center;
                 .footer-section-heading {
-                    font-size: 20px;
-                    font-weight: 600;
                     color: $main-text-color;
                     text-decoration: none;
                 }
                 .footer-section-content {
-                    font-size: 14px;
+                    font-size: $text-main-size;
+                    color: $text-02-color;
 
                     &.footer-section-content-social {
                         text-align: center;
@@ -25,7 +24,6 @@
                     .footer-section-content-link {
                         display: block;
                         text-decoration: none;
-                        color: $main-text-color;
                     }
                     .consultation-label {
                         &:hover {

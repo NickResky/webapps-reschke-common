@@ -1,29 +1,110 @@
+@mixin childPostPaddingLeftNone($nth) {
+    &:nth-child(#{$nth}n + 1) {
+        .post {
+          padding-left: 0
+        }
+    }
+}
+
+@mixin childPostPaddingRightNone($nth) {
+    &:nth-child(#{$nth}n + #{$nth}) {
+        .post {
+          padding-right: 0
+        }
+    }
+}
+
+@mixin childPostPaddingTopNone($nth) {
+    &:nth-child(-n + #{$nth}) {
+        .post {
+          padding-right: 0
+        }
+    }
+}
+
+@mixin childPostPaddingTopNone($nth) {
+    &:nth-child(#{$nth}n + 2) {
+        .post {
+          padding-top: 0
+        }
+    }
+}
+
+@mixin childPostBorderRightNone($nth) {
+    &:nth-child(#{$nth}n + #{$nth}) {
+        border-right: none;          
+    }
+}
+
+@mixin childPostBorderBottomNone($nth) {
+    &:nth-last-child(-n + #{$nth}) {
+        border-bottom: none;          
+    }
+}
+
+
 .main-content-container {
     //background-color: #ffffff;        
     .blog-posts {
-        padding-top: 20px;
         padding-bottom: 20px;
+        @include flexbox();
+        @include flex-wrap(wrap);
         .post-container {   
             //color: #303030;
-            padding-bottom: 50px;        
+            opacity: 0;
+            animation-name: fade-in;
+            animation-delay: 1.3s;
+            animation-duration: 0.7s;
+            animation-timing-function: ease;
+            animation-fill-mode: forwards;
+            @include flexbox();
+            @include flex-direction(column);
+            padding-bottom: 0;
+            display: inline-block;  
             .post {
                 .post-image-container {
+                    position: relative;
                     display: block;
-                    height: 300px;
-                    background-size: cover;
-                    background-position: center;
-                    background-color: $border-color-dark-2;
+                    height: 200px / $portfolio-columns-small;
                     @include flexbox();
-                    @include flex-direction(row);
+                    @include flex-direction(column);
                     align-content: center;
                     align-items: center;
                     text-align: center;
                     justify-content: center;
+                    .post-image {
+                        width: 100%;
+                        height: 100%;
+                        background-size: cover;
+                        background-position: center;
+                        background-color: $border-color-dark-2;
+                    }
                     .default-icon {
                         width: 40px;
                         height: 100px;
-                        background-image: url("../../../resources/Logo.png"); //no-repeat;
+                        // background-image: url("../../../resources/Logo.png"); //no-repeat;
                         background-size: 100% 100%;
+                    }
+                    .post-image-title-container {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        color: $main-text-color-on-dark-bg;
+                        opacity: 0;
+                        background-color: transparent;
+                        @include transition(
+                            background-color 0.3s ease,
+                            opacity 0.3s ease
+                        );
+                        @include flexbox();
+                        @include flex-direction(column);
+                        align-content: center;
+                        align-items: center;
+                        text-align: center;
+                        justify-content: center;
+                        .post-image-title {
+
+                        }
                     }
                 }
                 .post-date {
@@ -66,54 +147,49 @@
                     text-decoration: underline;
                 }
             }
+        }  
+        &.showGrid {
+            .post-container {        
+                border-right: 1px solid $main-text-color;
+                border-bottom: 1px solid $main-text-color;
+            }
+        }  
+    }
+}
+
+@media (max-width: $media-breakpoint-md - 1) {
+    .main-content-container { 
+        .blog-posts {
+            .post-container {
+                width: (100% / $portfolio-columns-small) - 1;
+                @include childPostPaddingLeftNone($portfolio-columns-small);
+                @include childPostPaddingRightNone($portfolio-columns-small);
+                @include childPostBorderRightNone($portfolio-columns-small);
+                @include childPostBorderBottomNone($portfolio-columns-small); 
+                .post {
+                    padding: 10px;
+                }
+            }
+            &.showGrid {
+                .post-container {         
+                    @include childPostBorderRightNone($portfolio-columns-small);
+                    @include childPostBorderBottomNone($portfolio-columns-small);
+                }
+            }  
         }
     }
 }
 
 @media (min-width: $media-breakpoint-md) {
-    .main-content-container {
+    .main-content-container { 
         .blog-posts {
-            padding-top: 50px;
-            padding-bottom: 50px;        
-            @include flexbox();
-            @include flex-wrap(wrap);
-            .post-container {
-                opacity: 0;
-                animation-name: fade-in;
-                animation-delay: 1.3s;
-                animation-duration: 0.7s;
-                animation-timing-function: ease;
-                animation-fill-mode: forwards;
-                @include flexbox();
-                @include flex-direction(column);
-                padding-bottom: 0;
-                display: inline-block;
-                width: 49%;
-                border-bottom: 1px solid $border-color-dark-2;
-                .post {
-                    padding-bottom: 50px;
-                    padding-top: 50px;
-                }
-                &:nth-child(odd) {
-                    border-right: 1px solid $border-color-dark-2;          
-                    .post {
-                        padding-right: 50px;
-                    }
-                }
-                &:nth-child(even) {
-                    .post {
-                        padding-left: 50px;
-                    }
-                }
-                &:nth-child(-n+2) {
-                    .post {
-                        padding-top: 0;
-                    }
-                }
-                &:nth-last-child(-n+2) {
-                    border-bottom: none;            
-                    .post {
-                        padding-bottom: 0;            
+            .post {
+                .post-image-container {
+                    .post-image-title-container {
+                        &:hover {
+                            background-color: rgba($main-background-color-dark, 0.8);
+                            opacity: 1;
+                        }
                     }
                 }
             }
@@ -121,11 +197,59 @@
     }
 }
 
+@media (max-width: $media-breakpoint-lg) and (min-width: $media-breakpoint-md) {
+    .main-content-container { 
+        .blog-posts {
+            padding-bottom: 50px;  
+            .post-container {
+                width: (100% / $portfolio-columns-medium) - 1;
+                @include childPostPaddingLeftNone($portfolio-columns-medium);
+                @include childPostPaddingRightNone($portfolio-columns-medium);
+                @include childPostBorderRightNone($portfolio-columns-medium);
+                @include childPostBorderBottomNone($portfolio-columns-medium); 
+                .post {
+                    padding: 10px;
+                    .post-image-container {
+                        height: 150px
+                    }
+                }
+            }
+            &.showGrid {
+                .post-container {         
+                    @include childPostBorderRightNone($portfolio-columns-medium);
+                    @include childPostBorderBottomNone($portfolio-columns-medium);
+                }
+            }  
+        }
+    }
+}
+
+
+
 @media (min-width: $media-breakpoint-lg) {
     .main-content-container {
         .blog-posts {
             max-width: $media-breakpoint-lg;
-            margin: 0 auto;
+            margin: 0 auto;     
+            .post-container {
+                width: (100% / $portfolio-columns-large) - 1;
+                @include childPostPaddingLeftNone($portfolio-columns-large);
+                @include childPostPaddingRightNone($portfolio-columns-large);
+                @include childPostBorderRightNone($portfolio-columns-large);
+                @include childPostBorderBottomNone($portfolio-columns-large); 
+                .post {
+                    padding: 20px;
+                    .post-image-container {
+                        height: 150px
+                    }
+                }
+            }
+            &.showGrid {
+                .post-container {         
+                    @include childPostBorderRightNone($portfolio-columns-large);
+                    @include childPostBorderBottomNone($portfolio-columns-large);
+                }
+            }  
         }
     }
 }

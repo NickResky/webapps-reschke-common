@@ -1,3 +1,4 @@
+import { PortfolioConfigService } from './../../services/portfolio-config-service';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
 import { ModelService } from './../../services/model.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +18,8 @@ export class PortfolioOverview01Component implements OnInit {
 
   constructor(
     private modelService: ModelService,
-    private zenkitCollectionsConfig: ZenkitCollectionsService
+    private zenkitCollectionsConfig: ZenkitCollectionsService,
+    private portfolioConfig: PortfolioConfigService
   ) {
 
   }

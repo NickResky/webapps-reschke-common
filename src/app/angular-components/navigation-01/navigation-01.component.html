@@ -1,4 +1,4 @@
-<div class="navbar-container">
+<div class="navbar-container" [ngClass]="[navigationConfig.displaySecondRow ? 'showSecondRow' : '']">
   <div class="loading-animation-container" *ngIf="isBrowser">
     <div class="loader-container" [ngClass]="[pageLoaded ? 'hide' : '']">
       <div class="loader-circle"></div>
@@ -9,7 +9,7 @@
     <div class="logo-container" [ngClass]="[pageLoaded ? 'show' : '', isApplicationYW() ? 'background-active' : '']">
       <div class="logo-container-inner">  
         <div class="logo" routerLink="/" *ngIf="isApplicationTTH()"></div>
-        <div class="logo" routerLink="/" *ngIf="isApplicationYW()" [innerHTML]='navigationConfig.titleHtml'></div>
+        <div class="logo" routerLink="/" *ngIf="!isApplicationTTH()" [innerHTML]='navigationConfig.titleHtml'></div>
       </div>
     </div>
     <!-- <div class="logo-container" *ngIf="!pageIsHome">
@@ -29,12 +29,17 @@
           </div>
         </div>
       </div>
-      <div class="navbar-menu-icon-container" (click)="toggleMobileNav()" *ngIf="isBrowser">
+      <div class="navbar-menu-icon-container" (click)="toggleMobileNav()" *ngIf="isBrowser && navigationConfig.displayMenuIcon">
         <div class="navbar-menu-icon">
           <div class="bar bar1"></div>
           <div class="bar bar2"></div>
           <div class="bar bar3"></div>
         </div>
+      </div>
+      <div class="navbar-second-row" *ngIf="navigationConfig.displaySecondRow" [ngClass]="[pageLoaded ? 'show' : '']">
+        <a class="navbar-second-row-element" *ngFor="let element of navigationConfig.navigationElements" [routerLink]="element.routerLink" [ngClass]="[element.isActive ? 'isActive': '']">
+          {{element.title}}
+        </a>
       </div>
       <div class="navbar-page-overlay" [ngClass]="isMobileNavOpen === true ? 'show': ''" (click)="closeMobileNav()">
 

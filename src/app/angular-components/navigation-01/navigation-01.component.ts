@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModelService } from '../../services/model.service';
 import { ApplicationIdentifier } from '../../constants/application-identifier';
 import { NavigationConfigService } from '../../services/navigation-config-service';
+import _ = require('lodash');
 
 
 @Component({
@@ -50,6 +51,13 @@ export class Navigation01Component implements OnInit {
 
     this.router.events.subscribe((evt: any) => {
       this.pageIsHome = evt.url === '/';
+
+      // reset
+      this.navigationConfig.navigationElements = _.map(this.navigationConfig.navigationElements, (el) => {
+        return { ...el, isActive: el.routerLink === evt.url }
+      });
+
+
     });
   }
 
@@ -71,6 +79,10 @@ export class Navigation01Component implements OnInit {
 
   isApplicationTTH() {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.TTH;
+  }
+
+  isApplicationSS() {
+    return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.SS;
   }
 
 }

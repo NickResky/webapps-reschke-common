@@ -5,13 +5,13 @@ import 'rxjs/Rx';
 export const ZenkitDataService = {
 
     // production
+    apiToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo5NzV9LCJpYXQiOjE1MzIxODU2MzR9.Y1F0166g5qikaEqXWWvOoLOkeRzA7ACm_E4XVOzBB70',
     apiUrl: 'https://zenkit.com/api/v1/',
     headers: {
-      'content-type': 'application/json; charset=UTF-8'
+      'content-type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo5NzV9LCJpYXQiOjE1MzIxODU2MzR9.Y1F0166g5qikaEqXWWvOoLOkeRzA7ACm_E4XVOzBB70'
     },
     useLocalStorage: false,
-    // development
-    // apiUrl = 'https://localhost:9000/api/v1/';
   
     // Only necessary if zenkit collection is not public
     // TODO: Remove before release

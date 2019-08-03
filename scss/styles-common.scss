@@ -44,6 +44,7 @@ a {
 
 .main-content-container {
     color: $main-text-color;
+    min-height: calc(100% - 150px);
 }
 
 .main-content-container-padding {
@@ -52,7 +53,7 @@ a {
 }
 
 .main-content-navbar-spacer {
-    margin-top: 80px;
+    margin-top: $header-height + 20px;
 }
 
 .main-title, .title-medium {
@@ -60,6 +61,15 @@ a {
     font-size: 1.9em;
     line-height: 1.4em;
     text-transform: uppercase;
+}
+
+.wrc-heading-01 {
+    font-weight: $heading-01-font-weight;
+}
+
+.wrc-heading-02 {
+    font-weight: $heading-02-font-weight;
+    font-size: $heading-02-font-size;
 }
 
 .tth-button {
@@ -87,6 +97,12 @@ a {
     top: 0;
     height: 100%;
     width: 100%;
+}
+
+.link {
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 /*************

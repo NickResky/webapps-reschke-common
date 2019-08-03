@@ -1,3 +1,4 @@
+import { PortfolioOverview01Component } from './angular-components/portfolio-overview-01/portfolio-overview-01.component';
 import { App01Component } from './angular-components/app-01/app-01.component';
 import { Footer01Component } from './school-common/angular-components/footer/footer.component';
 import { NgModule,Injectable } from '@angular/core';
@@ -17,7 +18,8 @@ import { CookiesNotificationComponent01 } from './angular-components/cookies-not
         Footer01Component,
         App01Component,
         Navigation01Component,
-        CookiesNotificationComponent01
+        CookiesNotificationComponent01,
+        PortfolioOverview01Component
     ], 
     exports: [
         PluginComponent,

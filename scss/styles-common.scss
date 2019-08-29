@@ -44,7 +44,14 @@ a {
 
 .main-content-container {
     color: $main-text-color;
+}
+
+.main-content-container-min-height {
     min-height: calc(100% - 150px);
+}
+
+.main-content-container-padding-bottom {
+    padding-bottom: 50px;
 }
 
 .main-content-container-padding {
@@ -61,6 +68,10 @@ a {
     font-size: 1.9em;
     line-height: 1.4em;
     text-transform: uppercase;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .wrc-heading-01 {

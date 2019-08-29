@@ -1,3 +1,5 @@
+import { FooterLink } from './../../classes/footer-link';
+import { FooterConfigService } from './../../../services/footer-config-service';
 import { ApplicationIdentifier } from './../../../constants/application-identifier';
 import { ZenkitCollectionsService } from './../../../services/zenkit-collections.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,7 +23,8 @@ export class Footer01Component implements OnInit {
 
   constructor(
     private modelService: ModelService,
-    private zenkitCollectionsConfig: ZenkitCollectionsService
+    private zenkitCollectionsConfig: ZenkitCollectionsService,
+    private footerConfig: FooterConfigService
   ) { }
 
   ngOnInit() {
@@ -42,12 +45,23 @@ export class Footer01Component implements OnInit {
     });
   }
 
+  getSocialLink(link: FooterLink) {
+    if (link.isEmail) {
+      // return 'mailto:' + link.link 
+    }
+    return link.link;
+  }
+
   isApplicationYW() {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.YW;
   }
 
   isApplicationTTH() {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.TTH;
+  }
+
+  isApplicationSS() {
+    return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.SS;
   }
 
 }

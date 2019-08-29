@@ -46,14 +46,13 @@
 .main-content-container {
     //background-color: #ffffff;        
     .blog-posts {
-        padding-bottom: 20px;
         @include flexbox();
         @include flex-wrap(wrap);
         .post-container {   
             //color: #303030;
             opacity: 0;
             animation-name: fade-in;
-            animation-delay: 1.3s;
+            animation-delay: 1s;
             animation-duration: 0.7s;
             animation-timing-function: ease;
             animation-fill-mode: forwards;
@@ -175,7 +174,7 @@
     .main-content-container { 
         .blog-posts {
             .post-container {
-                width: (100% / $portfolio-columns-small) - 1;
+                width: (100% / $portfolio-columns-small);
                 @include childPostPaddingLeftNone($portfolio-columns-small);
                 @include childPostPaddingRightNone($portfolio-columns-small);
                 @include childPostBorderRightNone($portfolio-columns-small);
@@ -214,9 +213,8 @@
 @media (max-width: $media-breakpoint-lg) and (min-width: $media-breakpoint-md) {
     .main-content-container { 
         .blog-posts {
-            padding-bottom: 50px;  
             .post-container {
-                width: (100% / $portfolio-columns-medium) - 1;
+                width: (100% / $portfolio-columns-medium);
                 @include childPostPaddingLeftNone($portfolio-columns-medium);
                 @include childPostPaddingRightNone($portfolio-columns-medium);
                 @include childPostBorderRightNone($portfolio-columns-medium);
@@ -243,7 +241,7 @@
             max-width: $media-breakpoint-lg;
             margin: 0 auto;     
             .post-container {
-                width: (100% / $portfolio-columns-large) - 1;
+                width: (100% / $portfolio-columns-large);
                 @include childPostPaddingLeftNone($portfolio-columns-large);
                 @include childPostPaddingRightNone($portfolio-columns-large);
                 @include childPostBorderRightNone($portfolio-columns-large);

@@ -1,5 +1,5 @@
-<div class="footer-container" *ngIf="footerContentLoaded && mainPageContentLoaded">
-  <div class="footer">
+<div class="footer-container main-content-container main-content-container-padding" *ngIf="footerContentLoaded && mainPageContentLoaded" [ngClass]="[footerConfig.displayBorderLine ? 'display-border-line' : '', footerConfig.displayBackgroundColor ? 'display-background-color' : '', mainPageContentLoaded ? 'page-loaded' : '']">
+  <div class="footer main-content">
     <div class="footer-section-container">
       <div class="footer-section footer-section-contact">
         <div class="footer-section-heading wrc-heading-02">
@@ -31,6 +31,16 @@
       </div>
     </div>
     <div class="footer-section-container">
+      <div class="footer-section footer-section-social" *ngIf="contact && isApplicationSS()">
+        <div class="footer-section-heading" *ngIf="footerConfig.displayMiddleColumnTitle">
+            {{footerConfig.middleColumnTitle}}
+        </div>
+        <div class="footer-section-content footer-section-content-social">
+          <a *ngFor="let link of footerConfig.links" class="footer-section-content-link-icon" [href]="getSocialLink(link)" [ngClass]="footerConfig.displaySmallLinkIcons ? 'small-icon' : ''" title='{{link.title}}'>
+            <i class="fa-3x" [ngClass]="link.iconClass"></i>
+          </a>
+        </div>
+      </div>
       <div class="footer-section footer-section-social" *ngIf="contact && isApplicationTTH()">
         <div class="footer-section-heading">
             Social Media

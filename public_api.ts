@@ -8,6 +8,7 @@ export { Footer01Component } from './src/app/school-common/angular-components/fo
 export { App01Component } from './src/app/angular-components/app-01/app-01.component';
 export { Navigation01Component } from './src/app/angular-components/navigation-01/navigation-01.component';
 export { PortfolioOverview01Component } from './src/app/angular-components/portfolio-overview-01/portfolio-overview-01.component';
+export { PortfolioEntry01Component } from './src/app/angular-components/portfolio-entry-01/portfolio-entry-01.component';
 
 /* -------------- SERVICES ---------------*/
 
@@ -27,6 +28,7 @@ export { TeamService } from './src/app/services/team.service';
 export { SeoService } from './src/app/services/seo.service';
 export { NavigationConfigService } from './src/app/services/navigation-config-service';
 export { PortfolioConfigService } from './src/app/services/portfolio-config-service';
+export { FooterConfigService } from './src/app/services/footer-config-service';
 
 
 /* -------------- Constants / Enums ---------------*/
@@ -52,4 +54,6 @@ export { ZenkitCollectionsConfig } from './src/app/constants/zenkit-collections-
 export { NavigationConfigType } from './src/app/school-common/classes/navigation-config-type';
 export { NavigationElement } from './src/app/school-common/classes/navigation-element';
 export { PortfolioConfigType } from './src/app/school-common/classes/portfolio-config-type';
+export { FooterLink } from './src/app/school-common/classes/footer-link';
+
 

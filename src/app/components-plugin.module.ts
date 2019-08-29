@@ -1,3 +1,4 @@
+import { PortfolioEntry01Component } from './angular-components/portfolio-entry-01/portfolio-entry-01.component';
 import { PortfolioOverview01Component } from './angular-components/portfolio-overview-01/portfolio-overview-01.component';
 import { App01Component } from './angular-components/app-01/app-01.component';
 import { Footer01Component } from './school-common/angular-components/footer/footer.component';
@@ -7,11 +8,14 @@ import { PluginComponent } from './plugin.component';
 import { Navigation01Component } from './angular-components/navigation-01/navigation-01.component';
 import { RouterModule } from '@angular/router';
 import { CookiesNotificationComponent01 } from './angular-components/cookies-notification/cookies-notification.component';
+import {CrystalGalleryModule} from 'ngx-crystal-gallery';
+import { ImageGalleryComponent } from './angular-components/image-gallery/image-gallery.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        CrystalGalleryModule
     ],
     declarations: [
         PluginComponent,
@@ -19,7 +23,9 @@ import { CookiesNotificationComponent01 } from './angular-components/cookies-not
         App01Component,
         Navigation01Component,
         CookiesNotificationComponent01,
-        PortfolioOverview01Component
+        PortfolioOverview01Component,
+        PortfolioEntry01Component,
+        ImageGalleryComponent
     ], 
     exports: [
         PluginComponent,

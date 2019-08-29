@@ -1,11 +1,28 @@
 .footer-container {
-    background-color: $footer-background-color;
+    opacity: 0;
+    &.page-loaded {
+        animation-name: fade-in;
+        animation-delay: 1s;
+        animation-duration: 0.7s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+    &.display-background-color {
+        background-color: $footer-background-color;
+    }
+    &.display-border-line {
+        .footer {
+            border-top: 1px solid $text-02-color;
+        }
+    }
     .footer {
         overflow: hidden;
         bottom: 0; /* Position the navbar at the top of the page */
         width: 100%; /* Full width */
         z-index: 10;
         color: $main-text-color;
+        padding-top: 20px;
+        padding-bottom: 30px;
         .footer-section-container {
             .footer-section {
                 text-align: center;
@@ -42,20 +59,32 @@
                     .footer-section-content-link-icon {
                         display: inline-block;
                         text-decoration: none;
-                        color: $main-text-color;
+                        color: $text-02-color;
                         margin: 10px;
                         position: relative;
                         width: 40px;
                         height: 40px;
                         padding: 10px;
                         @include border-radius(30px);
-                        border: 1px solid $main-text-color;
+                        border: 1px solid $text-02-color;
                         i {
                             position: absolute;
                             font-size: 30px;
                             width: 40px;
                             left: 10px;
                             top: 13px;
+                        }
+                        &.small-icon {
+                            width: 25px;
+                            height: 25px;
+                            padding: 5px;
+                            margin: 5px;
+                            i {
+                                font-size: 20px;
+                                width: 25px;
+                                left: 5px;
+                                top: 8px;
+                            }
                         }
                     }
                     .footer-section-content-break {
@@ -79,11 +108,17 @@
     }
 }
 
+.page-loaded {
+    .footer-container {
+        opacity: 1;
+    }
+}
+
 @media (min-width: $media-breakpoint-md) {
     .footer-container {
-        padding: 50px;
         .footer {
-            max-width: $media-breakpoint-md;
+            padding-top: 50px;
+            padding-bottom: 50px;
             margin: 0 auto;
             @include flexbox();
             .footer-section-container {
@@ -106,19 +141,6 @@
                     &.footer-section-legal {
                         padding-left: 50px;
                     }
-                }
-            }
-        }
-    }
-}
-
-@media (min-width: $media-breakpoint-lg) {
-    .footer-container {
-        .footer {
-            max-width: $media-breakpoint-lg;
-            .footer-section-container {
-                .footer-section {
-
                 }
             }
         }

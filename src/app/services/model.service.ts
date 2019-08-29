@@ -48,6 +48,7 @@ export class ModelService {
     imprintData: Promise<Imprint[]>|undefined;
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
+    appWidth = new BehaviorSubject<number>(0);
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -83,6 +84,15 @@ export class ModelService {
 
     setPageLoaded(value: boolean) {
         this.pageLoaded.next(value);
+        return value;
+    }
+
+    getAppWidth() {
+        return this.appWidth;
+    }
+
+    setAppWidth(value: number) {
+        this.appWidth.next(value);
         return value;
     }
 

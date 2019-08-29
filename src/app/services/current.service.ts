@@ -33,8 +33,8 @@ export class CurrentService {
                 '/blog/' +
                 blogPost.shortId +
                 '/' +
-                UtilityService.convertStringToUrlId(blogPost.title) +
-                '/' +
+                UtilityService.convertStringToUrlId(blogPost.title) 
+                + '/' +
                 UtilityService.convertStringToUrlId(dateString);
             } else {
               blogPost.routerLink = '/blog/' + blogPost.shortId;

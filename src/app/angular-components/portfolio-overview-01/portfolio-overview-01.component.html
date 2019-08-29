@@ -1,14 +1,14 @@
 <!-- <app-header-image *ngIf="backgroundImage" [image]='backgroundImage' [listId]='mainPageListShortId' title='Aktuelles'></app-header-image> -->
-<div class="main-content-container main-content-container-padding main-content-navbar-spacer">
+<div class="main-content-container main-content-container-padding main-content-navbar-spacer main-content-container-min-height main-content-container-padding-bottom">
   <div class="blog-posts main-content" [ngClass]="portfolioConfig.overview.displayGrid ? 'showGrid': ''">
     <div *ngFor="let post of posts" class="post-container">
       <div class="post">
-        <a class="post-image-container" [routerLink]="post.routerLink">
+        <a class="post-image-container" [routerLink]="['/blog' , post.shortId]">
           <div class="post-image" [ngStyle]="getPostImageBackgroundStyle(post)" *ngIf="post.images && post.images.length > 0">
 
           </div>
             <i class="default-icon" *ngIf="!post.images || post.images.length === 0"></i>
-            <div [routerLink]="post.routerLink" class="post-image-title-container">
+            <div [routerLink]="['/blog' , post.shortId]" class="post-image-title-container">
               <h2 [innerHTML]='post.title' class="post-image-title wrc-heading-02"></h2>
             </div>
         </a>

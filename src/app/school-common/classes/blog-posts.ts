@@ -1,9 +1,10 @@
 export class BlogPost {
-    shortId: string|undefined;
-    title: string|undefined;
-    description: string|undefined;
-    images: string[]|undefined;
-    youtubeVideoId: string|undefined;
-    date: Date|undefined;
-    routerLink: string|undefined;
+    shortId: string;
+    title: string;
+    description: string;
+    images: string[];
+    youtubeVideoId: string;
+    date: Date;
+    routerLink: string;
+    isHovered: boolean;
 }

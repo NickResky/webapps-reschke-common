@@ -1,12 +1,10 @@
 <div class="blog-post-details main-content-container main-content-container-padding main-content-navbar-spacer" *ngIf="blogPost">
     <div class="blog-post-details-content main-content">
         <h1 class="post-title wrc-heading-02">{{blogPost.title}}</h1>
-        <!-- <crystal-gallery [images]="myImages" [config]="myConfig"></crystal-gallery>
-        <crystal-gallery [images]="allImages" [config]="galleryConfig"></crystal-gallery> -->
-        <wrc-image-gallery></wrc-image-gallery>
-        <!-- <app-image-slider [images]='blogPost.images' [listid]='currentListShortId' *ngIf="blogPost.images && blogPost.images.length > 0"></app-image-slider> -->
+        <wrc-image-gallery [images]='currentProjectImages' [showMainImage]='true'></wrc-image-gallery>
         <div class="post-description" [innerHTML]="blogPost.description"></div>
         <!-- <div class="post-date">gepostet am {{getDateStringLong()}}</div> -->
-        <!-- <iframe class="blog-post-details-video" *ngIf="blogPost.youtubeVideoId" [src]="getYoutubeLink()" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+        <h1 class="post-title wrc-heading-02">Weitere Projekte</h1>
+        <wrc-image-gallery [images]='projectImages'></wrc-image-gallery>
     </div>
 </div>

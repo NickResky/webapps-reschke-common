@@ -1,11 +1,12 @@
 import { PortfolioConfigService } from './../../services/portfolio-config-service';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
 import { ModelService } from './../../services/model.service';
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, HostListener, Input } from '@angular/core';
 import * as _ from 'lodash';
 import 'rxjs/Rx';
 import { BlogPost } from '../../../../classes';
 import { UtilityService } from '../../../../services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wrc-image-gallery',
@@ -14,9 +15,12 @@ import { UtilityService } from '../../../../services';
 })
 export class ImageGalleryComponent implements OnInit {
 
+  @Input() images: any;
+  @Input() showMainImage: any;
   posts: BlogPost[];
   mainImageHeight = 0;
   mainPost: BlogPost;
+  mainImage: any;
   galleryContainerWidth: number = 0;
   slideGalleryContainerHeight = 0;
   appWidth: number = 500;
@@ -30,7 +34,9 @@ export class ImageGalleryComponent implements OnInit {
   sliderShowPrevButton = false;
   sliderShowNextButton = true;
   sliderPageIndex = 0;
-
+  private sub: any;
+  isBrowser: boolean;
+  mouseOverStartTime: number;
 
   @ViewChild('gallerycontainerelement') galleryContainerElement: ElementRef;
 
@@ -38,19 +44,26 @@ export class ImageGalleryComponent implements OnInit {
     private modelService: ModelService,
     private zenkitCollectionsConfig: ZenkitCollectionsService,
     private portfolioConfig: PortfolioConfigService,
-    private rd: Renderer2
+    private rd: Renderer2,
+    private route: ActivatedRoute
   ) {
 
   }
 
   ngOnInit() {
-    this.modelService.setPageLoaded(false);
+    this.findMainImage();
 
+    this.isBrowser = this.modelService.isPlatformBrowser();
     Promise.all([this.modelService.getPosts()]).then((results: any) => {
-      this.posts = results[0];
-      this.modelService.setPageLoaded(true);
-      this.mainPost = _.head(this.posts);
       this.updateGallery();
+    });
+
+    this.sub = this.route.params.subscribe(params => { 
+      if (this.isBrowser) {
+        setTimeout(() => {
+          this.findMainImage();
+        }, 200);
+      }
     });
   }
 
@@ -67,11 +80,21 @@ export class ImageGalleryComponent implements OnInit {
     this.modelService.getAppWidth().subscribe(
       (x) => {
         this.appWidth = x;
+        this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
+        console.log("gallery width: " + this.galleryContainerWidth);
+        this.updateGallery();
       }
     );
+  }
 
-    this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
-    console.log("gallery width: " + this.galleryContainerWidth);
+  findMainImage() {
+    this.mainImage = _.find(this.images, {
+      isActive: true
+    });
+
+    if (_.isNil(this.mainImage)) {
+      this.mainImage = _.head(this.images);
+    }
   }
 
   updateGallery() {
@@ -87,13 +110,13 @@ export class ImageGalleryComponent implements OnInit {
     this.slideGalleryContainerHeight = this.sliderImageHeight * 1.3;
     this.sliderImagePaddingTop = (this.slideGalleryContainerHeight - this.sliderImageHeight) / 2;
 
-    if (this.sliderFirstImageIndex < (this.posts.length % this.sliderImageShowCount)) {
+    if (this.sliderFirstImageIndex < this.sliderImageShowCount) {
       this.sliderShowPrevButton = false;
     } else {
       this.sliderShowPrevButton = true;
     }
 
-    if (this.posts.length - this.sliderFirstImageIndex < this.sliderImageShowCount) {
+    if (this.images.length - this.sliderFirstImageIndex < this.sliderImageShowCount) {
       this.sliderShowNextButton = false;
     } else {
       this.sliderShowNextButton = true;
@@ -104,57 +127,50 @@ export class ImageGalleryComponent implements OnInit {
     return UtilityService.getFileSrc(_.get(file, ['shortId']), this.zenkitCollectionsConfig.current.shortId);
   }
 
-  getBackgroundStyle(image: string, post: BlogPost) {
+  getBackgroundStyle(image: any) {
     let height;
-    if (post.isHovered) {
+    if (image.isHovered) {
       height = '100%';
     } else {
       height = this.sliderImageHeight + 'px';
     }
     return {
-      'background-image': 'url(' + this.getFileSrc(image) + ')',
+      'background-image': 'url(' + this.getFileSrc(image.imageData) + ')',
       'height': height,
     };
   }
 
-  getImageBackgroundUrl(post: BlogPost) {
-    const mainImageString = _.head(_.get(post, ['images']));
-
-    return 'url(' + this.getFileSrc(mainImageString) + ')';
-  }
-
-  getPostImageBackgroundStyle(post: BlogPost) {
-    const image = _.head(post.images);
-    return this.getBackgroundStyle(image, post);
+  getImageBackgroundUrl(image: any) {
+    return 'url(' + this.getFileSrc(image.imageData) + ')';
   }
 
   getDateStringLong(date: Date) {
     return UtilityService.convertDateToStringLong(date);
   }
 
-  postMouseEnter(post: BlogPost) {
-    const currentPost = _.find(this.posts,  {
-      shortId: post.shortId
+  postMouseEnter(image: any) {
+    this.mouseOverStartTime = Date.now();
+    const currentImage = _.find(this.images,  {
+      shortId: image.shortId
     });
-    const postIndex = _.findIndex(this.posts, {
-      shortId: post.shortId
+    const imageIndex = _.findIndex(this.images, {
+      shortId: image.shortId
     });
     if (this.appWidth < 576) {
 
     } else {
-      if (postIndex % this.sliderImageShowCount != 0) {
+      if (imageIndex % this.sliderImageShowCount != 0) {
         this.sliderPostHoveredCenter = true;
       }
     }
-    currentPost.isHovered = true;
-    
+    currentImage.isHovered = true;
   }
 
-  postMouseLeave(post: BlogPost) {
-    const currentPost = _.find(this.posts,  {
-      shortId: post.shortId
+  postMouseLeave(image: any) {
+    const currentImage = _.find(this.images,  {
+      shortId: image.shortId
     });
-    currentPost.isHovered = false;
+    currentImage.isHovered = false;
     this.sliderPostHoveredCenter = false;
   }
 
@@ -168,5 +184,9 @@ export class ImageGalleryComponent implements OnInit {
     this.sliderFirstImageIndex = this.sliderFirstImageIndex - this.sliderImageShowCount;
     this.sliderPageIndex--;
     this.updateGallery();
+  }
+
+  updateMainImage(image: any) {
+    this.mainImage = image;
   }
 }

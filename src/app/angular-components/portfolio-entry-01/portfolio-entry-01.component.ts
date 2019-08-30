@@ -31,6 +31,8 @@ export class PortfolioEntry01Component implements OnInit {
   ];
 
   allImages: any;
+  currentProjectImages: any;
+  projectImages: any;
   
   myConfig = {
     masonry: true,
@@ -69,25 +71,24 @@ export class PortfolioEntry01Component implements OnInit {
           this.modelService.getPosts()
         ]).then((results) => {
           this.blogPost = results[0];
-          this.myImages = _.map(this.blogPost.images, (image) => {
-            return {
-              preview: this.getFileSrc(image),
-              full: this.getFileSrc(image),
-              width: 300, // used for masonry
-              height: 300 // used for masonry
-            }
-          });
-
           const allPosts = results[1];
-          this.allImages = _.map(allPosts, (post) => {
+
+          this.currentProjectImages = _.map(this.blogPost.images, (image: any) => {
             return {
-              preview: this.getFileSrc(_.head(post.images)) + '/convert?h=100',
-              full: this.getFileSrc(_.head(post.images)),
-              // width: 200, // used for masonry
-              // height: 100 // used for masonry
+              imageData: image,
+              shortId: image.shortId
             }
           });
 
+          this.projectImages = _.map(allPosts, (post) => {
+            const firstImageData: any = _.head(post.images);
+            return {
+              imageData: firstImageData,
+              shortId: firstImageData.shortId,
+              routerLink: '/blog/' + post.shortId,
+              title: post.title
+            }
+          });
           this.modelService.setPageLoaded(true);
         });
       }

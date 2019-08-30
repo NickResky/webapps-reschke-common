@@ -8,7 +8,7 @@
 
           </div>
             <i class="default-icon" *ngIf="!post.images || post.images.length === 0"></i>
-            <div [routerLink]="['/blog' , post.shortId]" class="post-image-title-container">
+            <div class="post-image-title-container">
               <h2 [innerHTML]='post.title' class="post-image-title wrc-heading-02"></h2>
             </div>
         </a>

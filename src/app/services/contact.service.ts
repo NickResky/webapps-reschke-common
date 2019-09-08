@@ -24,10 +24,10 @@ export class ContactService {
         contact.phone = modifiedEntry.phone;
         contact.phone2 = modifiedEntry.phone2;
         contact.imprint = modifiedEntry.imprint;
+        contact.privacy = modifiedEntry.privacy;
         contact.description = modifiedEntry.description;
         contact.image = _.head(modifiedEntry.image);
         return contact;
       });
   }
-
 }

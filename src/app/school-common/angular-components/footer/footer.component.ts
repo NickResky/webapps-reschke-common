@@ -33,10 +33,13 @@ export class Footer01Component implements OnInit {
         this.mainPageContentLoaded = x;
       });
 
-    Promise.all([this.modelService.getContact(), this.modelService.getLocations()]).then((results: any) => {
+    Promise.all([
+      this.modelService.getContact(),
+      this.modelService.getLocations()
+    ]).then((results: any) => {
       this.contact = results[0];
       this.locations = results[1];
-      if (this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.YW){
+      if (this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.YW) {
         this.mainLocation = _.find(this.locations, {
           initials: 'YW'
         });

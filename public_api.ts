@@ -9,6 +9,8 @@ export { App01Component } from './src/app/angular-components/app-01/app-01.compo
 export { Navigation01Component } from './src/app/angular-components/navigation-01/navigation-01.component';
 export { PortfolioOverview01Component } from './src/app/angular-components/portfolio-overview-01/portfolio-overview-01.component';
 export { PortfolioEntry01Component } from './src/app/angular-components/portfolio-entry-01/portfolio-entry-01.component';
+export { ImprintComponent } from './src/app/angular-components/imprint/imprint.component';
+export { PrivacyComponent } from './src/app/angular-components/privacy/privacy.component';
 
 /* -------------- SERVICES ---------------*/
 

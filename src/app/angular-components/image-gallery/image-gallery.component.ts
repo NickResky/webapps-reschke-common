@@ -150,7 +150,7 @@ export class ImageGalleryComponent implements OnInit {
 
   postMouseEnter(image: any) {
     this.mouseOverStartTime = Date.now();
-    const currentImage = _.find(this.images,  {
+    const currentImage: any = _.find(this.images,  {
       shortId: image.shortId
     });
     const imageIndex = _.findIndex(this.images, {
@@ -167,7 +167,7 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   postMouseLeave(image: any) {
-    const currentImage = _.find(this.images,  {
+    const currentImage: any = _.find(this.images,  {
       shortId: image.shortId
     });
     currentImage.isHovered = false;

@@ -9,7 +9,7 @@ export class ImprintService {
 
   constructor() { }
 
-  getEntries(zenkitCollections: any) {
+  getImprintData(zenkitCollections: any) {
     const listShortId = zenkitCollections.imprint.shortId;
     return ZenkitDataService.getZenkitListData({
       listShortId: listShortId,

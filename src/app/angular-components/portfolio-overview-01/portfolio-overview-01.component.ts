@@ -29,6 +29,7 @@ export class PortfolioOverview01Component implements OnInit {
 
     Promise.all([this.modelService.getPosts()]).then((results: any) => {
       this.posts = results[0];
+      this.posts = _.orderBy(this.posts, ['date'], ['desc']);
       this.modelService.setPageLoaded(true);
     });
   }

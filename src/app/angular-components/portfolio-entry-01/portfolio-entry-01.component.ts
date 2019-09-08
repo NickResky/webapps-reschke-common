@@ -76,7 +76,8 @@ export class PortfolioEntry01Component implements OnInit {
           this.currentProjectImages = _.map(this.blogPost.images, (image: any) => {
             return {
               imageData: image,
-              shortId: image.shortId
+              shortId: image.shortId,
+              isHovered: false
             }
           });
 
@@ -86,7 +87,8 @@ export class PortfolioEntry01Component implements OnInit {
               imageData: firstImageData,
               shortId: firstImageData.shortId,
               routerLink: '/blog/' + post.shortId,
-              title: post.title
+              title: post.title,
+              isHovered: false
             }
           });
           this.modelService.setPageLoaded(true);

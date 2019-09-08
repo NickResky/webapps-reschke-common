@@ -38,14 +38,15 @@ import { UtilityService } from './utility.service';
 export class ModelService {
 
     mainPageData: Promise<MainPageData>|undefined;
-    contactData: Promise<Contact>|undefined;
+    contactData: Promise<Contact>;
     blogPostsData: Promise<BlogPost[]>|undefined;
     coursesData: Promise<CourseData>|undefined;
     performancesData: Promise<Performance[]>|undefined;
     teamData: Promise<Teacher[]>|undefined;
     locationData: Promise<LocationData>|undefined;
     locations: Promise<Location[]>|undefined;
-    imprintData: Promise<Imprint[]>|undefined;
+    imprintData: Promise<string>;
+    privacyData: Promise<string>;
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
     appWidth = new BehaviorSubject<number>(0);
@@ -239,7 +240,7 @@ export class ModelService {
         });
     }
 
-    getContact() {
+    getContact(): Promise<Contact> {
         if (_.isNil(this.contactData)) {
             this.contactData = this.contactService.getContact(this.zenkitCollectionsConfig);
             return this.contactData;
@@ -249,13 +250,27 @@ export class ModelService {
         });
     }
 
-    getEntries() {
+    getImprintData() {
         if (_.isNil(this.imprintData)) {
-            this.imprintData = this.imprintService.getEntries(this.zenkitCollectionsConfig);
+            this.imprintData = this.getContact().then((contact: Contact) => {
+                return contact.imprint;
+            });
             return this.imprintData;
         }
         return new Promise((resolve, reject) => {
             return resolve(this.imprintData);
+        });
+    }
+
+    getPrivacyData() {
+        if (_.isNil(this.privacyData)) {
+            this.privacyData = this.getContact().then((contact: Contact) => {
+                return contact.privacy;
+            });
+            return this.privacyData;
+        }
+        return new Promise((resolve, reject) => {
+            return resolve(this.privacyData);
         });
     }
 

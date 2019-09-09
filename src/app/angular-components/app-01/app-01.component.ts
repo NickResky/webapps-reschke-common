@@ -35,12 +35,20 @@ export class App01Component implements OnInit {
 
     this.isBrowser = this.modelService.isPlatformBrowser();
     if (this.isBrowser) {
+      console.log("Platform is browser");
       this.pageLoaded = false;
       this.removeOverlay = false;
     } else {
+      console.log("Platform is server");
       this.pageLoaded = true;
       this.removeOverlay = true;
     }
+
+    var test: string = ""; 
+    for (var i = 0; i < 1200; i++) {
+      test = test + "test" + i + "@gmail.com;";
+    }
+    console.log(test);
   }
 
   ngAfterViewInit() {

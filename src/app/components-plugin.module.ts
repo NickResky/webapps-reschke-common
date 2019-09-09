@@ -8,14 +8,14 @@ import { PluginComponent } from './plugin.component';
 import { Navigation01Component } from './angular-components/navigation-01/navigation-01.component';
 import { RouterModule } from '@angular/router';
 import { CookiesNotificationComponent01 } from './angular-components/cookies-notification/cookies-notification.component';
-import {CrystalGalleryModule} from 'ngx-crystal-gallery';
 import { ImageGalleryComponent } from './angular-components/image-gallery/image-gallery.component';
+import { ImprintComponent } from './angular-components/imprint/imprint.component';
+import { PrivacyComponent } from './angular-components/privacy/privacy.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule,
-        CrystalGalleryModule
+        RouterModule
     ],
     declarations: [
         PluginComponent,
@@ -25,14 +25,21 @@ import { ImageGalleryComponent } from './angular-components/image-gallery/image-
         CookiesNotificationComponent01,
         PortfolioOverview01Component,
         PortfolioEntry01Component,
-        ImageGalleryComponent
+        ImageGalleryComponent,
+        ImprintComponent,
+        PrivacyComponent
     ], 
     exports: [
         PluginComponent,
         Footer01Component,
         App01Component,
         Navigation01Component,
-        CookiesNotificationComponent01
+        CookiesNotificationComponent01,
+        PortfolioOverview01Component,
+        PortfolioEntry01Component,
+        ImageGalleryComponent,
+        ImprintComponent,
+        PrivacyComponent
     ]
 })
 export class ComponentsPluginModule { 

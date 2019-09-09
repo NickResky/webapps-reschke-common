@@ -4,7 +4,8 @@ export class NavigationConfigService {
     title: string = '';
     titleHtml: string = '';
     displaySecondRow = false;
+    displayMenuIcon = false;
     pageInitiallyLoaded = false;
     showLoadingAnimationAfterInitialLoad = true;
-    navigationElements: NavigationElement[]|undefined;
+    navigationElements: NavigationElement[];
 }

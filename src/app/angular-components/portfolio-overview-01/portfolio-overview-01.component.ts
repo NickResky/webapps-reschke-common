@@ -19,7 +19,7 @@ export class PortfolioOverview01Component implements OnInit {
   constructor(
     private modelService: ModelService,
     private zenkitCollectionsConfig: ZenkitCollectionsService,
-    private portfolioConfig: PortfolioConfigService
+    public portfolioConfig: PortfolioConfigService
   ) {
 
   }

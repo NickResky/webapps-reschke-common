@@ -125,7 +125,6 @@
             width: 100%;
             position: absolute;
             top: 58px;
-            opacity: 1;
             opacity: 0;
             animation: fade-in 0.8s ease forwards;
             animation-delay: 1s;
@@ -208,12 +207,9 @@
             text-align: center;
             width: 100%;
             opacity: 0;
-            @include transition(
-                opacity 0.5s ease
-            );
-            transition-delay: 0.5s;
             &.show {
-                opacity: 1;
+                animation: fade-in 0.5s ease forwards;
+                animation-delay: 1s;
             };
             .navbar-second-row-element {
                 margin: 0 10px;

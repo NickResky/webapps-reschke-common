@@ -15,6 +15,7 @@ export class App01Component implements OnInit {
   pageLoaded = false;
   removeOverlay = false;
   isBrowser = false;
+  isDeviceMobile = false;
 
   @ViewChild('appcontainer') appContainerElement: ElementRef;
 
@@ -43,12 +44,12 @@ export class App01Component implements OnInit {
       this.pageLoaded = true;
       this.removeOverlay = true;
     }
-
-    var test: string = ""; 
-    for (var i = 0; i < 1200; i++) {
-      test = test + "test" + i + "@gmail.com;";
+    this.isDeviceMobile = this.modelService.isDeviceMobile();
+    if (this.isDeviceMobile) {
+      console.log("Device is mobile");
+    } else {
+      console.log("Device is not mobile");
     }
-    console.log(test);
   }
 
   ngAfterViewInit() {

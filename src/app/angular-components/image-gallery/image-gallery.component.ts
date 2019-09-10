@@ -37,8 +37,12 @@ export class ImageGalleryComponent implements OnInit {
   private sub: any;
   isBrowser: boolean;
   mouseOverStartTime: number;
+  breakpointMedium = 576;
+  isDeviceMobile = this.modelService.isDeviceMobile();
 
   @ViewChild('gallerycontainerelement') galleryContainerElement: ElementRef;
+  @ViewChild('slidercontainerelement') sliderContainerElement: ElementRef;
+
 
   constructor(
     private modelService: ModelService,
@@ -85,6 +89,28 @@ export class ImageGalleryComponent implements OnInit {
         this.updateGallery();
       }
     );
+
+    // const hammer = new Hammer(this.galleryContainerElement);
+    // hammer.on("panleft", (ev: any)=> {
+    //   console.log("pan left detected")
+    // });
+    // hammer.on("panright", (ev: any)=> {
+    //   console.log("pan right detected")
+    // });
+  }
+
+  onSliderSwipeLeft() {
+    console.log("swipe left detected");
+    if (this.images.length - this.sliderFirstImageIndex >= this.sliderImageShowCount) {
+      this.sliderNext();
+    }
+  }
+
+  onSliderSwipeRight() {
+    console.log("swipe right detected");
+    if (this.sliderFirstImageIndex >= this.sliderImageShowCount) {
+      this.sliderPrev();
+    }
   }
 
   findMainImage() {
@@ -98,7 +124,7 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   updateGallery() {
-    if (this.appWidth < 576) {
+    if (this.appWidth < this.breakpointMedium) {
       this.sliderImageShowCount = 2;
     } else {
       this.sliderImageShowCount = 4;
@@ -129,7 +155,7 @@ export class ImageGalleryComponent implements OnInit {
 
   getBackgroundStyle(image: any) {
     let height;
-    if (image.isHovered) {
+    if (image.isHovered && !this.isDeviceMobile) {
       height = '100%';
     } else {
       height = this.sliderImageHeight + 'px';

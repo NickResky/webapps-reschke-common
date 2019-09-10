@@ -105,15 +105,6 @@ $controls-width: 40px;
                 margin 0.3s ease
             );
             .post-container {   
-                &:hover {
-                    .post {
-                        .post-image-container {
-                            .post-image {
-                                height: 100%;
-                            }
-                        }
-                    }
-                }
                 //color: #303030;
                 height: 100%;
                 opacity: 0;
@@ -222,5 +213,25 @@ $controls-width: 40px;
                 }
             }
         }  
+    }
+}
+
+@media (min-width: $media-breakpoint-lg) {
+    .image-gallery-container { 
+        .image-gallery {
+            .image-slider {
+                .post-container {   
+                    &:hover {
+                        .post {
+                            .post-image-container {
+                                .post-image {
+                                    // height: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

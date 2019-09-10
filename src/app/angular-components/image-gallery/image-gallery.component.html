@@ -3,8 +3,8 @@
     <div class="image-main" [ngStyle]="{'background-image': getImageBackgroundUrl(mainImage)}"></div>
   </div>
   <div class="image-gallery" [ngStyle]="{'height': slideGalleryContainerHeight + 'px'}" *ngIf="images.length > 1">
-    <div class="image-slider" [ngStyle]="{'margin-left': (sliderPostHoveredCenter ? -((sliderImageWidth * 0.5) / 2) : 0) - ((galleryContainerWidth - (2 * sliderControlsWidth)) * sliderPageIndex) + (sliderShowPrevButton ? sliderControlsWidth : 0) + 'px'}">
-      <div *ngFor="let image of images" class="post-container" [ngStyle]="image.isHovered ? {'width': sliderImageWidth * 1.5 + 'px'} : {'width': sliderImageWidth + 'px'}" (mouseenter)="postMouseEnter(image)" (mouseleave)="postMouseLeave(image)" (click)="updateMainImage(image)">
+    <div class="image-slider" [ngStyle]="{'margin-left': (sliderPostHoveredCenter ? -((sliderImageWidth * 0.5) / 2) : 0) - ((galleryContainerWidth - (2 * sliderControlsWidth)) * sliderPageIndex) + (sliderShowPrevButton ? sliderControlsWidth : 0) + 'px'}" (swipeleft)="onSliderSwipeLeft()" (swiperight)="onSliderSwipeRight()">
+      <div *ngFor="let image of images" class="post-container" [ngStyle]="image.isHovered && !isDeviceMobile ? {'width': sliderImageWidth * 1.5 + 'px'} : {'width': sliderImageWidth + 'px'}" (mouseenter)="postMouseEnter(image)" (mouseleave)="postMouseLeave(image)" (click)="updateMainImage(image)">
         <div class="post">
           <a class="post-image-container">
             <div class="post-image" [ngStyle]="getBackgroundStyle(image)" [routerLink]="image.routerLink">

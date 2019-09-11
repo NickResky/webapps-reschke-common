@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { PortfolioConfigService } from './../../services/portfolio-config-service';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
 import { ModelService } from './../../services/model.service';
@@ -15,6 +16,10 @@ import { UtilityService } from '../../../../services';
 export class PortfolioOverview01Component implements OnInit {
 
   posts: BlogPost[]|undefined;
+  allImagesLoaded = false;
+  allImagesLoadedTimeout = 4000;
+  allImagesLoadedTimeoutPassed = false;
+  isBrowser = this.modelService.isPlatformBrowser();
 
   constructor(
     private modelService: ModelService,
@@ -32,6 +37,12 @@ export class PortfolioOverview01Component implements OnInit {
       this.posts = _.orderBy(this.posts, ['date'], ['desc']);
       this.modelService.setPageLoaded(true);
     });
+
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.allImagesLoadedTimeoutPassed = true;
+      }, this.allImagesLoadedTimeout)
+    }
   }
 
   getFileSrc(file: string) {
@@ -49,7 +60,26 @@ export class PortfolioOverview01Component implements OnInit {
     return this.getBackgroundStyle(image);
   }
 
+  getPostImageUrl(post: BlogPost) {
+    const image: string = _.head(post.images);
+    return this.getFileSrc(image);
+  }
+
   getDateStringLong(date: Date) {
     return UtilityService.convertDateToStringLong(date);
+  }
+
+  imageLoaded(post: BlogPost) {
+    const currentBlogPost = _.find(this.posts, {
+      shortId: post.shortId
+    });
+    currentBlogPost.imageLoaded = true;
+
+    const foundUnloadedImage = _.find(this.posts, (p)=> {
+      return p.imageLoaded != true
+    });
+    if (_.isNil(foundUnloadedImage)) {
+      this.allImagesLoaded = true;
+    }
   }
 }

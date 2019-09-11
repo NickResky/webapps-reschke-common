@@ -1,3 +1,4 @@
+import { NavigationConfigService } from './navigation-config-service';
 import { ApplicationIdentifier } from '../constants/application-identifier';
 import { Observable } from 'rxjs/Observable';
 import { CurrentService } from './current.service';
@@ -31,6 +32,8 @@ import {
 import { ZenkitCollectionsService } from './zenkit-collections.service';
 import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config';
 import { UtilityService } from './utility.service';
+import { AppNavigationState } from '../constants/app-navigation-state';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -50,6 +53,8 @@ export class ModelService {
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
     appWidth = new BehaviorSubject<number>(0);
+    appNavigationState = new BehaviorSubject<AppNavigationState>(AppNavigationState.CENTER);
+    activeNavigationElementIndex = new BehaviorSubject<number>(0);;
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -60,6 +65,7 @@ export class ModelService {
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
         private zenkitCollectionsConfig: ZenkitCollectionsService,
+        private navigationConfig: NavigationConfigService,
         private mainPageService: MainPageService,
         private stageService: StageService,
         private coursesService: CoursesService,
@@ -68,7 +74,8 @@ export class ModelService {
         private contactService: ContactService,
         private currentService: CurrentService,
         private imprintService: ImprintService,
-        private scheduleService: ScheduleService
+        private scheduleService: ScheduleService,
+        private router: Router
     ) { 
         console.log("ModelService created");
         console.log(zenkitCollectionsConfig);
@@ -100,7 +107,16 @@ export class ModelService {
     }
 
     setPageLoaded(value: boolean) {
-        this.pageLoaded.next(value);
+        if (this.pageLoaded.value != value) {
+            this.pageLoaded.next(value);
+
+            if (this.appNavigationState.value == AppNavigationState.SLIDE_LEFT_FROM_CENTER) {
+                this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_RIGHT);
+            }
+            if (this.appNavigationState.value == AppNavigationState.SLIDE_RIGHT_FROM_CENTER) {
+                this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_LEFT);
+            }
+        }
         return value;
     }
 
@@ -111,6 +127,59 @@ export class ModelService {
     setAppWidth(value: number) {
         this.appWidth.next(value);
         return value;
+    }
+
+    getAppNavigationState() {
+        return this.appNavigationState;
+    }
+
+    setAppNavigationState(state: AppNavigationState) {
+        this.appNavigationState.next(state);
+        return state;
+    }
+
+    getNavigationConfig() {
+        return this.navigationConfig;
+    }
+
+    getActiveNavigationElementIndex() {
+        return this.activeNavigationElementIndex;
+    }
+
+    setActiveNavigationElementIndex(newIndex: number) {
+
+        
+        if (this.activeNavigationElementIndex.value < newIndex) {
+            this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_CENTER);
+        } else {
+            this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_CENTER);
+        }
+
+        this.activeNavigationElementIndex.next(newIndex);
+
+        const newNavigationElement = this.navigationConfig.navigationElements[newIndex];
+
+        if (this.isPlatformBrowser) {
+            setTimeout(()=> {
+              this.router.navigate([newNavigationElement.routerLink]);
+            }, 500)
+          } else {
+            this.router.navigate([newNavigationElement.routerLink]);
+        }
+
+        return newIndex;
+    }
+
+    navigationSwipeLeft() {
+        if (this.activeNavigationElementIndex.value < this.navigationConfig.navigationElements.length ) {
+            this.setActiveNavigationElementIndex(this.activeNavigationElementIndex.value + 1);
+        }
+    }
+
+    navigationSwipeRight() {
+        if (this.activeNavigationElementIndex.value > 0 ) {
+            this.setActiveNavigationElementIndex(this.activeNavigationElementIndex.value - 1);
+        }
     }
 
     getMainPageSections(): Promise<MainPageData> {

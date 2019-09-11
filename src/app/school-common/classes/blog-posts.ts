@@ -7,4 +7,5 @@ export class BlogPost {
     date: Date;
     routerLink: string;
     isHovered: boolean;
+    imageLoaded: boolean;
 }

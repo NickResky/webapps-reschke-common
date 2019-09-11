@@ -1,8 +1,11 @@
+import { AppNavigationState } from './../../constants/app-navigation-state';
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ModelService } from '../../services/model.service';
 import { SeoService } from '../../services/seo.service';
+import * as Hammer from 'hammerjs';
+import * as propagating from 'propagating-hammerjs';
 
 @Component({
   selector: 'wrc-root',
@@ -16,6 +19,7 @@ export class App01Component implements OnInit {
   removeOverlay = false;
   isBrowser = false;
   isDeviceMobile = false;
+  appNavigationState: AppNavigationState = AppNavigationState.CENTER;
 
   @ViewChild('appcontainer') appContainerElement: ElementRef;
 
@@ -75,5 +79,32 @@ export class App01Component implements OnInit {
           }
         }
     );
+
+    this.modelService.getAppNavigationState().subscribe(
+      (state: AppNavigationState) => {
+        console.log("App navigation state changed to " + state);
+        this.appNavigationState = state;
+      }
+    );
+
+    const hammer1 = propagating(new Hammer(this.appContainerElement.nativeElement));
+    hammer1
+      .on("swipeleft", (ev: any)=> {
+        this.onSwipeLeft();
+      })
+      .on("swiperight", (ev: any)=> {
+        this.onSwipeRight();
+      });
+
+  }
+
+  onSwipeLeft() {
+    this.modelService.navigationSwipeLeft();
+    console.log("swipe left detected");
+  }
+
+  onSwipeRight() {
+    this.modelService.navigationSwipeRight();
+    console.log("swipe right detected");
   }
 }

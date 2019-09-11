@@ -1,13 +1,11 @@
 .footer-container {
     opacity: 0;
     margin-top: 50px;
-    &.page-loaded {
-        animation-name: fade-in;
-        animation-delay: 1s;
-        animation-duration: 0.7s;
-        animation-timing-function: ease;
-        animation-fill-mode: forwards;
-    }
+    animation-name: fade-in;
+    animation-delay: 1s;
+    animation-duration: 0.7s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
     &.display-background-color {
         background-color: $footer-background-color;
     }

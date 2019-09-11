@@ -7,6 +7,8 @@ import 'rxjs/Rx';
 import { BlogPost } from '../../../../classes';
 import { UtilityService } from '../../../../services';
 import { ActivatedRoute } from '@angular/router';
+import * as Hammer from 'hammerjs';
+import * as propagating from 'propagating-hammerjs';
 
 @Component({
   selector: 'wrc-image-gallery',
@@ -40,8 +42,8 @@ export class ImageGalleryComponent implements OnInit {
   breakpointMedium = 576;
   isDeviceMobile = this.modelService.isDeviceMobile();
 
+  @ViewChild('sliderelement') sliderElement: ElementRef;
   @ViewChild('gallerycontainerelement') galleryContainerElement: ElementRef;
-  @ViewChild('slidercontainerelement') sliderContainerElement: ElementRef;
 
 
   constructor(
@@ -90,13 +92,16 @@ export class ImageGalleryComponent implements OnInit {
       }
     );
 
-    // const hammer = new Hammer(this.galleryContainerElement);
-    // hammer.on("panleft", (ev: any)=> {
-    //   console.log("pan left detected")
-    // });
-    // hammer.on("panright", (ev: any)=> {
-    //   console.log("pan right detected")
-    // });
+    const hammer1 = propagating(new Hammer(this.sliderElement.nativeElement));
+    hammer1
+      .on("swipeleft", (ev: any)=> {
+        this.onSliderSwipeLeft();
+        ev.stopPropagation();
+      })
+      .on("swiperight", (ev: any)=> {
+        this.onSliderSwipeRight();
+        ev.stopPropagation();
+      });
   }
 
   onSliderSwipeLeft() {

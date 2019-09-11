@@ -5,6 +5,7 @@ import { ModelService } from '../../services/model.service';
 import { ApplicationIdentifier } from '../../constants/application-identifier';
 import { NavigationConfigService } from '../../services/navigation-config-service';
 import _ = require('lodash');
+import { AppNavigationState } from '../../constants/app-navigation-state';
 
 
 @Component({
@@ -40,6 +41,8 @@ export class Navigation01Component implements OnInit {
       this.pageInitiallyLoaded = true;
     }
 
+    
+
     this.modelService.isPageLoaded().subscribe(
       (x) => {
         if (this.modelService.isPlatformBrowser()) {
@@ -61,6 +64,25 @@ export class Navigation01Component implements OnInit {
 
 
     });
+  }
+
+  redirectTo(path: string) {
+    // const currentNavigationIndex = _.findIndex(this.navigationConfig.navigationElements, {
+    //   isActive: true
+    // });
+    const targetNavigationIndex = _.findIndex(this.navigationConfig.navigationElements, {
+      routerLink: path
+    });
+
+    this.modelService.setActiveNavigationElementIndex(targetNavigationIndex);
+
+    // if (this.isBrowser) {
+    //   setTimeout(()=> {
+    //     this.router.navigate([path]);
+    //   }, 500)
+    // } else {
+    //   this.router.navigate([path]);
+    // }
   }
 
   toggleMobileNav() {

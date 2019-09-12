@@ -6,5 +6,10 @@ export interface NavigationConfigType {
     displaySecondRow: boolean,
     pageInitiallyLoaded: boolean,
     showLoadingAnimationAfterInitialLoad: boolean,
+    slideActive: false,
+    slideOutAnimationActive: false,
+    slideInAnimationActive: false,
+    displayLoadingAnimationInNavbar: true,
+    extendLoadingAnimationDuration: false,
     navigationElements: NavigationElement[]
 }

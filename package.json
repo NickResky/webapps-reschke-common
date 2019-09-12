@@ -30,7 +30,6 @@
     "@angular/platform-browser": "6.0.5",
     "@angular/router": "6.0.5",
     "@types/core-js": "^2.5.2",
-    "@types/hammerjs": "^2.0.36",
     "@types/lodash": "4.14.121",
     "@types/node": "~8.9.4",
     "copyfiles": "^2.1.1",

@@ -1,6 +1,9 @@
 <div class="navbar-container" [ngClass]="[navigationConfig.displaySecondRow ? 'showSecondRow' : '']">
   <div class="loading-animation-container" *ngIf="isBrowser">
-    <div class="loader-container" [ngClass]="[pageLoaded || (pageInitiallyLoaded) ? 'hide' : '']">
+    <div class="loader-container" [ngClass]="[
+      pageLoaded ? 'hide' : '',
+      !navigationConfig.displayLoadingAnimationInNavbar ? 'position-screen-center' : 'position-navbar']"
+      [ngStyle]="!navigationConfig.displayLoadingAnimationInNavbar && !pageLoaded ? {'height': appHeight + 'px'} : {}">
       <div class="loader-circle"></div>
       <div class="loader-line-mask">
         <div class="loader-line"></div>
@@ -36,10 +39,15 @@
           <div class="bar bar3"></div>
         </div>
       </div>
-      <div class="navbar-second-row" *ngIf="navigationConfig.displaySecondRow" [ngClass]="[(pageLoaded || pageInitiallyLoaded) && isBrowser ? 'show' : '']">
-        <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" (click)="redirectTo(element.routerLink)" [ngClass]="[element.isActive ? 'isActive': '']">
+      <div class="navbar-second-row" [ngClass]="[(pageLoaded || pageInitiallyLoaded) && isBrowser ? 'show' : '']" #navbarelement>
+        <div class="navbar-second-row-elements" *ngIf="navigationConfig.displaySecondRow">
+          <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" (click)="redirectTo(element.routerLink)" [ngClass]="[element.isActive ? 'isActive': '']">
           {{element.title}}
-        </a>
+          </a>
+          </div>
+        <div class="navbar-second-row-border-container" [ngStyle]="activeNavigationElementIndex < 0 ? {'margin-left': 0} : {'margin-left': (borderWidth * activeNavigationElementIndex)  + 'px'}" [ngClass]="activeNavigationElementIndex < 0 ? 'hide': ''" *ngIf="navigationConfig.displaySecondRow">
+          <div class="navbar-second-row-border-element" *ngFor="let element of navigationConfig.navigationElements"></div>
+        </div>
       </div>
       <div class="navbar-page-overlay" [ngClass]="isMobileNavOpen === true ? 'show': ''" (click)="closeMobileNav()">
 

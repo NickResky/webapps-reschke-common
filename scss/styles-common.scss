@@ -21,18 +21,20 @@ a {
     color: inherit;
 }
 
+$navigationSlideAnimationDuration: 0.7s;
+
 .app-container {
     &.slide-left-from-center {
-        animation: slide-left-from-center 0.5s ease forwards;
+        animation: slide-left-from-center $navigationSlideAnimationDuration ease forwards;
     }
     &.slide-left-from-right {
-        animation: slide-left-from-right 0.5s ease forwards;
+        animation: slide-left-from-right $navigationSlideAnimationDuration ease forwards;
     }
     &.slide-right-from-center {
-        animation: slide-right-from-center 0.5s ease forwards;
+        animation: slide-right-from-center $navigationSlideAnimationDuration ease forwards;
     }
     &.slide-right-from-left {
-        animation: slide-right-from-left 0.5s ease forwards;
+        animation: slide-right-from-left $navigationSlideAnimationDuration ease forwards;
     }
 }
 
@@ -129,6 +131,14 @@ a {
     &:hover {
         cursor: pointer;
     }
+}
+
+.fade-in-700 {
+    animation-delay: 0.3s;
+    animation-name: fade-in;
+    animation-duration: 0.7s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards; 
 }
 
 /*************

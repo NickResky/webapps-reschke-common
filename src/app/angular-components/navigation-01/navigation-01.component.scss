@@ -73,9 +73,18 @@
                 transform 0.3s ease,
                 opacity 0.3s ease
             );
+            &.position-screen-center {
+                &.hide {
+                    margin-top: -100px;
+                }
+            }
+            &.position-navbar {
+                &.hide {
+                    transform: translateY(-20px);
+                }
+            }
             &.hide {
                 opacity: 0;
-                transform: translateY(-20px);
             }
             .loader-circle {
                 position: absolute;
@@ -203,22 +212,40 @@
         }
 
         .navbar-second-row {
-            margin-top: 60px;
             text-align: center;
             width: 100%;
+            max-width: $media-breakpoint-sm;
+            margin: 60px auto 0 auto;
             opacity: 0;
             &.show {
                 animation: fade-in 0.5s ease forwards;
                 animation-delay: 1s;
             };
-            .navbar-second-row-element {
-                margin: 0 10px;
-                display: inline-block;
-                font-size: $text-navigation-row-02-size;
-                line-height: $text-navigation-row-02-size + 4px;
-                color: $text-02-color;
-                &.isActive, &:hover {
-                    border-bottom: 1px solid $text-02-color;
+            .navbar-second-row-elements {
+                width: 100%;
+                @include flexbox();
+                .navbar-second-row-element {
+                    @include flex(1);
+                    font-size: $text-navigation-row-02-size;
+                    height: $text-navigation-row-02-size + 8px;
+                    color: $text-02-color;
+                }
+            }
+            .navbar-second-row-border-container {
+                width: 100%;
+                @include flexbox();
+                @include transition(
+                    margin 0.7s ease,
+                    opacity 0.3s ease
+                );
+                &.hide {
+                    opacity: 0;
+                }
+                .navbar-second-row-border-element {
+                    @include flex(1);
+                    &:first-child {
+                        border-bottom: 1px solid $text-02-color;
+                    }
                 }
             }
         }

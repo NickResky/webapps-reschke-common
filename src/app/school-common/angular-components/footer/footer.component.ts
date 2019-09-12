@@ -20,6 +20,7 @@ export class Footer01Component implements OnInit {
   footerContentLoaded = false;
   mainPageContentLoaded = false;
   contact: Contact|undefined;
+  pageLoaded = false;
 
   constructor(
     private modelService: ModelService,
@@ -46,6 +47,14 @@ export class Footer01Component implements OnInit {
       }
       this.footerContentLoaded = true;
     });
+
+    this.modelService.isPageLoaded().subscribe(
+      (x) => {
+        if (this.modelService.isPlatformBrowser()) {
+          this.pageLoaded = x;
+        }
+      }
+  );
   }
 
   getSocialLink(link: FooterLink) {

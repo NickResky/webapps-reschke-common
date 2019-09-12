@@ -1,3 +1,4 @@
+import { NavigationConfigService } from './../../services/navigation-config-service';
 import { AppNavigationState } from './../../constants/app-navigation-state';
 
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, HostListener } from '@angular/core';
@@ -26,7 +27,9 @@ export class App01Component implements OnInit {
   constructor(
     private router: Router,
     private modelService: ModelService,
-    private seoService: SeoService) {
+    private seoService: SeoService,
+    public navigationConfig: NavigationConfigService
+  ) {
       this.seoService.addSeoData();
   }
 
@@ -34,6 +37,8 @@ export class App01Component implements OnInit {
   onesize(event: any){
     console.log("App width: " + event.target.innerWidth);
     this.modelService.setAppWidth(event.target.innerWidth);
+    console.log("App height: " + event.target.innerHeight);
+    this.modelService.setAppHeight(event.target.innerHeight);
   }
 
   ngOnInit() {
@@ -59,8 +64,11 @@ export class App01Component implements OnInit {
   ngAfterViewInit() {
 
     const appContainerWidth = this.appContainerElement.nativeElement.clientWidth;
+    const appContainerHeight = this.appContainerElement.nativeElement.clientHeight;
     console.log("App width: " + appContainerWidth);
     this.modelService.setAppWidth(appContainerWidth);
+    console.log("App height: " + appContainerHeight);
+    this.modelService.setAppHeight(appContainerHeight);
 
     this.router.events.subscribe((evt) => {
         if (!(evt instanceof NavigationEnd)) {
@@ -86,14 +94,17 @@ export class App01Component implements OnInit {
         this.appNavigationState = state;
       }
     );
-
     const hammer1 = propagating(new Hammer(this.appContainerElement.nativeElement));
     hammer1
       .on("swipeleft", (ev: any)=> {
-        this.onSwipeLeft();
+        if (this.navigationConfig.slideActive) {
+          this.onSwipeLeft();
+        }
       })
       .on("swiperight", (ev: any)=> {
-        this.onSwipeRight();
+        if (this.navigationConfig.slideActive) {
+          this.onSwipeRight();
+        }
       });
 
   }

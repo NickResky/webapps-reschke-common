@@ -7,5 +7,10 @@ export class NavigationConfigService {
     displayMenuIcon = false;
     pageInitiallyLoaded = false;
     showLoadingAnimationAfterInitialLoad = true;
+    slideActive = false;
+    slideOutAnimationActive = false;
+    slideInAnimationActive = false;
+    displayLoadingAnimationInNavbar = true;
+    extendLoadingAnimationDuration = false;
     navigationElements: NavigationElement[];
 }

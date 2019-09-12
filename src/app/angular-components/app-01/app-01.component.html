@@ -1,7 +1,11 @@
 <wrc-navigation-01></wrc-navigation-01>
 <div class="nav-spacer">
 </div>  
-<div class="app-container" #appcontainer [ngClass]="[appNavigationState == 'SLIDE_LEFT_FROM_CENTER' ? 'slide-left-from-center' : '', appNavigationState == 'SLIDE_LEFT_FROM_RIGHT' ? 'slide-left-from-right' : '', appNavigationState == 'SLIDE_RIGHT_FROM_CENTER' ? 'slide-right-from-center': '', appNavigationState == 'SLIDE_RIGHT_FROM_LEFT' ? 'slide-right-from-left' : '']">
+<div class="app-container" #appcontainer [ngClass]="[
+  appNavigationState == 'SLIDE_LEFT_FROM_CENTER' ? 'slide-left-from-center' : '', 
+  appNavigationState == 'SLIDE_LEFT_FROM_RIGHT' ? 'slide-left-from-right' : '',
+  appNavigationState == 'SLIDE_RIGHT_FROM_CENTER' ? 'slide-right-from-center': '',
+  appNavigationState == 'SLIDE_RIGHT_FROM_LEFT' ? 'slide-right-from-left' : '']">
   <router-outlet></router-outlet>
   <wrc-footer-01></wrc-footer-01>
 </div>

@@ -53,8 +53,10 @@ export class ModelService {
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
     appWidth = new BehaviorSubject<number>(0);
+    appHeight = new BehaviorSubject<number>(0);
     appNavigationState = new BehaviorSubject<AppNavigationState>(AppNavigationState.CENTER);
-    activeNavigationElementIndex = new BehaviorSubject<number>(0);;
+    activeNavigationElementIndex = new BehaviorSubject<number>(0);
+    lastTimePageLoaded = Date.now();
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -108,13 +110,32 @@ export class ModelService {
 
     setPageLoaded(value: boolean) {
         if (this.pageLoaded.value != value) {
-            this.pageLoaded.next(value);
 
-            if (this.appNavigationState.value == AppNavigationState.SLIDE_LEFT_FROM_CENTER) {
-                this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_RIGHT);
+            // Extend loading animation if shorter than 700ms
+            const timeDifference = Date.now() - this.lastTimePageLoaded;
+            const isBrowser = this.isPlatformBrowser();
+            if (this.navigationConfig.extendLoadingAnimationDuration && value && (timeDifference < 50000) && isBrowser) {
+                setTimeout(() => {
+                    this.lastTimePageLoaded = Date.now();
+                    this.pageLoaded.next(value);
+                }, 500);
+            } else if (value) {
+                this.lastTimePageLoaded = Date.now();
+                this.pageLoaded.next(value);
+            } else {
+                this.pageLoaded.next(value);
             }
-            if (this.appNavigationState.value == AppNavigationState.SLIDE_RIGHT_FROM_CENTER) {
-                this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_LEFT);
+
+
+            if (!this.navigationConfig.slideInAnimationActive) {
+                this.setAppNavigationState(AppNavigationState.CENTER)
+            } else {
+                if (this.appNavigationState.value == AppNavigationState.SLIDE_LEFT_FROM_CENTER) {
+                    this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_RIGHT);
+                }
+                if (this.appNavigationState.value == AppNavigationState.SLIDE_RIGHT_FROM_CENTER) {
+                    this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_LEFT);
+                }
             }
         }
         return value;
@@ -126,6 +147,15 @@ export class ModelService {
 
     setAppWidth(value: number) {
         this.appWidth.next(value);
+        return value;
+    }
+
+    getAppHeight() {
+        return this.appHeight;
+    }
+
+    setAppHeight(value: number) {
+        this.appHeight.next(value);
         return value;
     }
 
@@ -159,10 +189,10 @@ export class ModelService {
 
         const newNavigationElement = this.navigationConfig.navigationElements[newIndex];
 
-        if (this.isPlatformBrowser) {
+        if (this.isPlatformBrowser && this.navigationConfig.slideOutAnimationActive) {
             setTimeout(()=> {
               this.router.navigate([newNavigationElement.routerLink]);
-            }, 500)
+            }, 700)
           } else {
             this.router.navigate([newNavigationElement.routerLink]);
         }
@@ -171,7 +201,7 @@ export class ModelService {
     }
 
     navigationSwipeLeft() {
-        if (this.activeNavigationElementIndex.value < this.navigationConfig.navigationElements.length ) {
+        if (this.activeNavigationElementIndex.value < (this.navigationConfig.navigationElements.length -1)) {
             this.setActiveNavigationElementIndex(this.activeNavigationElementIndex.value + 1);
         }
     }

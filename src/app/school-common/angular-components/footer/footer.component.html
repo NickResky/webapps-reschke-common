@@ -1,4 +1,8 @@
-<div class="footer-container main-content-container main-content-container-padding" *ngIf="footerContentLoaded && mainPageContentLoaded" [ngClass]="[footerConfig.displayBorderLine ? 'display-border-line' : '', footerConfig.displayBackgroundColor ? 'display-background-color' : '', mainPageContentLoaded ? 'page-loaded' : '']">
+<div class="footer-container main-content-container main-content-container-padding" *ngIf="footerContentLoaded && mainPageContentLoaded" [ngClass]="[
+  footerConfig.displayBorderLine ? 'display-border-line' : '', 
+  footerConfig.displayBackgroundColor ? 'display-background-color' : '',
+  mainPageContentLoaded ? 'page-loaded' : '',
+  pageLoaded ? 'fade-in-700' : '']">
   <div class="footer main-content">
     <div class="footer-section-container">
       <div class="footer-section footer-section-contact">

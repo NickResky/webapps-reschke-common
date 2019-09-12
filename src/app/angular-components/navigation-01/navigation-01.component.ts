@@ -1,11 +1,13 @@
+import { NavigationElement } from './../../school-common/classes/navigation-element';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModelService } from '../../services/model.service';
 import { ApplicationIdentifier } from '../../constants/application-identifier';
 import { NavigationConfigService } from '../../services/navigation-config-service';
 import _ = require('lodash');
 import { AppNavigationState } from '../../constants/app-navigation-state';
+import { EventListener } from '@angular/core/src/debug/debug_node';
 
 
 @Component({
@@ -18,9 +20,13 @@ export class Navigation01Component implements OnInit {
   isMobileNavOpen = false;
   pageLoaded = false;
   pageInitiallyLoaded = false;
-  showLoadingAnimationAfterInitialLoad = false;
   pageIsHome = false;
   isBrowser = false;
+  appHeight: number = 0;
+  borderWidth: number = 0;
+  activeNavigationElementIndex = 0;
+
+  @ViewChild('navbarelement') navbarElement: ElementRef;
   
   constructor(
     private modelService: ModelService,
@@ -31,17 +37,16 @@ export class Navigation01Component implements OnInit {
 
   ngOnInit() {
 
+    this.borderWidth = this.navbarElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
+
     this.isBrowser = this.modelService.isPlatformBrowser();
     if (this.isBrowser) {
       this.pageLoaded = false;
       this.pageInitiallyLoaded = false;
-      this.showLoadingAnimationAfterInitialLoad = this.navigationConfig.showLoadingAnimationAfterInitialLoad;
     } else {
       this.pageLoaded = true;
       this.pageInitiallyLoaded = true;
     }
-
-    
 
     this.modelService.isPageLoaded().subscribe(
       (x) => {
@@ -54,16 +59,47 @@ export class Navigation01Component implements OnInit {
       }
     );
 
+    this.modelService.getAppHeight().subscribe(
+      (x) => {
+        this.appHeight = x;
+      }
+    );
+
+    this.modelService.getActiveNavigationElementIndex().subscribe(
+      (index) => {
+        this.activeNavigationElementIndex = index;
+        console.log('Navigation index: ' + index);
+      }
+    )
+
     this.router.events.subscribe((evt: any) => {
       this.pageIsHome = evt.url === '/';
 
       // reset
-      this.navigationConfig.navigationElements = _.map(this.navigationConfig.navigationElements, (el) => {
-        return { ...el, isActive: el.routerLink === evt.url }
-      });
+      // this.navigationConfig.navigationElements = _.map(this.navigationConfig.navigationElements, (el) => {
+      //   return { ...el, isActive: _.includes(evt.url, el.routerLink)}
+      // });
 
-
+      if (!_.isNil(evt.url)) {
+        if (evt.url === '/') {
+          this.modelService.setActiveNavigationElementIndex(0);
+        } else {
+          const index = _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => {
+            if (evt.url === '/' || element.routerLink === '/') {
+              return false;
+            }
+            const containsLink = _.includes(evt.url, element.routerLink);
+            return containsLink;
+          });
+          this.modelService.setActiveNavigationElementIndex(index);
+        }
+      }
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onesize(event: any){
+    this.borderWidth = this.navbarElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
   }
 
   redirectTo(path: string) {
@@ -75,14 +111,6 @@ export class Navigation01Component implements OnInit {
     });
 
     this.modelService.setActiveNavigationElementIndex(targetNavigationIndex);
-
-    // if (this.isBrowser) {
-    //   setTimeout(()=> {
-    //     this.router.navigate([path]);
-    //   }, 500)
-    // } else {
-    //   this.router.navigate([path]);
-    // }
   }
 
   toggleMobileNav() {

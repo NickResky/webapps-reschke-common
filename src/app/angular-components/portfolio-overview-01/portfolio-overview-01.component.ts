@@ -35,7 +35,6 @@ export class PortfolioOverview01Component implements OnInit {
     Promise.all([this.modelService.getPosts()]).then((results: any) => {
       this.posts = results[0];
       this.posts = _.orderBy(this.posts, ['date'], ['desc']);
-      this.modelService.setPageLoaded(true);
     });
 
     if (this.isBrowser) {
@@ -79,6 +78,7 @@ export class PortfolioOverview01Component implements OnInit {
       return p.imageLoaded != true
     });
     if (_.isNil(foundUnloadedImage)) {
+      this.modelService.setPageLoaded(true);
       this.allImagesLoaded = true;
     }
   }

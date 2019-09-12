@@ -19,7 +19,6 @@ export class ImageGalleryComponent implements OnInit {
 
   @Input() images: any;
   @Input() showMainImage: any;
-  posts: BlogPost[];
   mainImageHeight = 0;
   mainPost: BlogPost;
   mainImage: any;
@@ -61,9 +60,6 @@ export class ImageGalleryComponent implements OnInit {
     this.findMainImage();
 
     this.isBrowser = this.modelService.isPlatformBrowser();
-    Promise.all([this.modelService.getPosts()]).then((results: any) => {
-      this.updateGallery();
-    });
 
     this.sub = this.route.params.subscribe(params => { 
       if (this.isBrowser) {

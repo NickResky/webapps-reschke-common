@@ -3,7 +3,7 @@
     <div class="loader-container" [ngClass]="[
       pageLoaded || !isBrowser ? 'hide' : '',
       !navigationConfig.displayLoadingAnimationInNavbar ? 'position-screen-center' : 'position-navbar']!"
-      [ngStyle] = "!navigationConfig.displayLoadingAnimationInNavbar && !pageLoaded && isSmallDevice ? {'height': appHeight + 'px'} : {}">
+      [ngStyle] = "!navigationConfig.displayLoadingAnimationInNavbar && !pageLoaded ? getLoaderContainerStyle() : {}">
       <div class="loader-circle"></div>
       <div class="loader-line-mask">
         <div class="loader-line"></div>
@@ -41,7 +41,7 @@
       </div>
       <div class="navbar-second-row" [ngClass]="[(pageLoaded || pageInitiallyLoaded) && isBrowser ? 'show' : '', !navigationConfig.displaySecondRow ? 'remove' : '']">
         <div class="navbar-second-row-elements">
-          <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" (click)="redirectTo(element.routerLink)" [ngClass]="[element.isActive ? 'isActive': '']">
+          <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" [routerLink]="element.routerLink" [ngClass]="[element.isActive ? 'isActive': '']">
           {{element.title}}
           </a>
         </div>

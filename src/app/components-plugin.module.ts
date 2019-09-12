@@ -11,6 +11,7 @@ import { CookiesNotificationComponent01 } from './angular-components/cookies-not
 import { ImageGalleryComponent } from './angular-components/image-gallery/image-gallery.component';
 import { ImprintComponent } from './angular-components/imprint/imprint.component';
 import { PrivacyComponent } from './angular-components/privacy/privacy.component';
+import { ImageGallery02Component } from './angular-components/image-gallery-02/image-gallery-02.component';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { PrivacyComponent } from './angular-components/privacy/privacy.component
         PortfolioOverview01Component,
         PortfolioEntry01Component,
         ImageGalleryComponent,
+        ImageGallery02Component,
         ImprintComponent,
         PrivacyComponent
     ], 
@@ -38,6 +40,7 @@ import { PrivacyComponent } from './angular-components/privacy/privacy.component
         PortfolioOverview01Component,
         PortfolioEntry01Component,
         ImageGalleryComponent,
+        ImageGallery02Component,
         ImprintComponent,
         PrivacyComponent
     ]

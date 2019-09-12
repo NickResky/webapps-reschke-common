@@ -34,6 +34,7 @@ import { ZenkitCollectionsConfig } from '../constants/zenkit-collections-config'
 import { UtilityService } from './utility.service';
 import { AppNavigationState } from '../constants/app-navigation-state';
 import { Router } from '@angular/router';
+import { NavigationElement } from '../school-common/classes/navigation-element';
 
 @Injectable({
     providedIn: 'root'
@@ -57,7 +58,8 @@ export class ModelService {
     appNavigationState = new BehaviorSubject<AppNavigationState>(AppNavigationState.CENTER);
     activeNavigationElementIndex = new BehaviorSubject<number>(0);
     lastTimePageLoaded = Date.now();
-    previousNavigationIndex = 0;
+    previousRoute = '';
+    previousNavigationElementIndex = -1;
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -177,8 +179,27 @@ export class ModelService {
         return this.activeNavigationElementIndex;
     }
 
+    updateNavigation(route: string) {
+        if (!_.isNil(route) && this.previousRoute != route) {
+
+            if (route === '/' || _.includes(route, 'projekte')) {
+            this.setActiveNavigationElementIndex(0);
+            } else {
+            const index = _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => {
+                if (route === '/' || element.routerLink === '/') {
+                return false;
+                }
+                const containsLink = _.includes(route, element.routerLink);
+                return containsLink;
+            });
+            this.setActiveNavigationElementIndex(index);
+            }
+        }
+        this.previousRoute = route;
+    }
+
     setActiveNavigationElementIndex(newIndex: number) {
-        if (this.previousNavigationIndex != newIndex) {
+        if (this.previousNavigationElementIndex != newIndex) {
             // only apply slide animations on mobile
             if (this.isDeviceMobile()) {
                 if (this.activeNavigationElementIndex.value < newIndex) {
@@ -209,7 +230,7 @@ export class ModelService {
                 this.router.navigate([newNavigationElement.routerLink]);
             }
         }
-        this.previousNavigationIndex = newIndex;
+        this.previousNavigationElementIndex = newIndex;
         return newIndex;
     }
 

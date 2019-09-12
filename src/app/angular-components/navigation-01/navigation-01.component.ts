@@ -87,44 +87,13 @@ export class Navigation01Component implements OnInit {
 
     this.router.events.subscribe((evt: any) => {
       this.pageIsHome = evt.url === '/';
-
-      // reset
-      // this.navigationConfig.navigationElements = _.map(this.navigationConfig.navigationElements, (el) => {
-      //   return { ...el, isActive: _.includes(evt.url, el.routerLink)}
-      // });
-
-      if (!_.isNil(evt.url) && this.previousUrl != evt.url) {
-        if (this.pageIsHome || _.includes(evt.url, 'projekte')) {
-          this.modelService.setActiveNavigationElementIndex(0);
-        } else {
-          const index = _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => {
-            if (evt.url === '/' || element.routerLink === '/') {
-              return false;
-            }
-            const containsLink = _.includes(evt.url, element.routerLink);
-            return containsLink;
-          });
-          this.modelService.setActiveNavigationElementIndex(index);
-        }
-      }
-      this.previousUrl = evt.url;
+      this.modelService.updateNavigation(evt.url);
     });
   }
 
   @HostListener('window:resize', ['$event'])
   onesize(event: any){
     this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
-  }
-
-  redirectTo(path: string) {
-    // const currentNavigationIndex = _.findIndex(this.navigationConfig.navigationElements, {
-    //   isActive: true
-    // });
-    const targetNavigationIndex = _.findIndex(this.navigationConfig.navigationElements, {
-      routerLink: path
-    });
-
-    this.modelService.setActiveNavigationElementIndex(targetNavigationIndex);
   }
 
   toggleMobileNav() {
@@ -149,6 +118,18 @@ export class Navigation01Component implements OnInit {
 
   isApplicationSS() {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.SS;
+  }
+
+  getLoaderContainerStyle() {
+    if (this.isSmallDevice) {
+      return {
+        height: this.appHeight + 'px'
+      }
+    } else {
+      return {
+        height : '500px'
+      }
+    }
   }
 
 }

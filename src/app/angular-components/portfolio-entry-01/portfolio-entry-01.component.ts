@@ -20,36 +20,9 @@ export class PortfolioEntry01Component implements OnInit {
   private sub: any;
   blogPostShortId: string = '';
 
-  myImages: any = [
-    {
-      preview: 'https://zenkit.com/api/v1/lists/Wn9wlV3aJ/files/FaAnZWklXi',
-      full: 'https://zenkit.com/api/v1/lists/Wn9wlV3aJ/files/FaAnZWklXi',
-      // width: 300, // used for masonry
-      // height: 300, // used for masonry
-      description: 'description of the image' // optional property
-    }
-  ];
-
   allImages: any;
   currentProjectImages: any;
   projectImages: any;
-  
-  myConfig = {
-    masonry: true,
-    masonryMaxHeight: 70
-  };
-
-  galleryConfig = {
-    masonry: true,
-		masonryMaxHeight: 100,
-		masonryGutter: 6,
-		loop: false,
-		backgroundOpacity: 0.85,
-		animationDuration: 100,
-		counter: true,
-		lightboxMaxHeight: '100vh - 86px',
-		lightboxMaxWidth: '100%'
-  };
 
   constructor(
       private modelService: ModelService,

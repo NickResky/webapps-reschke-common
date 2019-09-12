@@ -57,6 +57,7 @@ export class ModelService {
     appNavigationState = new BehaviorSubject<AppNavigationState>(AppNavigationState.CENTER);
     activeNavigationElementIndex = new BehaviorSubject<number>(0);
     lastTimePageLoaded = Date.now();
+    previousNavigationIndex = 0;
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -177,26 +178,38 @@ export class ModelService {
     }
 
     setActiveNavigationElementIndex(newIndex: number) {
+        if (this.previousNavigationIndex != newIndex) {
+            // only apply slide animations on mobile
+            if (this.isDeviceMobile()) {
+                if (this.activeNavigationElementIndex.value < newIndex) {
+                    this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_CENTER);
+                } else {
+                    this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_CENTER);
+                }
+            } else {
+                if (this.isPlatformBrowser()) {
 
-        
-        if (this.activeNavigationElementIndex.value < newIndex) {
-            this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_CENTER);
-        } else {
-            this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_CENTER);
+                    this.setAppNavigationState(AppNavigationState.FADE_OUT);
+
+                    setTimeout(() => {
+                        this.setAppNavigationState(AppNavigationState.CENTER);
+                    }, 700);
+                }
+            }
+
+            this.activeNavigationElementIndex.next(newIndex);
+
+            const newNavigationElement = this.navigationConfig.navigationElements[newIndex];
+
+            if (this.isPlatformBrowser && this.navigationConfig.slideOutAnimationActive) {
+                setTimeout(()=> {
+                this.router.navigate([newNavigationElement.routerLink]);
+                }, 700)
+            } else {
+                this.router.navigate([newNavigationElement.routerLink]);
+            }
         }
-
-        this.activeNavigationElementIndex.next(newIndex);
-
-        const newNavigationElement = this.navigationConfig.navigationElements[newIndex];
-
-        if (this.isPlatformBrowser && this.navigationConfig.slideOutAnimationActive) {
-            setTimeout(()=> {
-              this.router.navigate([newNavigationElement.routerLink]);
-            }, 700)
-          } else {
-            this.router.navigate([newNavigationElement.routerLink]);
-        }
-
+        this.previousNavigationIndex = newIndex;
         return newIndex;
     }
 

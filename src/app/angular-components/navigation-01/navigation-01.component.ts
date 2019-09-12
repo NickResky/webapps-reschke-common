@@ -8,6 +8,7 @@ import { NavigationConfigService } from '../../services/navigation-config-servic
 import _ = require('lodash');
 import { AppNavigationState } from '../../constants/app-navigation-state';
 import { EventListener } from '@angular/core/src/debug/debug_node';
+import { AppBreakpoints } from '../../constants/app-breakpointss';
 
 
 @Component({
@@ -25,8 +26,10 @@ export class Navigation01Component implements OnInit {
   appHeight: number = 0;
   borderWidth: number = 0;
   activeNavigationElementIndex = 0;
+  isSmallDevice = true;
+  previousUrl = '';
 
-  @ViewChild('navbarelement') navbarElement: ElementRef;
+  @ViewChild('navbarsecondrowborderelement') navbarSecondRowBorderElement: ElementRef;
   
   constructor(
     private modelService: ModelService,
@@ -37,7 +40,7 @@ export class Navigation01Component implements OnInit {
 
   ngOnInit() {
 
-    this.borderWidth = this.navbarElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
+    this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
 
     this.isBrowser = this.modelService.isPlatformBrowser();
     if (this.isBrowser) {
@@ -72,6 +75,16 @@ export class Navigation01Component implements OnInit {
       }
     )
 
+    this.modelService.getAppWidth().subscribe(
+      (width) => {
+        if (width <= AppBreakpoints.MEDIUM) {
+          this.isSmallDevice = true;
+        } else {
+          this.isSmallDevice = false;
+        }
+      }
+    )
+
     this.router.events.subscribe((evt: any) => {
       this.pageIsHome = evt.url === '/';
 
@@ -80,8 +93,8 @@ export class Navigation01Component implements OnInit {
       //   return { ...el, isActive: _.includes(evt.url, el.routerLink)}
       // });
 
-      if (!_.isNil(evt.url)) {
-        if (evt.url === '/') {
+      if (!_.isNil(evt.url) && this.previousUrl != evt.url) {
+        if (this.pageIsHome || _.includes(evt.url, 'projekte')) {
           this.modelService.setActiveNavigationElementIndex(0);
         } else {
           const index = _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => {
@@ -94,12 +107,13 @@ export class Navigation01Component implements OnInit {
           this.modelService.setActiveNavigationElementIndex(index);
         }
       }
+      this.previousUrl = evt.url;
     });
   }
 
   @HostListener('window:resize', ['$event'])
   onesize(event: any){
-    this.borderWidth = this.navbarElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
+    this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
   }
 
   redirectTo(path: string) {

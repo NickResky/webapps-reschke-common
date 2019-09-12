@@ -86,7 +86,7 @@ export class PortfolioEntry01Component implements OnInit {
             return {
               imageData: firstImageData,
               shortId: firstImageData.shortId,
-              routerLink: '/blog/' + post.shortId,
+              routerLink: '/projekte/' + post.shortId,
               title: post.title,
               isHovered: false
             }

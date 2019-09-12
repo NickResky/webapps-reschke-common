@@ -24,6 +24,7 @@ a {
 $navigationSlideAnimationDuration: 0.7s;
 
 .app-container {
+    opacity: 1;
     &.slide-left-from-center {
         animation: slide-left-from-center $navigationSlideAnimationDuration ease forwards;
     }
@@ -35,6 +36,9 @@ $navigationSlideAnimationDuration: 0.7s;
     }
     &.slide-right-from-left {
         animation: slide-right-from-left $navigationSlideAnimationDuration ease forwards;
+    }
+    &.fade-out {
+        animation: fade-out $navigationSlideAnimationDuration ease forwards;
     }
 }
 

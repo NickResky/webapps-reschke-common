@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import 'rxjs/Rx';
 import { BlogPost } from '../../../../classes';
 import { UtilityService } from '../../../../services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Hammer from 'hammerjs';
 import * as propagating from 'propagating-hammerjs';
 
@@ -51,7 +51,8 @@ export class ImageGalleryComponent implements OnInit {
     private zenkitCollectionsConfig: ZenkitCollectionsService,
     private portfolioConfig: PortfolioConfigService,
     private rd: Renderer2,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
 
   }
@@ -147,7 +148,7 @@ export class ImageGalleryComponent implements OnInit {
       this.sliderShowPrevButton = true;
     }
 
-    if (this.images.length - this.sliderFirstImageIndex < this.sliderImageShowCount) {
+    if (this.images.length - this.sliderFirstImageIndex < this.sliderImageShowCount + 1) {
       this.sliderShowNextButton = false;
     } else {
       this.sliderShowNextButton = true;
@@ -217,7 +218,11 @@ export class ImageGalleryComponent implements OnInit {
     this.updateGallery();
   }
 
-  updateMainImage(image: any) {
-    this.mainImage = image;
+  clickThumbnail(image: any) {
+    if (image.routerLink) {
+      this.router.navigate([image.routerLink]);
+    } else {
+      this.mainImage = image;
+    }
   }
 }

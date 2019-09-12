@@ -70,8 +70,7 @@
             height: 50px;
             width: 100%;
             @include transition(
-                transform 0.3s ease,
-                opacity 0.3s ease
+                transform 0.3s ease
             );
             &.position-screen-center {
                 &.hide {
@@ -85,6 +84,7 @@
             }
             &.hide {
                 opacity: 0;
+                height: 0;
             }
             .loader-circle {
                 position: absolute;
@@ -214,15 +214,20 @@
         .navbar-second-row {
             text-align: center;
             width: 100%;
-            max-width: $media-breakpoint-sm;
-            margin: 60px auto 0 auto;
+            margin: 70px auto 0 auto;
             opacity: 0;
             &.show {
                 animation: fade-in 0.5s ease forwards;
                 animation-delay: 1s;
             };
+            &.remove {
+                height: 0;
+                overflow: hidden;
+            }
             .navbar-second-row-elements {
+                max-width: $media-breakpoint-sm;
                 width: 100%;
+                margin: 0 auto;
                 @include flexbox();
                 .navbar-second-row-element {
                     @include flex(1);
@@ -232,21 +237,32 @@
                 }
             }
             .navbar-second-row-border-container {
+                max-width: $media-breakpoint-sm;
                 width: 100%;
-                @include flexbox();
-                @include transition(
-                    margin 0.7s ease,
-                    opacity 0.3s ease
-                );
-                &.hide {
-                    opacity: 0;
-                }
-                .navbar-second-row-border-element {
-                    @include flex(1);
-                    &:first-child {
-                        border-bottom: 1px solid $text-02-color;
+                margin: 0 auto;
+                .navbar-second-row-border-elements {
+                    @include transition(
+                        margin 0.7s linear 0.1s,
+                        opacity 0.3s ease
+                    );
+                    @include flexbox();
+                    width: 100%;
+                    .navbar-second-row-border-element {
+                        @include flex(1);
+                        @include transition(
+                            opacity 0.3s ease
+                        );
+                        &:first-child {
+                            border-bottom: 1px solid $text-02-color;
+                        }
+                        &.hide {
+                            opacity: 0;
+                        }
                     }
                 }
+            }
+            .navbar-second-row-border-bottom {
+                border-bottom: 1px solid $border-color-light-2;
             }
         }
 
@@ -444,14 +460,24 @@
 @media (min-width: $media-breakpoint-md) {
     .navbar-container {
         .navbar {
+            &.showSecondRow {
+                .navbar {
+                    .navbar-menu-icon-container {
+                        display: none;
+                    }
+                }
+            }
             .navbar-navigation {
                 max-width: 400px;
             }
-        }
-        &.showSecondRow {
-            .navbar {
-                .navbar-menu-icon-container {
-                    display: none;
+            .navbar-second-row {
+                margin-top: 60px;
+                .navbar-second-row-elements {
+                    max-width: 230px;
+                }
+                .navbar-second-row-border-container,
+                .navbar-second-row-border-bottom {
+                    opacity: 0;
                 }
             }
         }
@@ -459,17 +485,24 @@
 }
 
 
-// @media (min-width: $media-breakpoint-lg) {
-//     .navbar-container {
-//         .navbar {
-//             .navbar-navigation {
-//                 .navbar-navigation-link:not(.dropdown-link) {
-//                     margin: 25px 20px 20px 20px;
-//                 }
-//             }
-//         }
-//     }
-// }
+@media (min-width: $media-breakpoint-lg) {
+    .navbar-container {
+        .loading-animation-container {
+            .loader-container {
+                height: 500px;
+            }
+        }
+        .navbar {
+            .navbar-second-row {
+                .navbar-second-row-border-container {
+                    @include transition(
+                        margin 1.5s linear 0.1s
+                    );
+                }
+            }
+        }
+    }
+}
 
 @keyframes logo-slide-down {
     from {

@@ -9,6 +9,7 @@ import _ = require('lodash');
 import { AppNavigationState } from '../../constants/app-navigation-state';
 import { EventListener } from '@angular/core/src/debug/debug_node';
 import { AppBreakpoints } from '../../constants/app-breakpointss';
+import { TweenMax, Power4} from '../../resources/TweenMax.min';
 
 
 @Component({
@@ -24,12 +25,23 @@ export class Navigation01Component implements OnInit {
   pageIsHome = false;
   isBrowser = false;
   appHeight: number = 0;
+  appWidth: number = 0;
   borderWidth: number = 0;
   activeNavigationElementIndex = 0;
   isSmallDevice = true;
   previousUrl = '';
 
   @ViewChild('navbarsecondrowborderelement') navbarSecondRowBorderElement: ElementRef;
+  @ViewChild('canvaselement') canvasElement: ElementRef;
+
+  sw = 800;
+  sh = 300;
+  pixelRatio = 2;
+
+  canvas: any;
+  ctx: any;
+  leon: any;
+
   
   constructor(
     private modelService: ModelService,
@@ -68,6 +80,12 @@ export class Navigation01Component implements OnInit {
       }
     );
 
+    this.modelService.getAppWidth().subscribe(
+      (x) => {
+        this.appWidth = x;
+      }
+    );
+
     this.modelService.getActiveNavigationElementIndex().subscribe(
       (index) => {
         this.activeNavigationElementIndex = index;
@@ -75,21 +93,68 @@ export class Navigation01Component implements OnInit {
       }
     )
 
-    this.modelService.getAppWidth().subscribe(
-      (width) => {
-        if (width <= AppBreakpoints.MEDIUM) {
-          this.isSmallDevice = true;
-        } else {
-          this.isSmallDevice = false;
-        }
+    this.modelService.getAppWidth().subscribe((width) => {
+      if (width <= AppBreakpoints.MEDIUM) {
+        this.isSmallDevice = true;
+      } else {
+        this.isSmallDevice = false;
       }
-    )
+      this.canvas = this.canvasElement.nativeElement;
+      this.ctx = this.canvas.getContext("2d");
+      this.canvas.width = width * this.pixelRatio;
+      this.canvas.height = this.sh * this.pixelRatio;
+      this.canvas.style.width = width + 'px';
+      this.canvas.style.height = this.sh + 'px';
+      this.ctx.scale(this.pixelRatio, this.pixelRatio);
+
+      this.leon = new LeonSans({
+          text: 'STADLERSTADLER',
+          color: ['#222222'],
+          size: 100,
+          weight: 400,
+          align: 'center'
+      });
+
+      requestAnimationFrame(this.animate.bind(this));
+
+      let i, total = this.leon.drawing.length;
+      // for (i = 0; i < total; i++) {
+      //   TweenMax.fromTo(this.leon.drawing[i], 1.6, {
+      //       value: 0
+      //     }, {
+      //       delay: i * 0.05,
+      //       value: 1,
+      //       ease: Power4.easeOut
+      //   });
+      // }
+    })
 
     this.router.events.subscribe((evt: any) => {
       this.pageIsHome = evt.url === '/';
       this.modelService.updateNavigation(evt.url);
     });
+
+
+
+    
   }
+
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
+
+    this.ctx.clearRect(0, 0, this.sw, this.sh);
+
+    const x = (this.sw - this.leon.rect.w) / 2;
+    const y = (this.sh - this.leon.rect.h) / 2;
+    this.leon.position(x, y);
+
+    this.leon.draw(this.ctx);
+    this.leon.point(this.ctx);
+    // this.leon.box(this.ctx);
+    // this.leon.grid(this.ctx);
+
+  }
+  
 
   @HostListener('window:resize', ['$event'])
   onesize(event: any){

@@ -12,6 +12,7 @@ import { ImageGalleryComponent } from './angular-components/image-gallery/image-
 import { ImprintComponent } from './angular-components/imprint/imprint.component';
 import { PrivacyComponent } from './angular-components/privacy/privacy.component';
 import { ImageGallery02Component } from './angular-components/image-gallery-02/image-gallery-02.component';
+import { LeonSansAnimationComponent } from './angular-components/leon-sans-animation/leon-sans-animation.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { ImageGallery02Component } from './angular-components/image-gallery-02/i
         ImageGalleryComponent,
         ImageGallery02Component,
         ImprintComponent,
-        PrivacyComponent
+        PrivacyComponent,
+        LeonSansAnimationComponent
     ], 
     exports: [
         PluginComponent,
@@ -42,7 +44,8 @@ import { ImageGallery02Component } from './angular-components/image-gallery-02/i
         ImageGalleryComponent,
         ImageGallery02Component,
         ImprintComponent,
-        PrivacyComponent
+        PrivacyComponent,
+        LeonSansAnimationComponent
     ]
 })
 export class ComponentsPluginModule { 

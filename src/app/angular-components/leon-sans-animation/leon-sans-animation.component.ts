@@ -1,7 +1,7 @@
 import { NavigationElement } from './../../school-common/classes/navigation-element';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModelService } from '../../services/model.service';
 import { ApplicationIdentifier } from '../../constants/application-identifier';
 import { NavigationConfigService } from '../../services/navigation-config-service';
@@ -11,29 +11,22 @@ import { EventListener } from '@angular/core/src/debug/debug_node';
 import { AppBreakpoints } from '../../constants/app-breakpointss';
 import { TweenMax, Power4} from '../../resources/TweenMax.min';
 
-
 @Component({
-  selector: 'wrc-navigation-01',
-  templateUrl: 'navigation-01.component.html',
+  selector: 'wrc-leon-sans-animation',
+  templateUrl: 'leon-sans-animation.component.html',
   styleUrls: []
 })
-export class Navigation01Component implements OnInit {
+export class LeonSansAnimationComponent implements OnInit {
 
-  isMobileNavOpen = false;
   pageLoaded = false;
   pageInitiallyLoaded = false;
-  pageIsHome = false;
   isBrowser = false;
   appHeight: number = 0;
   appWidth: number = 0;
-  borderWidth: number = 0;
-  activeNavigationElementIndex = 0;
   isSmallDevice = true;
-  previousUrl = '';
-  private sub: any;
 
-  @ViewChild('navbarsecondrowborderelement') navbarSecondRowBorderElement: ElementRef;
   @ViewChild('canvaselement') canvasElement: ElementRef;
+  @Input() textparam: any;
 
   sw = 800;
   sh = 300;
@@ -48,13 +41,11 @@ export class Navigation01Component implements OnInit {
     private modelService: ModelService,
     private router: Router,
     private zenkitCollectionsConfig: ZenkitCollectionsService,
-    public navigationConfig: NavigationConfigService,
-    private route: ActivatedRoute
+    public navigationConfig: NavigationConfigService
   ) { }
 
   ngOnInit() {
 
-    this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
 
     this.isBrowser = this.modelService.isPlatformBrowser();
     if (this.isBrowser) {
@@ -82,47 +73,78 @@ export class Navigation01Component implements OnInit {
       }
     );
 
-    this.modelService.getAppWidth().subscribe(
+    this.modelService.getAppHeight().subscribe(
       (x) => {
-        this.appWidth = x;
+        this.appHeight = x;
+        if (this.appWidth > 0) {
+          this.createLeonSans();
+        }
       }
     );
 
-    this.modelService.getActiveNavigationElementIndex().subscribe(
-      (index) => {
-        this.activeNavigationElementIndex = index;
-        console.log('Navigation index: ' + index);
-      }
-    )
-
     this.modelService.getAppWidth().subscribe((width) => {
+      if (width <= 0) {
+        return width;
+      }
+      this.appWidth = width;
       if (width <= AppBreakpoints.MEDIUM) {
         this.isSmallDevice = true;
       } else {
         this.isSmallDevice = false;
       }
-    })   
-    
-    this.sub = this.router.events.subscribe(val => {
-      this.modelService.updateNavigation(val.url);
+      if (this.appHeight > 0) {
+        this.createLeonSans();
+      }
     })
-  }  
-
-  @HostListener('window:resize', ['$event'])
-  onesize(event: any){
-    this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
+      
   }
 
-  toggleMobileNav() {
-    this.isMobileNavOpen = !this.isMobileNavOpen;
+  createLeonSans() {
+    this.canvas = this.canvasElement.nativeElement;
+    this.ctx = this.canvas.getContext("2d");
+    this.canvas.width = this.appWidth * this.pixelRatio;
+    this.canvas.height = this.appHeight * this.pixelRatio;
+    this.canvas.style.width = this.appWidth + 'px';
+    this.canvas.style.height = this.appHeight + 'px';
+    this.ctx.scale(this.pixelRatio, this.pixelRatio);
+
+    this.leon = new LeonSans({
+        text: _.upperCase(this.textparam),
+        color: ['#222222'],
+        size: 300,
+        weight: 400,
+        align: 'center'
+    });
+
+    requestAnimationFrame(this.animate.bind(this));
+
+    let i, total = this.leon.drawing.length;
+    
+    for (i = 0; i < total; i++) {
+      TweenMax.fromTo(this.leon.drawing[i], 3, {
+          value: 0
+        }, {
+          delay: i * 0.05,
+          value: 1,
+          ease: Power4.easeOut
+      });
+    }  
   }
 
-  closeMobileNav() {
-    this.isMobileNavOpen = false;
-  }
+  animate() {
+    requestAnimationFrame(this.animate.bind(this));
 
-  getRouterLink(element: any) {
-    return element.routerLink;
+    this.ctx.clearRect(0, 0, this.sw, this.sh);
+
+    const x = (this.appWidth - this.leon.rect.w) / 2;
+    const y = (this.appHeight - this.leon.rect.h) / 2;
+    this.leon.position(x, y);
+
+    this.leon.draw(this.ctx);
+    // this.leon.point(this.ctx);
+    // this.leon.box(this.ctx);
+    // this.leon.grid(this.ctx);
+
   }
 
   isApplicationYW() {
@@ -136,17 +158,4 @@ export class Navigation01Component implements OnInit {
   isApplicationSS() {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.SS;
   }
-
-  getLoaderContainerStyle() {
-    if (this.isSmallDevice) {
-      return {
-        height: this.appHeight + 'px'
-      }
-    } else {
-      return {
-        height : '500px'
-      }
-    }
-  }
-
 }

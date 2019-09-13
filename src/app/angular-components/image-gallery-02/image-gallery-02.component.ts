@@ -20,6 +20,7 @@ export class ImageGallery02Component implements OnInit {
   allImagesLoadedTimeout = 4000;
   allImagesLoadedTimeoutPassed = false;
   isBrowser = this.modelService.isPlatformBrowser();
+  pageLoaded = false;
 
   constructor(
     private modelService: ModelService,
@@ -37,6 +38,14 @@ export class ImageGallery02Component implements OnInit {
         this.allImagesLoadedTimeoutPassed = true;
       }, this.allImagesLoadedTimeout)
     }
+
+    this.modelService.isPageLoaded().subscribe(
+      (x) => {
+        if (this.modelService.isPlatformBrowser()) {
+          this.pageLoaded = x;
+        }
+      }
+    );
   }
 
   getDateStringLong(date: Date) {
@@ -57,4 +66,6 @@ export class ImageGallery02Component implements OnInit {
       this.allImagesLoaded = true;
     }
   }
+
+
 }

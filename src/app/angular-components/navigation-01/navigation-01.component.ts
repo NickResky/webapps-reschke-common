@@ -96,7 +96,7 @@ export class Navigation01Component implements OnInit {
     )
 
     this.modelService.getAppWidth().subscribe((width) => {
-      if (width <= AppBreakpoints.MEDIUM) {
+      if (width < AppBreakpoints.MEDIUM) {
         this.isSmallDevice = true;
       } else {
         this.isSmallDevice = false;
@@ -104,13 +104,17 @@ export class Navigation01Component implements OnInit {
     })   
     
     this.sub = this.router.events.subscribe(val => {
-      this.modelService.updateNavigation(val.url);
+      this.modelService.updateNavigation(_.get(val, ['url']));
     })
   }  
 
   @HostListener('window:resize', ['$event'])
   onesize(event: any){
     this.borderWidth = this.navbarSecondRowBorderElement.nativeElement.clientWidth / this.navigationConfig.navigationElements.length;
+  }
+
+  redirect(url: string) {
+    this.modelService.updateNavigation(url);
   }
 
   toggleMobileNav() {

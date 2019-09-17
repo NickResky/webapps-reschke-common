@@ -29,10 +29,6 @@ export class Footer01Component implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.modelService.isPageLoaded().subscribe(
-      (x: any) => {
-        this.mainPageContentLoaded = x;
-      });
 
     Promise.all([
       this.modelService.getContact(),
@@ -53,6 +49,7 @@ export class Footer01Component implements OnInit {
         if (this.modelService.isPlatformBrowser()) {
           this.pageLoaded = x;
         }
+        this.mainPageContentLoaded = x;
       }
   );
   }

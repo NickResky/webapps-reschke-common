@@ -67,5 +67,7 @@ export class ImageGallery02Component implements OnInit {
     }
   }
 
-
+  redirect(url: string) {
+    this.modelService.updateNavigation('projekte/' + url);
+  }
 }

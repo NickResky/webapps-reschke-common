@@ -18,6 +18,7 @@ export class PortfolioOverview01Component implements OnInit {
   galleryImages: any;
   posts: BlogPost[]|undefined;
   isBrowser = this.modelService.isPlatformBrowser();
+  pageLoaded = false;
 
   constructor(
     private modelService: ModelService,
@@ -46,6 +47,13 @@ export class PortfolioOverview01Component implements OnInit {
           imageLoaded: false
         }
       });
+      this.modelService.setPageLoaded(true);
     });
+
+    this.modelService.isPageLoaded().subscribe(
+      (x) => {
+        this.pageLoaded = x;
+      }
+    );
   }
 }

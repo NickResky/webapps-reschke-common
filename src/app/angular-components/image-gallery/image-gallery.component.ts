@@ -40,6 +40,7 @@ export class ImageGalleryComponent implements OnInit {
   mouseOverStartTime: number;
   breakpointMedium = 576;
   isDeviceMobile = this.modelService.isDeviceMobile();
+  pageLoaded = false;
 
   @ViewChild('sliderelement') sliderElement: ElementRef;
   @ViewChild('gallerycontainerelement') galleryContainerElement: ElementRef;
@@ -68,6 +69,12 @@ export class ImageGalleryComponent implements OnInit {
         }, 200);
       }
     });
+
+    this.modelService.isPageLoaded().subscribe(
+      (x) => {
+        this.pageLoaded = true;
+      }
+    );
   }
 
   @HostListener('window:resize', ['$event'])

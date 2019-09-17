@@ -1,7 +1,7 @@
 <div class="navbar-container" [ngClass]="[navigationConfig.displaySecondRow ? 'showSecondRow' : '']">
   <div class="loading-animation-container" >
     <div class="loader-container" [ngClass]="[
-      pageLoaded || !isBrowser ? 'hide' : '',
+    pageLoaded || !isBrowser ? 'hide' : '',
       !navigationConfig.displayLoadingAnimationInNavbar ? 'position-screen-center' : 'position-navbar']!"
       [ngStyle] = "!navigationConfig.displayLoadingAnimationInNavbar && !pageLoaded ? getLoaderContainerStyle() : {}">
       <div class="loader-circle"></div>
@@ -41,7 +41,7 @@
       </div>
       <div class="navbar-second-row" [ngClass]="[(pageLoaded || pageInitiallyLoaded) && isBrowser ? 'show' : '', !navigationConfig.displaySecondRow ? 'remove' : '']">
         <div class="navbar-second-row-elements">
-          <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" [routerLink]="element.routerLink" [ngClass]="[element.isActive ? 'isActive': '']">
+          <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" (click)="redirect(element.routerLink)" [ngClass]="[element.isActive ? 'isActive': '']">
           {{element.title}}
           </a>
         </div>

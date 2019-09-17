@@ -16,7 +16,7 @@ import * as propagating from 'propagating-hammerjs';
 })
 export class App01Component implements OnInit {
   title = 'app';
-  pageLoaded = false;
+  pageLoaded = true;
   removeOverlay = false;
   isBrowser = false;
   isDeviceMobile = false;

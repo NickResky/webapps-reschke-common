@@ -47,7 +47,6 @@ export class PortfolioOverview01Component implements OnInit {
           imageLoaded: false
         }
       });
-      this.modelService.setPageLoaded(true);
     });
 
     this.modelService.isPageLoaded().subscribe(

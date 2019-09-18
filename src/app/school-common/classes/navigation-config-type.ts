@@ -11,5 +11,6 @@ export interface NavigationConfigType {
     slideInAnimationActive: false,
     displayLoadingAnimationInNavbar: true,
     extendLoadingAnimationDuration: false,
+    fadeInAnimationDurationInMs: number,
     navigationElements: NavigationElement[]
 }

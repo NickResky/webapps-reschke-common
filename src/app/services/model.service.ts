@@ -54,16 +54,16 @@ export class ModelService {
     privacyData: Promise<string>;
     scheduleData: Promise<ScheduleData>|undefined;
     pageLoaded = new BehaviorSubject<boolean>(false);
-    loadingAnimationActive = new BehaviorSubject<boolean>(false);
+    loadingAnimationActive = new BehaviorSubject<boolean>(true);
     appWidth = new BehaviorSubject<number>(0);
     appHeight = new BehaviorSubject<number>(0);
     appNavigationState = new BehaviorSubject<AppNavigationState>(AppNavigationState.CENTER);
-    activeNavigationElementIndex = new BehaviorSubject<number>(0);
+    activeNavigationElementIndex = new BehaviorSubject<number>(this.getNavigationIndexFromUrl(this.router.url));
     lastTimePageLoaded = Date.now();
     startPageLoadTime = Date.now();
-    pageInitiallyLoaded = false;
-    previousRoute = '';
-    previousNavigationElementIndex = -1;
+    pageInitiallyLoaded = new BehaviorSubject<boolean>(false);;
+    previousRoute = this.router.url;
+    previousNavigationElementIndex = this.getNavigationIndexFromUrl(this.router.url);
 
     // pageLoaded = Observable.create(observer => {
     //     observer.onNext(false);
@@ -115,6 +115,10 @@ export class ModelService {
         return this.pageLoaded;
     }
 
+    isPageInitiallyLoaded() {
+        return this.pageInitiallyLoaded;
+    }
+
     updateLoadingStatus(pageLoaded: boolean) {
         if (pageLoaded) {
             this.lastTimePageLoaded = Date.now();
@@ -122,6 +126,10 @@ export class ModelService {
         this.pageLoaded.next(pageLoaded);
 
         this.loadingAnimationActive.next(!pageLoaded);
+
+        if (pageLoaded) {
+            this.pageInitiallyLoaded.next(true);
+        }
     }
 
     setPageLoaded(value: boolean) {
@@ -131,18 +139,13 @@ export class ModelService {
             const timeSincePageLoadStart = Date.now() - this.startPageLoadTime;
             const isBrowser = this.isPlatformBrowser();
 
-            if (!this.pageInitiallyLoaded && value && timeSincePageLoadStart < 2000) {
-                // Extend loading animation if the page content loads before the navigation animation has finished
-                setTimeout(() => {
-                    this.updateLoadingStatus(value);
-                }, 2000);
-            } else if (this.navigationConfig.extendLoadingAnimationDuration && value && (timeSinceLastPageLoad < 50000) && isBrowser) {
+           if (this.navigationConfig.extendLoadingAnimationDuration && value && (timeSinceLastPageLoad < 50000) && isBrowser) {
                 // Extend loading animation to ensure that the spinner is displayed after redirecting 
                 setTimeout(() => {
                     this.updateLoadingStatus(value);
                 }, 500);
             } else {
-                this.pageLoaded.next(value);
+                this.updateLoadingStatus(value);
             }
 
 
@@ -156,9 +159,6 @@ export class ModelService {
                     this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_LEFT);
                 }
             }
-        }
-        if (value) {
-            this.pageInitiallyLoaded = true;
         }
         return value;
     }
@@ -202,74 +202,101 @@ export class ModelService {
         return this.activeNavigationElementIndex;
     }
 
-    updateNavigation(route: string) {
-
-        this.setActiveNavigationElementIndex(route, -1);
-
+    updateNavigation(url: string) {
+        // if (!_.isNil(url) && this.previousRoute != url) {
+            this.setActiveNavigationElementIndex(url, -1);
+            this.updateAnimation(this.activeNavigationElementIndex.value, url);
+            this.redirect(url);
+        // }
     }
 
     setActiveNavigationElementIndex(url: string, index: number) {
-        if (!_.isNil(url) && this.previousRoute != url) {
 
+        // if (this.previousRoute != url) {
             let navigationIndex: number;
 
-            if (index && index > 0) {
+            if (index >= 0) {
                 navigationIndex = index;
-            } else if (url === '/' || _.includes(url, 'projekte')) {
-                navigationIndex = 0;
             } else {
-            navigationIndex = 
-                _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => {
-                    if (url === '/' || element.routerLink === '/') {
-                    return false;
-                    }
-                    const containsLink = _.includes(url, element.routerLink);
-                    return containsLink;
-                });
+                navigationIndex = this.getNavigationIndexFromUrl(url);
             }
 
-            // only apply slide animations on mobile
-            if (this.appWidth.value < AppBreakpoints.MEDIUM && navigationIndex >= 0) {
-                if (this.activeNavigationElementIndex.value < navigationIndex) {
-                    this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_CENTER);
-                } else {
-                    this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_CENTER);
-                }
-            } else {
-                if (this.isPlatformBrowser()) {
-
-                    this.setAppNavigationState(AppNavigationState.FADE_OUT);
-
-                    setTimeout(() => {
-                        this.setAppNavigationState(AppNavigationState.CENTER);
-                    }, 700);
-                }
-            }
-
-            if (this.isPlatformBrowser && this.navigationConfig.slideOutAnimationActive) {
-                setTimeout(()=> {
-                this.router.navigate([url]);
-                }, 700)
-            } else {
-                this.router.navigate([url]);
-            }
-
-            this.previousRoute = url;
             this.previousNavigationElementIndex = navigationIndex;
             this.activeNavigationElementIndex.next(navigationIndex);
             return navigationIndex;
+        // }
+    }
+    
+    redirect(url: string) {
+        if (url) {
+            if (this.isPlatformBrowser && this.navigationConfig.slideOutAnimationActive) {
+                setTimeout(()=> {
+                    this.previousRoute = url;
+                    this.router.navigate([url]);
+                }, 700)
+            } else {
+                this.previousRoute = url;
+                this.router.navigate([url]);
+            }
         }
+    }
+
+    updateAnimation(navigationIndex: number, url: string) {
+        
+        // only apply slide animations on mobile
+        if (this.appWidth.value < AppBreakpoints.MEDIUM && navigationIndex >= 0) {
+            if (this.activeNavigationElementIndex.value < navigationIndex) {
+                this.setAppNavigationState(AppNavigationState.SLIDE_RIGHT_FROM_CENTER);
+            } else {
+                this.setAppNavigationState(AppNavigationState.SLIDE_LEFT_FROM_CENTER);
+            }
+        } else {
+            if (this.isPlatformBrowser()) {
+
+                this.setAppNavigationState(AppNavigationState.FADE_OUT);
+
+                setTimeout(() => {
+                    this.setAppNavigationState(AppNavigationState.CENTER);
+                }, 700);
+            }
+        }
+    }
+
+    getNavigationIndexFromUrl(url: string) {
+        if (url === '/' || _.includes(url, 'projekte')) {
+            return 0;
+        } 
+
+        const navigationIndex = 
+            _.findIndex(this.navigationConfig.navigationElements, (element: NavigationElement) => { 
+                if (url === '/' || element.routerLink === '/') {
+                    return false;
+                }
+                const containsLink = _.includes(url, element.routerLink);
+                return containsLink;
+            });
+        return navigationIndex;
     }
 
     navigationSwipeLeft() {
         if (this.activeNavigationElementIndex.value < (this.navigationConfig.navigationElements.length -1)) {
             this.setActiveNavigationElementIndex('', this.activeNavigationElementIndex.value + 1);
+            
+            const url = this.navigationConfig.navigationElements[this.activeNavigationElementIndex.value].routerLink;
+            
+            this.updateAnimation(this.activeNavigationElementIndex.value, url);
+            this.redirect(url);
         }
     }
 
     navigationSwipeRight() {
         if (this.activeNavigationElementIndex.value > 0 ) {
             this.setActiveNavigationElementIndex('', this.activeNavigationElementIndex.value - 1);
+            
+            const url = this.navigationConfig.navigationElements[this.activeNavigationElementIndex.value].routerLink;
+            
+            this.updateAnimation(this.activeNavigationElementIndex.value, url);
+            this.redirect(url);
         }
     }
 

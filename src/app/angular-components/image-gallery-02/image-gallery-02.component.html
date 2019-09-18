@@ -4,7 +4,7 @@
       <a class="image-container" [routerLink]="[image.routerLink]">
         <!-- <div class="post-image" [ngStyle]="getPostImageBackgroundStyle(post)" *ngIf="post.images && post.images.length > 0">
         </div> -->
-        <img class="image" [src]="image.url" (load)="imageLoaded(image)" [ngClass]="image.imageLoaded && pageLoaded && (allImagesLoaded || allImagesLoadedTimeoutPassed) ? 'loaded': ''"/>
+        <img class="image" [src]="image.url" (load)="imageLoaded(image)" [ngClass]="image.imageLoaded && pageLoaded && allImagesLoaded ? 'loaded': ''"/>
         <div class="post-image-title-container">
           <h2 [innerHTML]='image.title' class="post-image-title wrc-heading-02"></h2>
         </div>

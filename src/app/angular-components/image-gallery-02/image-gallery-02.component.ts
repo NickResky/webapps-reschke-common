@@ -1,3 +1,4 @@
+import { NavigationConfigService } from './../../services/navigation-config-service';
 import { isPlatformBrowser } from '@angular/common';
 import { PortfolioConfigService } from './../../services/portfolio-config-service';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
@@ -21,11 +22,13 @@ export class ImageGallery02Component implements OnInit {
   allImagesLoadedTimeoutPassed = false;
   isBrowser = this.modelService.isPlatformBrowser();
   pageLoaded = false;
+  pageInitiallyLoaded = false;
 
   constructor(
     private modelService: ModelService,
     private zenkitCollectionsConfig: ZenkitCollectionsService,
-    public portfolioConfig: PortfolioConfigService
+    public portfolioConfig: PortfolioConfigService,
+    private navigationConfig: NavigationConfigService
   ) {
 
   }
@@ -39,11 +42,24 @@ export class ImageGallery02Component implements OnInit {
       }, this.allImagesLoadedTimeout)
     }
 
-    this.modelService.isPageLoaded().subscribe(
+    this.modelService.isLoadingAnimationActive().subscribe(
       (x) => {
         if (this.modelService.isPlatformBrowser()) {
-          this.pageLoaded = x;
+          if (!x && !this.pageInitiallyLoaded && this.isBrowser) {
+            // When the page is loaded for the first time the gallery is supposed to fade in after the navigation
+            setTimeout(() => {
+              this.pageLoaded = !x;
+            }, this.navigationConfig.fadeInAnimationDurationInMs);
+          } else {
+            this.pageLoaded = !x;
+          }
         }
+      }
+    );
+
+    this.modelService.isPageInitiallyLoaded().subscribe(
+      (x) => {
+        this.pageInitiallyLoaded = x
       }
     );
   }

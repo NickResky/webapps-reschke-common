@@ -12,5 +12,6 @@ export class NavigationConfigService {
     slideInAnimationActive = false;
     displayLoadingAnimationInNavbar = true;
     extendLoadingAnimationDuration = false;
+    fadeInAnimationDurationInMs = 1500;
     navigationElements: NavigationElement[];
 }

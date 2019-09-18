@@ -232,7 +232,6 @@
 
 @media (min-width: $media-breakpoint-lg) {
     .image-gallery-02-container {
-        max-width: $media-breakpoint-lg;
         margin: 0 auto;     
         .gallery-image-container {
             width: (100% / $portfolio-columns-large);
@@ -250,5 +249,23 @@
                 @include childPostBorderBottomNone($portfolio-columns-large);
             }
         }  
+    }
+}
+
+@media (min-width: $media-breakpoint-xl) {
+    .image-gallery-02-container {
+        margin: 0 auto;     
+        .gallery-image-container {
+            width: (100% / $portfolio-columns-large);
+            @include childPostPaddingLeftNone($portfolio-columns-large);
+            @include childPostPaddingRightNone($portfolio-columns-large);
+            @include childPostBorderRightNone($portfolio-columns-large);
+            @include childPostBorderBottomNone($portfolio-columns-large); 
+            .gallery-image {
+                .image-container {
+                    height: 200px;
+                }
+            }
+        }
     }
 }

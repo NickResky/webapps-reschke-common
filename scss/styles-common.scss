@@ -253,3 +253,19 @@ $navigationSlideAnimationDuration: 0.7s;
         }
     }
 }
+
+@media (min-width: $media-breakpoint-xl) {
+    .main-content-container {
+        .main-content {
+            max-width: $media-breakpoint-xl;
+        }
+    }
+}
+
+@media (min-width: $media-breakpoint-xxl) {
+    .main-content-container {
+        .main-content {
+            max-width: $media-breakpoint-xxl;
+        }
+    }
+}

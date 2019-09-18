@@ -118,8 +118,13 @@
             .footer-section-container {
                 width: 33%;
                 @include flexbox();
+                position: relative;
                 .footer-section {
                     text-align: left;
+                    &.right {
+                        right: 0;
+                        position: absolute;
+                    }
                     &.footer-section-contact {
                         padding-right: 50px;
                     }

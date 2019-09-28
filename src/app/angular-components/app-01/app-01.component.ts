@@ -5,7 +5,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, HostListen
 import { Router, NavigationEnd } from '@angular/router';
 import { ModelService } from '../../services/model.service';
 import { SeoService } from '../../services/seo.service';
-import * as Hammer from 'hammerjs';
+import * as Hammer from '../../resources/hammer.min';
 import * as propagating from 'propagating-hammerjs';
 
 @Component({
@@ -18,7 +18,7 @@ export class App01Component implements OnInit {
   title = 'app';
   pageLoaded = true;
   removeOverlay = false;
-  isBrowser = false;
+  isBrowser = this.modelService.isPlatformBrowser();;
   isDeviceMobile = false;
   appNavigationState: AppNavigationState = AppNavigationState.CENTER;
 
@@ -43,7 +43,10 @@ export class App01Component implements OnInit {
 
   ngOnInit() {
 
-    this.isBrowser = this.modelService.isPlatformBrowser();
+    if (this.isBrowser) {
+
+    }
+
     if (this.isBrowser) {
       console.log("Platform is browser");
       this.pageLoaded = false;
@@ -94,19 +97,22 @@ export class App01Component implements OnInit {
         this.appNavigationState = state;
       }
     );
-    const hammer1 = propagating(new Hammer(this.appContainerElement.nativeElement));
-    hammer1
-      .on("swipeleft", (ev: any)=> {
-        if (this.navigationConfig.slideActive) {
-          this.onSwipeLeft();
-        }
-      })
-      .on("swiperight", (ev: any)=> {
-        if (this.navigationConfig.slideActive) {
-          this.onSwipeRight();
-        }
-      });
 
+    if (this.isBrowser) {
+
+      const hammer1 = propagating(new Hammer(this.appContainerElement.nativeElement));
+      hammer1
+        .on("swipeleft", (ev: any)=> {
+          if (this.navigationConfig.slideActive) {
+            this.onSwipeLeft();
+          }
+        })
+        .on("swiperight", (ev: any)=> {
+          if (this.navigationConfig.slideActive) {
+            this.onSwipeRight();
+          }
+        });
+    }
   }
 
   onSwipeLeft() {

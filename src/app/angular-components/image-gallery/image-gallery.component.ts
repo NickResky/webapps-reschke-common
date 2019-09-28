@@ -7,7 +7,7 @@ import 'rxjs/Rx';
 import { BlogPost } from '../../../../classes';
 import { UtilityService } from '../../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as Hammer from 'hammerjs';
+import * as Hammer from '../../resources/hammer.min';
 import * as propagating from 'propagating-hammerjs';
 
 @Component({
@@ -96,16 +96,18 @@ export class ImageGalleryComponent implements OnInit {
       }
     );
 
-    const hammer1 = propagating(new Hammer(this.sliderElement.nativeElement));
-    hammer1
-      .on("swipeleft", (ev: any)=> {
-        this.onSliderSwipeLeft();
-        ev.stopPropagation();
-      })
-      .on("swiperight", (ev: any)=> {
-        this.onSliderSwipeRight();
-        ev.stopPropagation();
-      });
+    if (this.isBrowser) {
+      const hammer1 = propagating(new Hammer(this.sliderElement.nativeElement));
+      hammer1
+        .on("swipeleft", (ev: any)=> {
+          this.onSliderSwipeLeft();
+          ev.stopPropagation();
+        })
+        .on("swiperight", (ev: any)=> {
+          this.onSliderSwipeRight();
+          ev.stopPropagation();
+        });
+    }
   }
 
   onSliderSwipeLeft() {

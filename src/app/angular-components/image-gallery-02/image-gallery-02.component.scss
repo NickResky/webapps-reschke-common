@@ -197,9 +197,20 @@
         .gallery-image-container {
             .image-container {
                 .post-image-title-container {
+                    .post-image-title {
+                        transform: translateY(15px);
+                        opacity: 0;
+                        @include transition(
+                            all .3s cubic-bezier(1,0,0,1)
+                        );
+                    }
                     &:hover {
                         background-color: rgba($main-background-color-dark, 0.8);
                         opacity: 1;
+                        .post-image-title {
+                            transform: translateY(0px);
+                            opacity: 1;
+                        }
                     }
                 }
             }

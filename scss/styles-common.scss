@@ -102,6 +102,7 @@ $navigationSlideAnimationDuration: 0.7s;
 .wrc-heading-02 {
     font-weight: $heading-02-font-weight;
     font-size: $heading-02-font-size;
+    font-family: $heading-02-font-family;
 }
 
 .tth-button {
@@ -257,7 +258,7 @@ $navigationSlideAnimationDuration: 0.7s;
 @media (min-width: $media-breakpoint-xl) {
     .main-content-container {
         .main-content {
-            max-width: $media-breakpoint-xl;
+            // max-width: $media-breakpoint-xl;
         }
     }
 }
@@ -265,7 +266,7 @@ $navigationSlideAnimationDuration: 0.7s;
 @media (min-width: $media-breakpoint-xxl) {
     .main-content-container {
         .main-content {
-            max-width: $media-breakpoint-xxl;
+            // max-width: $media-breakpoint-xxl;
         }
     }
 }

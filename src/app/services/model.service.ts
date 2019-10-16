@@ -35,7 +35,7 @@ import { UtilityService } from './utility.service';
 import { AppNavigationState } from '../constants/app-navigation-state';
 import { Router } from '@angular/router';
 import { NavigationElement } from '../school-common/classes/navigation-element';
-import { AppBreakpoints } from '../constants/app-breakpointss';
+import { AppBreakpoints } from '../constants/app-breakpoints';
 
 @Injectable({
     providedIn: 'root'

@@ -1,13 +1,15 @@
+import { AppBreakpoints } from './../../constants/app-breakpoints';
 import { NavigationConfigService } from './../../services/navigation-config-service';
 import { isPlatformBrowser } from '@angular/common';
 import { PortfolioConfigService } from './../../services/portfolio-config-service';
 import { ZenkitCollectionsService } from './../../services/zenkit-collections.service';
 import { ModelService } from './../../services/model.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 import 'rxjs/Rx';
 import { BlogPost } from '../../../../classes';
 import { UtilityService } from '../../../../services';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'wrc-image-gallery-02',
@@ -17,12 +19,49 @@ import { UtilityService } from '../../../../services';
 export class ImageGallery02Component implements OnInit {
 
   @Input() images: any;
-  allImagesLoaded = false;
+  allImagesLoaded = true;
   allImagesLoadedTimeout = 4000;
   allImagesLoadedTimeoutPassed = false;
   isBrowser = this.modelService.isPlatformBrowser();
   pageLoaded = false;
   pageInitiallyLoaded = false;
+  displayLargeImages = true;
+  galleryContainerWidth = 0;
+  imageWidth = 0;
+  imageHeight = 0;
+  appWidth = 0;
+  onlyShowTitleImages = true;
+
+
+  @ViewChild('galleryContainerElement') galleryContainerElement: ElementRef;
+
+  viewTypes = [
+    {
+      name: "large",
+      title: "Liste",
+      class: "fas fa-th-large",
+      active: true
+    },
+    {
+      name: "small",
+      title: "Kacheln",
+      class: "fas fa-th",
+      active: false
+    }
+  ]
+
+  filterOptions = [
+    {
+      name: "all-images",
+      title: "Alle Bilder",
+      active: false
+    },
+    {
+      name: "only-title-images",
+      title: "Titelbilder",
+      active: true
+    }
+  ]
 
   constructor(
     private modelService: ModelService,
@@ -34,7 +73,7 @@ export class ImageGallery02Component implements OnInit {
   }
 
   ngOnInit() {
-    this.modelService.setPageLoaded(false);
+    this.modelService.setPageLoaded(true);
 
     if (this.isBrowser) {
       setTimeout(() => {
@@ -62,6 +101,47 @@ export class ImageGallery02Component implements OnInit {
         this.pageInitiallyLoaded = x
       }
     );
+
+    this.modelService.getAppWidth().subscribe(
+      (x) => {
+        this.appWidth = x;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
+
+    this.updateGallery();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onesize(event: any){
+    this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
+    console.log("gallery width: " + this.galleryContainerWidth);
+    this.updateGallery();
+  }
+
+  updateGallery() {
+    if (this.displayLargeImages) {
+      this.imageWidth = this.galleryContainerWidth;
+    } else {
+      this.imageWidth = this.galleryContainerWidth / 2;
+    }
+
+    if (this.appWidth > AppBreakpoints.MEDIUM) {
+      if (this.displayLargeImages) {
+        this.imageWidth = this.galleryContainerWidth / 2;
+      } else {
+        this.imageWidth = this.galleryContainerWidth / 3;
+      }
+    }
+    if (
+      this.appWidth > AppBreakpoints.LARGE
+      && !this.displayLargeImages) {
+        this.imageWidth = this.galleryContainerWidth / 4;
+    }
+
+    this.imageHeight = (this.imageWidth / 16) * 9;
   }
 
   getDateStringLong(date: Date) {
@@ -85,5 +165,29 @@ export class ImageGallery02Component implements OnInit {
 
   redirect(url: string) {
     this.modelService.updateNavigation('projekte/' + url);
+  }
+
+  changeViewType(viewType: any) {
+    const type = _.find(this.viewTypes, {
+      name: viewType.name
+    })
+    this.viewTypes.forEach(type => {
+      type.active = false;
+    });
+    viewType.active = true;
+    this.displayLargeImages = viewType.name === 'large';
+    this.updateGallery();
+  }
+
+  changeFilter(filterOption: any) {
+    const option = _.find(this.filterOptions, {
+      name: filterOption.name
+    })
+    this.filterOptions.forEach(type => {
+      type.active = false;
+    });
+    option.active = true;
+    this.onlyShowTitleImages = filterOption.name === 'only-title-images';
+    this.updateGallery();
   }
 }

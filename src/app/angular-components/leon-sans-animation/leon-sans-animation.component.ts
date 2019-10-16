@@ -8,7 +8,7 @@ import { NavigationConfigService } from '../../services/navigation-config-servic
 import _ = require('lodash');
 import { AppNavigationState } from '../../constants/app-navigation-state';
 import { EventListener } from '@angular/core/src/debug/debug_node';
-import { AppBreakpoints } from '../../constants/app-breakpointss';
+import { AppBreakpoints } from '../../constants/app-breakpoints';
 import { TweenMax, Power4} from '../../resources/TweenMax.min';
 
 @Component({

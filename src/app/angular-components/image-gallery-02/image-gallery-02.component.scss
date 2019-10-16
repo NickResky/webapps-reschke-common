@@ -9,7 +9,7 @@
 @mixin childPostPaddingRightNone($nth) {
     &:nth-child(#{$nth}n + #{$nth}) {
         .gallery-image  {
-          padding-right: 0
+            padding-right: 0
         }
     }
 }
@@ -46,170 +46,282 @@
 .image-gallery-02-container {
     @include flexbox();
     @include flex-wrap(wrap);
-    .gallery-image-container {   
-        //color: #303030;
-        // opacity: 0;
-        // animation-name: fade-in;
-        // animation-delay: 1s;
-        // animation-duration: 0.7s;
-        // animation-timing-function: ease;
-        // animation-fill-mode: forwards;
-        @include flexbox();
-        @include flex-direction(column);
-        padding-bottom: 0;
-        display: inline-block;  
-        .gallery-image {
-            .image-container {
-                position: relative;
-                display: block;
-                height: 200px / $portfolio-columns-small;
-                @include flexbox();
-                @include flex-direction(column);
-                align-content: center;
-                align-items: center;
-                text-align: center;
-                justify-content: center;
-                .image {
-                    opacity: 0;
-                    @include transition(
-                        opacity 1.5s ease
-                    );
-                    width: 100%;
-                    height: 100%;
-                    background-size: cover;
-                    background-position: center;
-                    &.loaded {
-                        opacity: 1;
+    .image-gallery-02-controls {
+        margin-bottom: 20px;
+        opacity: 0;
+        width: 100%;
+        @include transition(
+            opacity 0.5s ease
+        );
+        &.show {
+            opacity: 1;
+        }
+        .controls-icon-container {
+            display: inline-block;
+            &.active {
+                .controls-icon, .controls-icon-container {
+                    color: $main-text-color;
+                }
+                .controls-icon-container {
+                    font-weight: 600;
+                }
+            }
+            .controls-icon {
+                margin-right: 5px;
+                color: $text-02-color;
+            }
+            .controls-icon-label {
+                font-size: 14px;
+                margin-right: 15px;
+            }
+        }
+        .filter-form {
+            display: inline-block;
+            float: right;
+        }
+    }
+    .gallery-images-container {
+        .gallery-image-container {   
+            //color: #303030;
+            // opacity: 0;
+            // animation-name: fade-in;
+            // animation-delay: 1s;
+            // animation-duration: 0.7s;
+            // animation-timing-function: ease;
+            // animation-fill-mode: forwards;
+            @include flexbox();
+            @include flex-direction(column);
+            padding-bottom: 0;
+            display: inline-block; 
+            &.display-large {
+                .gallery-image {
+                    .image-container {
+                        .post-image-title-container {
+                            opacity: 1;
+                            background-color: rgba($main-background-color-dark, 0.3);
+                            .post-image-title {
+                                font-size: 1.8em;
+                                line-height: 1.3em;
+                            }
+                       }
                     }
                 }
-                .default-icon {
-                    width: 40px;
-                    height: 100px;
-                    // background-image: url("../../../resources/Logo.png"); //no-repeat;
-                    background-size: 100% 100%;
+            }
+            &:not(.display-large) {
+                .gallery-image {
+                    .image-container {
+                        .post-image-title-container {
+                            .post-image-title {
+                                opacity: 0;
+                                font-size: 1.1em;
+                                line-height: 1em;
+                            }
+                       }
+                    }
                 }
-                .post-image-title-container {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    color: $main-text-color-on-dark-bg;
-                    opacity: 0;
-                    background-color: transparent;
-                    @include transition(
-                        background-color 0.3s ease,
-                        opacity 0.3s ease
-                    );
+            }
+            .gallery-image {
+                height: 100%;
+                .image-container {
+                    position: relative;
+                    display: block;
                     @include flexbox();
                     @include flex-direction(column);
                     align-content: center;
                     align-items: center;
                     text-align: center;
                     justify-content: center;
-                    .post-image-title {
-
+                    height: 100%;
+                    .image {
+                        opacity: 0;
+                        @include transition(
+                            opacity 1.5s ease
+                        );
+                        width: 100%;
+                        height: 100%;
+                        background-size: cover;
+                        background-position: center;
+                        &.loaded {
+                            opacity: 1;
+                        }
+                    }
+                    .default-icon {
+                        width: 40px;
+                        height: 100px;
+                        // background-image: url("../../../resources/Logo.png"); //no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    .post-image-title-container {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        color: $main-text-color-on-dark-bg;
+                        background-color: transparent;
+                        @include transition(
+                            background-color 0.3s ease,
+                            opacity 0.3s ease
+                        );
+                        @include flexbox();
+                        @include flex-direction(column);
+                        align-content: center;
+                        align-items: center;
+                        text-align: center;
+                        justify-content: center;
+                        &.hide {
+                            opacity: 0 !important;
+                        }
+                        .post-image-title {
+                            margin: 15px;
+                            font-family: serif;
+                            font-weight: 800;
+                        }
                     }
                 }
-            }
-            .post-date {
-                margin-top: 30px;
-                display: inline-block;
-                font-size: 12px;
-                padding: 0 10px;
-                font-weight: 600;
-                color: $main-background-color;
-                background-color: $main-text-color; 
-            }
-            .post-heading {
-                margin: 10px 0 5px 0;
-                line-height: 30px;
-            }
-            .post-description-container {
-                height: 150px;
-                padding-bottom: 20px;
-                text-overflow: ellipsis;
-                position: relative;
-                .post-description {
-                    height: 160px;
-                    overflow: hidden;
+                .post-date {
+                    margin-top: 30px;
+                    display: inline-block;
+                    font-size: 12px;
+                    padding: 0 10px;
+                    font-weight: 600;
+                    color: $main-background-color;
+                    background-color: $main-text-color; 
                 }
-                .post-description-overlay {
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 75px;
-                    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba($main-background-color,0)),color-stop(100%,$main-background-color));
-                    background: -webkit-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
-                    background: -o-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
-                    background: -ms-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
-                    background: linear-gradient(to bottom,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                .post-heading {
+                    margin: 10px 0 5px 0;
+                    line-height: 30px;
                 }
-            }
-            .post-more-button {
-                margin-top: 20px;
-                text-decoration: underline;
-            }
-        }
-    }  
-    &.showGrid {
-        .gallery-image-container {        
-            border-right: 1px solid $main-text-color;
-            border-bottom: 1px solid $main-text-color;
-        }
-    }  
-}
-
-@media (min-width: $media-breakpoint-sm) {
-    .image-gallery-02-container {
-        .gallery-image-container { 
-            .gallery-image {
-                .image-container {
-                    height: 150px
+                .post-description-container {
+                    height: 150px;
+                    padding-bottom: 20px;
+                    text-overflow: ellipsis;
+                    position: relative;
+                    .post-description {
+                        height: 160px;
+                        overflow: hidden;
+                    }
+                    .post-description-overlay {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 75px;
+                        background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba($main-background-color,0)),color-stop(100%,$main-background-color));
+                        background: -webkit-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: -o-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: -ms-linear-gradient(top,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                        background: linear-gradient(to bottom,rgba($main-background-color,0) 0%,$main-background-color 100%);
+                    }
+                }
+                .post-more-button {
+                    margin-top: 20px;
+                    text-decoration: underline;
                 }
             }
-        }
-    }
-}
-
-@media (max-width: $media-breakpoint-md - 1) {
-    .image-gallery-02-container {
-        .gallery-image-container {
-            width: (100% / $portfolio-columns-small);
-            @include childPostPaddingLeftNone($portfolio-columns-small);
-            @include childPostPaddingRightNone($portfolio-columns-small);
-            @include childPostBorderRightNone($portfolio-columns-small);
-            @include childPostBorderBottomNone($portfolio-columns-small); 
-            .gallery-image {
-                padding: 10px;
-            }
-        }
+        }  
         &.showGrid {
-            .gallery-image-container {         
-                @include childPostBorderRightNone($portfolio-columns-small);
-                @include childPostBorderBottomNone($portfolio-columns-small);
+            .gallery-image-container {        
+                border-right: 1px solid $main-text-color;
+                border-bottom: 1px solid $main-text-color;
             }
         }  
     }
 }
 
+@media (max-width: $media-breakpoint-md - 1) {
+    .image-gallery-02-container {
+        .gallery-images-container {
+            .gallery-image-container {
+                &:not(.display-large) {
+                    @include childPostPaddingLeftNone($portfolio-columns-small);
+                    @include childPostPaddingRightNone($portfolio-columns-small);
+                    @include childPostBorderRightNone($portfolio-columns-small);
+                    @include childPostBorderBottomNone($portfolio-columns-small);
+                    .gallery-image {
+                        padding: 10px;
+                    }
+                }
+            }
+        }
+        &.showGrid {
+            .gallery-images-container {
+                .gallery-image-container {         
+                    @include childPostBorderRightNone($portfolio-columns-small);
+                    @include childPostBorderBottomNone($portfolio-columns-small);
+                }
+            }
+        }  
+    }
+}
+
+@media (min-width: $media-breakpoint-sm) {
+    .image-gallery-02-container {
+        .gallery-images-container {
+            .gallery-image-container {
+                &.display-large {
+                    .gallery-image {
+                        .image-container {
+                            .post-image-title-container {
+                                .post-image-title {
+                                    font-size: 3em;
+                                    line-height: 1.2em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (min-width: $media-breakpoint-md) {
     .image-gallery-02-container {
-        .gallery-image-container {
-            .image-container {
-                .post-image-title-container {
-                    .post-image-title {
-                        transform: translateY(15px);
-                        opacity: 0;
-                        @include transition(
-                            all .3s cubic-bezier(1,0,0,1)
-                        );
+        .gallery-images-container {
+            .gallery-image-container {
+                &.display-large {
+                    @include childPostPaddingLeftNone(2);
+                    @include childPostPaddingRightNone(2);
+                    .gallery-image {
+                        .image-container {
+                            .post-image-title-container {
+                                background-color: rgba($main-background-color-dark, 0.05);
+                                .post-image-title {
+                                    font-size: 2em;
+                                }
+                            }
+                        }
                     }
-                    &:hover {
-                        background-color: rgba($main-background-color-dark, 0.8);
-                        opacity: 1;
-                        .post-image-title {
-                            transform: translateY(0px);
-                            opacity: 1;
+                }
+                &:not(.display-large) {
+                    .gallery-image {
+                        .image-container {
+                            .post-image-title-container {
+                                .post-image-title {
+                                    font-size: 1.5em;
+                                    line-height: 1.1em;
+                                }
+                            }
+                        }
+                    }
+                }
+                .gallery-image {
+                    .image-container {
+                        .post-image-title-container {
+                            .post-image-title {
+                                transform: translateY(15px);
+                                opacity: 0;
+                                @include transition(
+                                    all .3s cubic-bezier(1,0,0,1)
+                                );
+                            }
+                            &:hover {
+                                background-color: rgba($main-background-color-dark, 0.3);
+                                opacity: 1;
+                                .post-image-title {
+                                    transform: translateY(0px);
+                                    opacity: 1;
+                                }
+                            }
                         }
                     }
                 }
@@ -220,20 +332,25 @@
 
 @media (max-width: $media-breakpoint-lg) and (min-width: $media-breakpoint-md) {
     .image-gallery-02-container {
-        .gallery-image-container {
-            width: (100% / $portfolio-columns-medium);
-            @include childPostPaddingLeftNone($portfolio-columns-medium);
-            @include childPostPaddingRightNone($portfolio-columns-medium);
-            @include childPostBorderRightNone($portfolio-columns-medium);
-            @include childPostBorderBottomNone($portfolio-columns-medium); 
-            .gallery-image {
-                padding: 10px;
+        .gallery-images-container {
+            .gallery-image-container {
+                &:not(.display-large) {
+                    @include childPostPaddingLeftNone($portfolio-columns-medium);
+                    @include childPostPaddingRightNone($portfolio-columns-medium);
+                    @include childPostBorderRightNone($portfolio-columns-medium);
+                    @include childPostBorderBottomNone($portfolio-columns-medium);
+                } 
+                .gallery-image {
+                    padding: 10px;
+                }
             }
         }
         &.showGrid {
-            .gallery-image-container {         
-                @include childPostBorderRightNone($portfolio-columns-medium);
-                @include childPostBorderBottomNone($portfolio-columns-medium);
+            .gallery-images-container {
+                .gallery-image-container {         
+                    @include childPostBorderRightNone($portfolio-columns-medium);
+                    @include childPostBorderBottomNone($portfolio-columns-medium);
+                }
             }
         }  
     }
@@ -243,21 +360,38 @@
 
 @media (min-width: $media-breakpoint-lg) {
     .image-gallery-02-container {
-        margin: 0 auto;     
-        .gallery-image-container {
-            width: (100% / $portfolio-columns-large);
-            @include childPostPaddingLeftNone($portfolio-columns-large);
-            @include childPostPaddingRightNone($portfolio-columns-large);
-            @include childPostBorderRightNone($portfolio-columns-large);
-            @include childPostBorderBottomNone($portfolio-columns-large); 
-            .gallery-image {
-                padding: 20px;
+        margin: 0 auto;  
+        .gallery-images-container {   
+            .gallery-image-container {
+                &:not(.display-large) {
+                    width: (100% / $portfolio-columns-large);
+                    @include childPostPaddingLeftNone($portfolio-columns-large);
+                    @include childPostPaddingRightNone($portfolio-columns-large);
+                    @include childPostBorderRightNone($portfolio-columns-large);
+                    @include childPostBorderBottomNone($portfolio-columns-large); 
+                }
+                &.display-large {
+                    .gallery-image {
+                        .image-container {
+                            .post-image-title-container {
+                                .post-image-title {
+                                    font-size: 3em;
+                                }
+                            }
+                        }
+                    }
+                }
+                .gallery-image {
+                    padding: 20px;
+                }
             }
         }
         &.showGrid {
-            .gallery-image-container {         
-                @include childPostBorderRightNone($portfolio-columns-large);
-                @include childPostBorderBottomNone($portfolio-columns-large);
+            .gallery-images-container {
+                .gallery-image-container {         
+                    @include childPostBorderRightNone($portfolio-columns-large);
+                    @include childPostBorderBottomNone($portfolio-columns-large);
+                }
             }
         }  
     }
@@ -265,18 +399,6 @@
 
 @media (min-width: $media-breakpoint-xl) {
     .image-gallery-02-container {
-        margin: 0 auto;     
-        .gallery-image-container {
-            width: (100% / $portfolio-columns-large);
-            @include childPostPaddingLeftNone($portfolio-columns-large);
-            @include childPostPaddingRightNone($portfolio-columns-large);
-            @include childPostBorderRightNone($portfolio-columns-large);
-            @include childPostBorderBottomNone($portfolio-columns-large); 
-            .gallery-image {
-                .image-container {
-                    height: 200px;
-                }
-            }
-        }
+        margin: 0 auto;  
     }
 }

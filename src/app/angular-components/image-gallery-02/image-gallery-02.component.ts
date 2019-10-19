@@ -19,6 +19,7 @@ import { NgForm } from '@angular/forms';
 export class ImageGallery02Component implements OnInit {
 
   @Input() images: any;
+  filteredImages: any[];
   allImagesLoaded = true;
   allImagesLoadedTimeout = 4000;
   allImagesLoadedTimeoutPassed = false;
@@ -52,14 +53,14 @@ export class ImageGallery02Component implements OnInit {
 
   filterOptions = [
     {
-      name: "all-images",
-      title: "Alle Bilder",
-      active: false
-    },
-    {
       name: "only-title-images",
       title: "Titelbilder",
       active: true
+    },
+    {
+      name: "all-images",
+      title: "Alle Bilder",
+      active: false
     }
   ]
 
@@ -110,7 +111,7 @@ export class ImageGallery02Component implements OnInit {
 
   ngAfterViewInit() {
     this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
-
+    const test = this.images;
     this.updateGallery();
   }
 
@@ -122,6 +123,14 @@ export class ImageGallery02Component implements OnInit {
   }
 
   updateGallery() {
+
+    this.filteredImages = _.reduce(this.images, (filteredImages: any[], image) => {
+      if (image.isPrimaryImage || !this.onlyShowTitleImages) {
+        filteredImages.push(image);
+      }
+      return filteredImages;
+    }, []);
+
     if (this.displayLargeImages) {
       this.imageWidth = this.galleryContainerWidth;
     } else {
@@ -138,9 +147,9 @@ export class ImageGallery02Component implements OnInit {
     if (
       this.appWidth > AppBreakpoints.LARGE
       && !this.displayLargeImages) {
-        this.imageWidth = this.galleryContainerWidth / 4;
+        this.imageWidth = this.galleryContainerWidth / 5;
     }
-
+    this.imageWidth = this.imageWidth - 1.0;
     this.imageHeight = (this.imageWidth / 16) * 9;
   }
 
@@ -179,15 +188,15 @@ export class ImageGallery02Component implements OnInit {
     this.updateGallery();
   }
 
-  changeFilter(filterOption: any) {
+  changeFilter(filterName: string) {
     const option = _.find(this.filterOptions, {
-      name: filterOption.name
+      name: filterName
     })
     this.filterOptions.forEach(type => {
       type.active = false;
     });
     option.active = true;
-    this.onlyShowTitleImages = filterOption.name === 'only-title-images';
+    this.onlyShowTitleImages = filterName === 'only-title-images';
     this.updateGallery();
   }
 }

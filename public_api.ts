@@ -36,6 +36,8 @@ export { FooterConfigService } from './src/app/services/footer-config-service';
 /* -------------- Constants / Enums ---------------*/
 export { ElementTypes } from './src/app/constants/zenkit-element-types';
 export { ApplicationIdentifier } from './src/app/constants/application-identifier';
+export { FooterConfigSectionElementTypes } from './src/app/constants/footer-config-section-element-types';
+export { FooterConfigType } from './src/app/constants/footer-config-type';
 
 /* -------------- Classes ---------------*/
 export { Teacher } from './src/app/school-common/classes/teacher';

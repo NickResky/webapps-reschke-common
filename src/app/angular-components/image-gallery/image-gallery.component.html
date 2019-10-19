@@ -2,15 +2,15 @@
   <div class="image-main-container" [ngStyle]="{'height': mainImageHeight + 'px'}" *ngIf="showMainImage">
     <div class="image-main" [ngStyle]="{'background-image': getImageBackgroundUrl(mainImage)}"></div>
   </div>
-  <div class="image-gallery" [ngStyle]="{'height': slideGalleryContainerHeight + 'px'}" *ngIf="images.length > 1">
+  <div class="image-gallery" [ngStyle]="{'height': slideGalleryContainerHeight + 'px'}" *ngIf="images && images.length > 1">
     <div class="image-slider" [ngStyle]="{'margin-left': (sliderPostHoveredCenter ? -((sliderImageWidth * 0.5) / 2) : 0) - ((galleryContainerWidth - (2 * sliderControlsWidth)) * sliderPageIndex) + (sliderShowPrevButton ? sliderControlsWidth : 0) + 'px'}" #sliderelement>
       <div *ngFor="let image of images" class="post-container" [ngStyle]="image.isHovered && !isDeviceMobile ? {'width': sliderImageWidth * 1.5 + 'px'} : {'width': sliderImageWidth + 'px'}" (mouseenter)="postMouseEnter(image)" (mouseleave)="postMouseLeave(image)" (click)="clickThumbnail(image)">
         <div class="post">
           <a class="post-image-container">
             <div class="post-image" [ngStyle]="getBackgroundStyle(image)">
             </div>
-              <div class="post-image-title-container"  *ngIf="image.title">
-                <h2 [innerHTML]='image.title' class="post-image-title"></h2>
+              <div class="post-image-title-container">
+                <h2 [innerHTML]='image.title' class="post-image-title" *ngIf="image.title"></h2>
               </div>
           </a>
         </div>

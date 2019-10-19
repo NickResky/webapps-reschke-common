@@ -47,7 +47,6 @@
     @include flexbox();
     @include flex-wrap(wrap);
     .image-gallery-02-controls {
-        margin-bottom: 20px;
         opacity: 0;
         width: 100%;
         @include transition(
@@ -62,22 +61,34 @@
                 .controls-icon, .controls-icon-container {
                     color: $main-text-color;
                 }
-                .controls-icon-container {
-                    font-weight: 600;
-                }
             }
             .controls-icon {
                 margin-right: 5px;
                 color: $text-02-color;
             }
             .controls-icon-label {
-                font-size: 14px;
+                font-size: $text-main-size;
                 margin-right: 15px;
+                color: $text-02-color;
             }
         }
         .filter-form {
-            display: inline-block;
             float: right;
+            .filter-select-icon {
+                display: inline-block;
+                position: relative;
+                left: 20px;
+                font-size: $text-main-size;
+                color: $text-02-color;
+                margin-right: 5px;
+            }
+            select {
+                position: relative;
+                padding-left: 20px;
+                font-family: $font-family;
+                font-size: $text-main-size;
+                color: $text-02-color;
+            }    
         }
     }
     .gallery-images-container {

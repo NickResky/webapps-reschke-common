@@ -125,6 +125,18 @@ $navigationSlideAnimationDuration: 0.7s;
     }
 }
 
+.select-no-styling {
+    border:none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-appearance: none;
+    &:focus {
+        outline: none;
+    }
+}
+
 .app-container {
     position: absolute;
     top: 0;

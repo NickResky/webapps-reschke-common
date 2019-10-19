@@ -3,10 +3,19 @@
   footerConfig.displayBackgroundColor ? 'display-background-color' : '',
   mainPageContentLoaded ? 'page-loaded' : '',
   pageLoaded ? 'fade-in-700' : '']">
-  <div class="footer main-content">
+  <div class="footer main-content" *ngIf="footerConfig.footerSections">
+      <div class="footer-section-container" *ngFor="let footerSection of footerConfig.footerSections">
+          <div class="footer-section">
+              <div class="footer-section-heading wrc-heading-02" *ngIf="footerSection.title">
+                {{footerSection.title}}
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="footer main-content" *ngIf="!footerConfig.footerSections">
     <div class="footer-section-container">
       <div class="footer-section footer-section-contact">
-        <div class="footer-section-heading wrc-heading-02">
+        <div class="footer-section-heading wrc-heading-02" *ngIf="footerConfig.displaySectionHeadings">
           Kontakt
         </div>
         <div class="footer-section-content">
@@ -28,14 +37,14 @@
               <span class="footer-section-content-link" *ngIf="locationMG.consultationTime3">{{locationMG.consultationTime3}}</span> -->
             </div>
           </div>
-          <div class="footer-section-content-break"></div>
+          <div class="footer-section-content-break" *ngIf="!isApplicationSS()"></div>
           <span class="footer-section-content-link"><a [href]="['tel:', contact.phone, '?']" target="_top">Tel. {{contact.phone}}</a></span>
           <span class="footer-section-content-link"><a [href]="['mailto:', contact.email, '?']" target="_top">{{contact.email}}</a></span>
         </div>
       </div>
     </div>
     <div class="footer-section-container">
-      <div class="footer-section footer-section-social" *ngIf="contact && isApplicationSS()">
+      <div class="footer-section footer-section-social" *ngIf="contact && isApplicationSS()" [ngClass]="[footerConfig.displaySocialSection ? '' : 'hide']">
         <div class="footer-section-heading" *ngIf="footerConfig.displayMiddleColumnTitle">
             {{footerConfig.middleColumnTitle}}
         </div>
@@ -82,7 +91,7 @@
             Studio<br>
           </a>
           <a class="" routerLink="/impressum">
-              Impressum
+            Impressum
           </a><br>
           <a class="" routerLink="/datenschutz">
             Datenschutz

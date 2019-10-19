@@ -5,13 +5,16 @@
         <span class="controls-icon-label">{{viewType.title}}</span>
     </div>
     <form class="filter-form">
-      <select name="filter-select" (change)="changeFilter($event.target.value)">
-        <option *ngFor="let filter of filterOptions" [value]="filter">{{filter.title}}</option>
+      <i class="filter-select-icon fa fa-filter"></i>
+      <select name="filter-select" class="select-no-styling link" (change)="changeFilter($event.target.value)">
+        <option *ngFor="let filter of filterOptions" [value]="filter.name">
+          {{filter.title}}
+        </option>
       </select>
     </form>
   </div>
   <div class="gallery-images-container">
-    <div *ngFor="let image of images" class="gallery-image-container" [ngClass]="displayLargeImages ? 'display-large' : ''" [ngStyle]="{'width': imageWidth + 'px', 'height': imageHeight + 'px'}">
+    <div *ngFor="let image of filteredImages" class="gallery-image-container" [ngClass]="[displayLargeImages ? 'display-large' : '', image.isPrimaryImage || !onlyShowTitleImages ? '' : 'hide']" [ngStyle]="{'width': imageWidth + 'px', 'height': imageHeight + 'px'}">
       <div class="gallery-image">
         <a class="image-container" [routerLink]="[image.routerLink]">
           <!-- <div class="post-image" [ngStyle]="getPostImageBackgroundStyle(post)" *ngIf="post.images && post.images.length > 0">

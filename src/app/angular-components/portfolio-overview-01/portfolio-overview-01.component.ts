@@ -36,31 +36,34 @@ export class PortfolioOverview01Component implements OnInit {
       this.posts = _.orderBy(this.posts, ['date'], ['desc']);
 
       this.galleryImages = _.reduce(this.posts, (images: any, post) => {
-        const firstImageData: any = _.head(post.images);
-        images.push({
-          imageData: firstImageData,
-          shortId: firstImageData.shortId,
-          url: UtilityService.getFileSrc(firstImageData.shortId, this.zenkitCollectionsConfig.current.shortId),
-          routerLink: '/projekte/' + post.shortId,
-          title: post.title,
-          description: '',
-          imageLoaded: false,
-          isPrimaryImage: true
-        });
-
-        post.images.shift();
-        _.map(post.images, (image: any) => {
+        if (post.images && post.images.length > 0) {
+          const firstImageData: any = _.head(post.images);
           images.push({
-            imageData: image,
-            shortId: image.shortId,
-            url: UtilityService.getFileSrc(image.shortId, this.zenkitCollectionsConfig.current.shortId),
+            imageData: firstImageData,
+            shortId: firstImageData.shortId,
+            url: UtilityService.getFileSrc(firstImageData.shortId, this.zenkitCollectionsConfig.current.shortId),
             routerLink: '/projekte/' + post.shortId,
             title: post.title,
             description: '',
             imageLoaded: false,
-            isPrimaryImage: false
+            isPrimaryImage: true
           });
-        });
+
+          post.images.shift();
+
+          _.map(post.images, (image: any) => {
+            images.push({
+              imageData: image,
+              shortId: image.shortId,
+              url: UtilityService.getFileSrc(image.shortId, this.zenkitCollectionsConfig.current.shortId),
+              routerLink: '/projekte/' + post.shortId,
+              title: post.title,
+              description: '',
+              imageLoaded: false,
+              isPrimaryImage: false
+            });
+          });
+        }
         return images;
       }, []);
     });

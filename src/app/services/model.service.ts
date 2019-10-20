@@ -44,7 +44,8 @@ export class ModelService {
 
     mainPageData: Promise<MainPageData>|undefined;
     contactData: Promise<Contact>;
-    blogPostsData: Promise<BlogPost[]>|undefined;
+    blogPosts: BlogPost[];
+    // blogPostsData: Promise<BlogPost[]>|undefined;
     coursesData: Promise<CourseData>|undefined;
     performancesData: Promise<Performance[]>|undefined;
     teamData: Promise<Teacher[]>|undefined;
@@ -311,12 +312,22 @@ export class ModelService {
     }
 
     getPosts(): Promise<BlogPost[]> {
-        if (_.isNil(this.blogPostsData)) {
-            this.blogPostsData = this.currentService.getPosts(this.zenkitCollectionsConfig);
+        // if (_.isNil(this.blogPostsData)) {
+        //     this.blogPostsData = this.currentService.getPosts(this.zenkitCollectionsConfig);
+        // }
+        // return new Promise((resolve, reject) => {
+        //     return resolve(this.blogPostsData);
+        // });
+        if (_.isNil(this.blogPosts)) {
+            return this.currentService.getPosts(this.zenkitCollectionsConfig).then((posts: BlogPost[]) => {
+                this.blogPosts = posts;
+                return this.blogPosts;
+            })
+        } else {
+            return new Promise((resolve, reject) => {
+                return resolve(this.blogPosts);
+            });     
         }
-        return new Promise((resolve, reject) => {
-            return resolve(this.blogPostsData);
-        });
     }
 
     getPostByShortId(shortId: string): Promise<BlogPost> {

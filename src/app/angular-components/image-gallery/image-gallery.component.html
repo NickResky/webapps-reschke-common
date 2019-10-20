@@ -7,11 +7,13 @@
       <div *ngFor="let image of images" class="post-container" [ngStyle]="image.isHovered && !isDeviceMobile ? {'width': sliderImageWidth * 1.5 + 'px'} : {'width': sliderImageWidth + 'px'}" (mouseenter)="postMouseEnter(image)" (mouseleave)="postMouseLeave(image)" (click)="clickThumbnail(image)">
         <div class="post">
           <a class="post-image-container">
-            <div class="post-image" [ngStyle]="getBackgroundStyle(image)">
+            <div class="post-image" [ngStyle]="getImageBackgroundStyle(image)">
             </div>
-              <div class="post-image-title-container">
-                <h2 [innerHTML]='image.title' class="post-image-title" *ngIf="image.title"></h2>
+            <div class="post-image-title-container" [ngClass]="image.title ? 'has-title' : ''" [ngStyle]="getTitleStyle(image)">
+              <div class="post-image-title" *ngIf="image.title" [ngStyle]="{'width': sliderImageWidth - 10 + 'px' }">
+                <span class="post-image-title-text">{{image.title}}</span>
               </div>
+            </div>
           </a>
         </div>
       </div>

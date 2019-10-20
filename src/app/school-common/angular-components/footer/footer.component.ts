@@ -1,3 +1,4 @@
+import { FooterConfigSectionElementTypes } from './../../../constants/footer-config-section-element-types';
 import { FooterLink } from './../../classes/footer-link';
 import { FooterConfigService } from './../../../services/footer-config-service';
 import { ApplicationIdentifier } from './../../../constants/application-identifier';
@@ -73,4 +74,24 @@ export class Footer01Component implements OnInit {
     return this.zenkitCollectionsConfig.applicationIdentifier == ApplicationIdentifier.SS;
   }
 
+  isSectionElementOfTypeLink(sectionElement: any) {
+    if (sectionElement.type == FooterConfigSectionElementTypes.LINK) {
+      return true;
+    }
+    return false;
+  }
+
+  isSectionElementOfTypeText(sectionElement: any) {
+    if (sectionElement.type == FooterConfigSectionElementTypes.TEXT) {
+      return true;
+    }
+    return false;
+  }
+
+  isSectionElementOfTypeIcon(sectionElement: any) {
+    if (sectionElement.type == FooterConfigSectionElementTypes.ICON) {
+      return true;
+    }
+    return false;
+  }
 }

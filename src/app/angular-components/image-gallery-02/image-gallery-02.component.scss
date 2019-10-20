@@ -113,6 +113,9 @@
                             .post-image-title {
                                 font-size: 1.8em;
                                 line-height: 1.3em;
+                                .post-image-title-text {
+                                    padding: 15px;
+                                }
                             }
                        }
                     }
@@ -126,6 +129,9 @@
                                 opacity: 0;
                                 font-size: 1.1em;
                                 line-height: 1em;
+                                .post-image-title-text {
+                                    padding: 5px;
+                                }
                             }
                        }
                     }
@@ -182,9 +188,15 @@
                             opacity: 0 !important;
                         }
                         .post-image-title {
-                            margin: 15px;
-                            font-family: serif;
-                            font-weight: 800;
+                            width: 100%;
+                            .post-image-title-text {
+                                display: block;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                margin: 0;
+                                font-family: serif;
+                                font-weight: 800;
+                            }
                         }
                     }
                 }
@@ -379,7 +391,15 @@
                     @include childPostPaddingLeftNone($portfolio-columns-large);
                     @include childPostPaddingRightNone($portfolio-columns-large);
                     @include childPostBorderRightNone($portfolio-columns-large);
-                    @include childPostBorderBottomNone($portfolio-columns-large); 
+                    @include childPostBorderBottomNone($portfolio-columns-large);.gallery-image {
+                        .image-container {
+                            .post-image-title-container {
+                                .post-image-title {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
                 }
                 &.display-large {
                     .gallery-image {

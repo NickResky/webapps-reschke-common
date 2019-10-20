@@ -21,7 +21,9 @@
           </div> -->
           <img class="image" [src]="image.url" (load)="imageLoaded(image)" [ngClass]="image.imageLoaded && pageLoaded && allImagesLoaded ? 'loaded': ''"/>
           <div class="post-image-title-container" [ngClass]="image.imageLoaded && pageLoaded && allImagesLoaded ? '': 'hide'">
-            <h2 [innerHTML]='image.title' class="post-image-title"></h2>
+            <div class="post-image-title">
+              <div class="post-image-title-text" [innerHTML]='image.title'></div>
+            </div>
           </div>
         </a>
         <div class="post-date" *ngIf="portfolioConfig.displayDescriptionBelowImage">{{getDateStringLong(image.date)}}</div>

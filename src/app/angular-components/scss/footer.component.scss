@@ -23,16 +23,24 @@
                 &.hide {
                     display: none;
                 }
-                .footer-section-heading {
-                    color: $main-text-color;
-                    text-decoration: none;
-                }
                 .footer-section-content {
                     font-size: $text-main-size;
                     color: $text-02-color;
-
                     &.footer-section-content-social {
                         text-align: center;
+                    }                
+                    &.center-elements {
+                        text-align: center;
+                    }
+                    .footer-section-element-container {
+                        &.display-inline {
+                            display: inline-block;
+                            margin-right: 20px;
+                        }
+                    }
+                    .footer-section-heading {
+                        color: $main-text-color;
+                        text-decoration: none;
                     }
 
                     .footer-section-content-link {
@@ -119,7 +127,7 @@
             margin: 0 auto;
             @include flexbox();
             .footer-section-container {
-                width: 33%;
+                flex: 1;
                 @include flexbox();
                 position: relative;
                 .footer-section {

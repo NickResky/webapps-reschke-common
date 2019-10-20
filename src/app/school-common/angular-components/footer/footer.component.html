@@ -9,6 +9,11 @@
               <div class="footer-section-heading wrc-heading-02" *ngIf="footerSection.title">
                 {{footerSection.title}}
               </div>
+              <div class="footer-section-content" [ngClass]="footerSection.centerElements ? 'center-elements' : ''">
+                <div class="footer-section-element-container" *ngFor="let footerSectionElement of footerSection.elements" [ngClass]="footerSection.displayElementsInline ? 'display-inline' : ''" >
+                  <a class="footer-section-element" [routerLink]="footerSectionElement.routerLink" *ngIf="isSectionElementOfTypeLink(footerSectionElement)" class="footer-section-content-link">{{footerSectionElement.text}}</a>
+                </div>
+              </div>
           </div>
       </div>
   </div>

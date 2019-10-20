@@ -36,6 +36,7 @@ export class PortfolioOverview01Component implements OnInit {
       this.posts = _.orderBy(this.posts, ['date'], ['desc']);
 
       this.galleryImages = _.reduce(this.posts, (images: any, post) => {
+
         if (post.images && post.images.length > 0) {
           const firstImageData: any = _.head(post.images);
           images.push({
@@ -49,9 +50,12 @@ export class PortfolioOverview01Component implements OnInit {
             isPrimaryImage: true
           });
 
-          post.images.shift();
+          let remainingImages = [];
+          if (post.images.length > 1) {
+            remainingImages = post.images.splice(1, post.images.length - 1);
+          }
 
-          _.map(post.images, (image: any) => {
+          _.map(remainingImages, (image: any) => {
             images.push({
               imageData: image,
               shortId: image.shortId,

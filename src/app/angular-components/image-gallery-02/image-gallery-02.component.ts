@@ -111,7 +111,6 @@ export class ImageGallery02Component implements OnInit {
 
   ngAfterViewInit() {
     this.galleryContainerWidth = this.galleryContainerElement.nativeElement.clientWidth;
-    const test = this.images;
     this.updateGallery();
   }
 
@@ -130,6 +129,15 @@ export class ImageGallery02Component implements OnInit {
       }
       return filteredImages;
     }, []);
+
+    const foundUnloadedImage = _.find(this.filteredImages, (img: any)=> {
+      return img.imageLoaded != true
+    });
+
+    if (foundUnloadedImage) {
+      this.modelService.setPageLoaded(false);
+      this.allImagesLoaded = false;
+    }
 
     if (this.displayLargeImages) {
       this.imageWidth = this.galleryContainerWidth;
@@ -158,12 +166,12 @@ export class ImageGallery02Component implements OnInit {
   }
 
   imageLoaded(image: any) {
-    const currentImage: any = _.find(this.images, {
+    const currentImage: any = _.find(this.filteredImages, {
       shortId: image.shortId
     });
     currentImage.imageLoaded = true;
 
-    const foundUnloadedImage = _.find(this.images, (img: any)=> {
+    const foundUnloadedImage = _.find(this.filteredImages, (img: any)=> {
       return img.imageLoaded != true
     });
     if (_.isNil(foundUnloadedImage)) {

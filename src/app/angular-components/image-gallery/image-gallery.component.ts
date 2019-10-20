@@ -9,6 +9,7 @@ import { UtilityService } from '../../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Hammer from '../../resources/hammer.min';
 import * as propagating from 'propagating-hammerjs';
+import { AppBreakpoints } from '../../constants/app-breakpoints';
 
 @Component({
   selector: 'wrc-image-gallery',
@@ -38,7 +39,6 @@ export class ImageGalleryComponent implements OnInit {
   private sub: any;
   isBrowser: boolean;
   mouseOverStartTime: number;
-  breakpointMedium = 576;
   isDeviceMobile = this.modelService.isDeviceMobile();
   pageLoaded = false;
 
@@ -135,10 +135,12 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   updateGallery() {
-    if (this.appWidth < this.breakpointMedium) {
+    if (this.appWidth < AppBreakpoints.MEDIUM) {
       this.sliderImageShowCount = 2;
+    } else if (this.appWidth < AppBreakpoints.LARGE) {
+      this.sliderImageShowCount = 3;
     } else {
-      this.sliderImageShowCount = 4;
+        this.sliderImageShowCount = 3;
     }
 
     this.sliderImageWidth = (this.galleryContainerWidth - (this.sliderControlsWidth * 2)) / this.sliderImageShowCount;
@@ -164,7 +166,7 @@ export class ImageGalleryComponent implements OnInit {
     return UtilityService.getFileSrc(_.get(file, ['shortId']), this.zenkitCollectionsConfig.current.shortId);
   }
 
-  getBackgroundStyle(image: any) {
+  getImageBackgroundStyle(image: any) {
     let height;
     if (image.isHovered && !this.isDeviceMobile) {
       height = '100%';
@@ -173,7 +175,19 @@ export class ImageGalleryComponent implements OnInit {
     }
     return {
       'background-image': 'url(' + this.getFileSrc(image.imageData) + ')',
-      'height': height,
+      'height': height
+    };
+  }
+
+  getTitleStyle(image: any) {
+    let height;
+    if (image.isHovered && !this.isDeviceMobile) {
+      height = '100%';
+    } else {
+      height = this.sliderImageHeight + 'px';
+    }
+    return {
+      'height': height
     };
   }
 

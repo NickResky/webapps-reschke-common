@@ -40,15 +40,15 @@ export class PortfolioEntry01Component implements OnInit {
         this.modelService.setPageLoaded(false);
         this.blogPostShortId = params['shortId'];
         Promise.all([
-          this.modelService.getPostByShortId(this.blogPostShortId),
-          this.modelService.getPosts()
+          this.modelService.getProjectByShortId(this.blogPostShortId),
+          this.modelService.getProjects()
         ]).then((results) => {
           this.blogPost = results[0];
           const allPosts = results[1];
 
           this.currentProjectImages = _.map(this.blogPost.images, (image: any) => {
             return {
-              imageData: image,
+              url: UtilityService.getFileSrc(image.shortId, this.zenkitCollectionsConfig.projects.shortId),
               shortId: image.shortId,
               isHovered: false
             }
@@ -57,7 +57,7 @@ export class PortfolioEntry01Component implements OnInit {
           this.projectImages = _.map(allPosts, (post) => {
             const firstImageData: any = _.head(post.images);
             return {
-              imageData: firstImageData,
+              url: UtilityService.getFileSrc(firstImageData.shortId, this.zenkitCollectionsConfig.projects.shortId),
               shortId: firstImageData.shortId,
               routerLink: '/projekte/' + post.shortId,
               title: post.title,

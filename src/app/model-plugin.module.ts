@@ -12,6 +12,7 @@ import { MainPageService } from './services/main-page.service';
 import { ScheduleService } from './services/schedule.service';
 import { StageService } from './services/stage.service';
 import { LocationsService } from './services/locations.service';
+import { ProjectsService } from './services/projects.service';
 
 @NgModule()
 export class ModelPluginModule { 
@@ -29,7 +30,8 @@ export class ModelPluginModule {
                 MainPageService,
                 ScheduleService,
                 StageService,
-                TeamService
+                TeamService,
+                ProjectsService
             ]
         }
     }

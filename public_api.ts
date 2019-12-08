@@ -21,6 +21,7 @@ export { ZenkitDataService } from './src/app/services/zenkit-data-service';
 export { ContactService } from './src/app/services/contact.service';
 export { CoursesService } from './src/app/services/courses.service';
 export { CurrentService } from './src/app/services/current.service';
+export { ProjectsService } from './src/app/services/projects.service';
 export { ImprintService } from './src/app/services/imprint.service';
 export { LocationsService } from './src/app/services/locations.service';
 export { MainPageService } from './src/app/services/main-page.service';

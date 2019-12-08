@@ -6,7 +6,8 @@ export interface ZenkitCollectionsConfig {
     apiUrl : string,
     applicationIdentifier: ApplicationIdentifier,
     home: ZenkitCollection,
-    current: ZenkitCollection
+    current: ZenkitCollection,
+    projects: ZenkitCollection,
     performances: ZenkitCollection
     courses: ZenkitCollection
     schedule: ZenkitCollection

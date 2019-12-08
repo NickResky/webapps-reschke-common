@@ -281,12 +281,14 @@
         .gallery-images-container {
             .gallery-image-container {
                 &.display-large {
+                    @include childPostPaddingLeftNone(2);
+                    @include childPostPaddingRightNone(2);
                     .gallery-image {
+                        padding: 10px;
                         .image-container {
                             .post-image-title-container {
                                 .post-image-title {
-                                    font-size: 3em;
-                                    line-height: 1.2em;
+                                    font-size: 2em;
                                 }
                             }
                         }
@@ -302,8 +304,6 @@
         .gallery-images-container {
             .gallery-image-container {
                 &.display-large {
-                    @include childPostPaddingLeftNone(2);
-                    @include childPostPaddingRightNone(2);
                     .gallery-image {
                         .image-container {
                             .post-image-title-container {

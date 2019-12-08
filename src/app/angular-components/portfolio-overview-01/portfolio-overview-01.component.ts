@@ -31,7 +31,7 @@ export class PortfolioOverview01Component implements OnInit {
   ngOnInit() {
     this.modelService.setPageLoaded(false);
 
-    Promise.all([this.modelService.getPosts()]).then((results: any) => {
+    Promise.all([this.modelService.getProjects()]).then((results: any) => {
       this.posts = results[0];
       this.posts = _.orderBy(this.posts, ['date'], ['desc']);
 
@@ -40,9 +40,8 @@ export class PortfolioOverview01Component implements OnInit {
         if (post.images && post.images.length > 0) {
           const firstImageData: any = _.head(post.images);
           images.push({
-            imageData: firstImageData,
             shortId: firstImageData.shortId,
-            url: UtilityService.getFileSrc(firstImageData.shortId, this.zenkitCollectionsConfig.current.shortId),
+            url: UtilityService.getFileSrc(firstImageData.shortId, this.zenkitCollectionsConfig.projects.shortId),
             routerLink: '/projekte/' + post.shortId,
             title: post.title,
             description: '',
@@ -59,7 +58,7 @@ export class PortfolioOverview01Component implements OnInit {
             images.push({
               imageData: image,
               shortId: image.shortId,
-              url: UtilityService.getFileSrc(image.shortId, this.zenkitCollectionsConfig.current.shortId),
+              url: UtilityService.getFileSrc(image.shortId, this.zenkitCollectionsConfig.projects.shortId),
               routerLink: '/projekte/' + post.shortId,
               title: post.title,
               description: '',

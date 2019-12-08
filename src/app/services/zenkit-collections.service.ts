@@ -6,4 +6,5 @@ export class ZenkitCollectionsService {
   applicationIdentifier: ApplicationIdentifier = ApplicationIdentifier.UNDEFINED;
   home: any;
   current: any;
+  projects: any;
 }

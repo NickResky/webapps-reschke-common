@@ -36,6 +36,7 @@ import { AppNavigationState } from '../constants/app-navigation-state';
 import { Router } from '@angular/router';
 import { NavigationElement } from '../school-common/classes/navigation-element';
 import { AppBreakpoints } from '../constants/app-breakpoints';
+import { ProjectsService } from './projects.service';
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +46,7 @@ export class ModelService {
     mainPageData: Promise<MainPageData>|undefined;
     contactData: Promise<Contact>;
     blogPosts: BlogPost[];
+    projects: BlogPost[];
     // blogPostsData: Promise<BlogPost[]>|undefined;
     coursesData: Promise<CourseData>|undefined;
     performancesData: Promise<Performance[]>|undefined;
@@ -83,6 +85,7 @@ export class ModelService {
         private locationsService: LocationsService,
         private contactService: ContactService,
         private currentService: CurrentService,
+        private projectsService: ProjectsService,
         private imprintService: ImprintService,
         private scheduleService: ScheduleService,
         private router: Router
@@ -336,6 +339,28 @@ export class ModelService {
                 return p.shortId === shortId;
             });
             return post;
+        });
+    }
+
+    getProjects(): Promise<BlogPost[]> {
+        if (_.isNil(this.projects)) {
+            return this.projectsService.getProjects(this.zenkitCollectionsConfig).then((projects: BlogPost[]) => {
+                this.projects = projects;
+                return this.projects;
+            })
+        } else {
+            return new Promise((resolve, reject) => {
+                return resolve(this.projects);
+            });     
+        }
+    }
+
+    getProjectByShortId(shortId: string): Promise<BlogPost> {
+        return this.getProjects().then((projects: any) => {
+            const project = _.find(projects, (p: any) => {
+                return p.shortId === shortId;
+            });
+            return project;
         });
     }
 

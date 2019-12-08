@@ -145,13 +145,14 @@ export class ImageGallery02Component implements OnInit {
       this.imageWidth = this.galleryContainerWidth / 2;
     }
 
-    if (this.appWidth > AppBreakpoints.MEDIUM) {
-      if (this.displayLargeImages) {
-        this.imageWidth = this.galleryContainerWidth / 2;
-      } else {
-        this.imageWidth = this.galleryContainerWidth / 3;
-      }
+    if (this.appWidth > AppBreakpoints.SMALL && this.displayLargeImages) {
+      this.imageWidth = this.galleryContainerWidth / 2;
     }
+
+    if (this.appWidth > AppBreakpoints.MEDIUM && !this.displayLargeImages) {
+        this.imageWidth = this.galleryContainerWidth / 3;
+    }
+    
     if (
       this.appWidth > AppBreakpoints.LARGE
       && !this.displayLargeImages) {

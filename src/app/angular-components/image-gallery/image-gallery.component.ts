@@ -163,7 +163,7 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   getFileSrc(file: string) {
-    return UtilityService.getFileSrc(_.get(file, ['shortId']), this.zenkitCollectionsConfig.current.shortId);
+    return UtilityService.getFileSrc(_.get(file, ['shortId']), this.zenkitCollectionsConfig.projects.shortId);
   }
 
   getImageBackgroundStyle(image: any) {
@@ -174,7 +174,7 @@ export class ImageGalleryComponent implements OnInit {
       height = this.sliderImageHeight + 'px';
     }
     return {
-      'background-image': 'url(' + this.getFileSrc(image.imageData) + ')',
+      'background-image': 'url(' + image.url + ')',
       'height': height
     };
   }
@@ -192,7 +192,7 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   getImageBackgroundUrl(image: any) {
-    return 'url(' + this.getFileSrc(image.imageData) + ')';
+    return 'url(' + image.url + ')';
   }
 
   getDateStringLong(date: Date) {

@@ -194,7 +194,7 @@
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 margin: 0;
-                                font-family: serif;
+                                // font-family: serif;
                                 font-weight: 800;
                             }
                         }
@@ -254,6 +254,25 @@
     .image-gallery-02-container {
         .gallery-images-container {
             .gallery-image-container {
+                &.display-large {
+                    padding-bottom: 20px;
+                    .gallery-image {
+                        .image-container {
+                            border-radius: 5px;
+                            overflow: hidden;
+                            .post-image-title-container {
+                                background-color: rgba($main-text-color, 0.02);
+                                .post-image-title {
+                                    position: absolute;
+                                    text-align: left;
+                                    bottom: 0;
+                                    background: linear-gradient(180deg,transparent 0,rgba($main-text-color,.6) 81%);
+                                    font-size: 1.4em;
+                                }
+                            }
+                        }
+                    }  
+                }
                 &:not(.display-large) {
                     @include childPostPaddingLeftNone($portfolio-columns-small);
                     @include childPostPaddingRightNone($portfolio-columns-small);
@@ -288,7 +307,7 @@
                         .image-container {
                             .post-image-title-container {
                                 .post-image-title {
-                                    font-size: 2em;
+                                    font-size: 1.4em;
                                 }
                             }
                         }

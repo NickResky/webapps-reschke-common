@@ -1,3 +1,4 @@
+import { BlogPostEntryComponent } from './angular-components/blog-post-entry/blog-post-entry.component';
 import { PortfolioEntry01Component } from './angular-components/portfolio-entry-01/portfolio-entry-01.component';
 import { PortfolioOverview01Component } from './angular-components/portfolio-overview-01/portfolio-overview-01.component';
 import { App01Component } from './angular-components/app-01/app-01.component';
@@ -31,7 +32,8 @@ import { LeonSansAnimationComponent } from './angular-components/leon-sans-anima
         ImageGallery02Component,
         ImprintComponent,
         PrivacyComponent,
-        LeonSansAnimationComponent
+        LeonSansAnimationComponent,
+        BlogPostEntryComponent
     ], 
     exports: [
         PluginComponent,
@@ -45,7 +47,8 @@ import { LeonSansAnimationComponent } from './angular-components/leon-sans-anima
         ImageGallery02Component,
         ImprintComponent,
         PrivacyComponent,
-        LeonSansAnimationComponent
+        LeonSansAnimationComponent,
+        BlogPostEntryComponent
     ]
 })
 export class ComponentsPluginModule { 

@@ -11,6 +11,7 @@ export { PortfolioOverview01Component } from './src/app/angular-components/portf
 export { PortfolioEntry01Component } from './src/app/angular-components/portfolio-entry-01/portfolio-entry-01.component';
 export { ImprintComponent } from './src/app/angular-components/imprint/imprint.component';
 export { PrivacyComponent } from './src/app/angular-components/privacy/privacy.component';
+export { BlogPostEntryComponent } from './src/app/angular-components/blog-post-entry/blog-post-entry.component';
 
 /* -------------- SERVICES ---------------*/
 

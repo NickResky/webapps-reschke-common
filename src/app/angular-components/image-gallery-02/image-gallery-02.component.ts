@@ -32,6 +32,7 @@ export class ImageGallery02Component implements OnInit {
   imageHeight = 0;
   appWidth = 0;
   onlyShowTitleImages = true;
+  showControls = false;
 
 
   @ViewChild('galleryContainerElement') galleryContainerElement: ElementRef;
@@ -75,6 +76,13 @@ export class ImageGallery02Component implements OnInit {
 
   ngOnInit() {
     this.modelService.setPageLoaded(true);
+
+    if (this.isBrowser) {
+      const showSettingsStoredValue = localStorage.getItem('stadlerstadler-show-settings');
+      if (showSettingsStoredValue && showSettingsStoredValue == "true") {
+        this.showControls = true;
+      }
+    }
 
     if (this.isBrowser) {
       setTimeout(() => {

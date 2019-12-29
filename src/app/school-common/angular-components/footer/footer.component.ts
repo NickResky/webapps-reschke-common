@@ -22,6 +22,8 @@ export class Footer01Component implements OnInit {
   mainPageContentLoaded = false;
   contact: Contact|undefined;
   pageLoaded = false;
+  showSettings = false;
+  isBrowser = false;
 
   constructor(
     private modelService: ModelService,
@@ -30,6 +32,15 @@ export class Footer01Component implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.isBrowser = this.modelService.isPlatformBrowser();
+
+    if (this.isBrowser) {
+      const showSettingsStoredValue = localStorage.getItem('stadlerstadler-show-settings');
+      if (showSettingsStoredValue && showSettingsStoredValue == "true") {
+        this.showSettings = true;
+      }
+    }
 
     Promise.all([
       this.modelService.getContact(),
@@ -93,5 +104,28 @@ export class Footer01Component implements OnInit {
       return true;
     }
     return false;
+  }
+
+  isSectionElementOfTypeSettings(sectionElement: any) {
+    if (sectionElement.type == FooterConfigSectionElementTypes.SETTINGS) {
+      return true;
+    }
+    return false;
+  }
+
+  activeteShowSettings() {
+    if (this.isBrowser) {
+      localStorage.setItem('stadlerstadler-show-settings', 'true');
+      this.showSettings = true;
+      location.reload();
+    }
+  }
+
+  deactivateShowSettings() {
+    if (this.isBrowser) {
+      localStorage.removeItem('stadlerstadler-show-settings');
+      this.showSettings = false;
+      location.reload();
+    }
   }
 }

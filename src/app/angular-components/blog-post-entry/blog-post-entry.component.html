@@ -1,0 +1,10 @@
+<div class="blog-post-details main-content-container main-content-container-padding main-content-navbar-spacer" *ngIf="blogPost">
+    <div class="blog-post-details-content main-content">
+        <h1 class="post-title wrc-heading-02">{{blogPost.title}}</h1>
+        <wrc-image-gallery [images]='currentProjectImages' [showMainImage]='true'></wrc-image-gallery>
+        <div class="post-description" [innerHTML]="blogPost.description"></div>
+        <!-- <div class="post-date">gepostet am {{getDateStringLong()}}</div> -->
+        <h1 class="post-title wrc-heading-02">Weitere Projekte</h1>
+        <wrc-image-gallery [images]='projectImages'></wrc-image-gallery>
+    </div>
+</div>

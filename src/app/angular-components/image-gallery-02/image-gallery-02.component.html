@@ -1,5 +1,5 @@
 <div class="image-gallery-02-container" [ngClass]="[portfolioConfig.overview.displayGrid ? 'showGrid': '']" #galleryContainerElement>
-  <div class="image-gallery-02-controls" [ngClass]="[pageLoaded ? 'show' : '']">
+  <div class="image-gallery-02-controls" [ngClass]="[pageLoaded ? 'show' : '']" *ngIf="showControls">
     <div *ngFor="let viewType of viewTypes" class="controls-icon-container link" (click)="changeViewType(viewType)" [ngClass]="[viewType.active ? 'active' : '']">
         <i class="controls-icon" [ngClass]="[viewType.class]"></i>
         <span class="controls-icon-label">{{viewType.title}}</span>

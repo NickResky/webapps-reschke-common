@@ -12,6 +12,12 @@
               <div class="footer-section-content" [ngClass]="footerSection.centerElements ? 'center-elements' : ''">
                 <div class="footer-section-element-container" *ngFor="let footerSectionElement of footerSection.elements" [ngClass]="footerSection.displayElementsInline ? 'display-inline' : ''" >
                   <a class="footer-section-element" [routerLink]="footerSectionElement.routerLink" *ngIf="isSectionElementOfTypeLink(footerSectionElement)" class="footer-section-content-link">{{footerSectionElement.text}}</a>
+                  <a class="footer-section-element" *ngIf="isSectionElementOfTypeSettings(footerSectionElement) && !showSettings" (click)='activeteShowSettings()'>
+                      Einstellungen anzeigen<br>
+                  </a>
+                  <a class="footer-section-element" *ngIf="isSectionElementOfTypeSettings(footerSectionElement) && showSettings" (click)='deactivateShowSettings()'>
+                    Einstellungen ausblenden<br>
+                  </a>
                 </div>
               </div>
           </div>

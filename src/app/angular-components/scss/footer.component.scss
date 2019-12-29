@@ -37,6 +37,9 @@
                             display: inline-block;
                             margin-right: 20px;
                         }
+                        .footer-section-element:hover {
+                            cursor: pointer;
+                        }
                     }
                     .footer-section-heading {
                         color: $main-text-color;
@@ -97,6 +100,10 @@
                     }
                 }
             }
+        }
+        .settings {
+            font-size: $text-main-size;
+            color: $text-02-color;
         }
     }
 }

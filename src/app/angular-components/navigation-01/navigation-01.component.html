@@ -1,4 +1,4 @@
-<div class="navbar-container" [ngClass]="[navigationConfig.displaySecondRow ? 'showSecondRow' : '']">
+<div class="navbar-container" [ngClass]="[navigationConfig.displaySecondRow ? 'showSecondRow' : '', navigationConfig.titleCentered ? 'centered' : 'uncentered']">
   <div class="loading-animation-container" >
     <div class="loader-container" [ngClass]="[
     pageLoaded || !isBrowser ? 'hide' : '',
@@ -24,7 +24,7 @@
   </div>
   <div class="main-content-container main-content-container-padding">
     <div class="navbar main-content" [ngClass]="isMobileNavOpen === true ? 'mobile-nav-open': ''">
-      <div routerLink="/" class="logo-container">
+      <div routerLink="/" class="logo-container-02" [ngClass]="[navigationConfig.displayLogo ? 'display-logo' : '']">
         <div class="logo"></div>
         <div class="logo-label-container">
           <div class="logo-label">
@@ -41,6 +41,9 @@
       </div>
       <div class="navbar-second-row" [ngClass]="[(pageLoaded || pageInitiallyLoaded) && isBrowser ? 'show' : '', !navigationConfig.displaySecondRow ? 'remove' : '']">
         <div class="navbar-second-row-elements">
+          <a class="navbar-second-row-element link page-title" (click)="redirect('/')">
+              {{navigationConfig.title}}
+          </a>
           <a class="navbar-second-row-element link" *ngFor="let element of navigationConfig.navigationElements" (click)="redirect(element.routerLink)" [ngClass]="[element.isActive ? 'isActive': '']">
           {{element.title}}
           </a>
@@ -48,7 +51,7 @@
         <div class="navbar-second-row-border-container">
           <div class="navbar-second-row-border-elements" [ngStyle]="activeNavigationElementIndex < 0 ? {'margin-left': 0} : {'margin-left': (borderWidth * activeNavigationElementIndex)  + 'px'}" #navbarsecondrowborderelement>
             <div class="navbar-second-row-border-element" 
-             [ngClass]="activeNavigationElementIndex < 0 ? 'hide': ''"
+            [ngClass]="activeNavigationElementIndex < 0 ? 'hide': ''"
             *ngFor="let element of navigationConfig.navigationElements"></div>
           </div>
         </div>

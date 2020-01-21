@@ -10,6 +10,7 @@ import { AppNavigationState } from '../../constants/app-navigation-state';
 import { EventListener } from '@angular/core/src/debug/debug_node';
 import { AppBreakpoints } from '../../constants/app-breakpoints';
 import { TweenMax, Power4} from '../../resources/TweenMax.min';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -91,6 +92,11 @@ export class Navigation01Component implements OnInit {
     this.modelService.getActiveNavigationElementIndex().subscribe(
       (index) => {
         this.activeNavigationElementIndex = index;
+        this.navigationConfig.navigationElements.forEach((element) => {
+          element.isActive = false;
+        })
+        const activeElement = this.navigationConfig.navigationElements[index];
+        _.set(activeElement, ['isActive'], true);
         console.log('Navigation index: ' + index);
       }
     )

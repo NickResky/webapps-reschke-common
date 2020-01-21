@@ -14,9 +14,9 @@
     </form>
   </div>
   <div class="gallery-images-container">
-    <div *ngFor="let image of filteredImages" class="gallery-image-container" [ngClass]="[displayLargeImages ? 'display-large' : '', image.isPrimaryImage || !onlyShowTitleImages ? '' : 'hide']" [ngStyle]="{'width': imageWidth + 'px', 'height': imageHeight + 'px'}">
+    <div *ngFor="let image of filteredImages" class="gallery-image-container" [ngClass]="[displayLargeImages ? 'display-large' : '', image.isPrimaryImage || !onlyShowTitleImages ? '' : 'hide']" [ngStyle]="{'width': imageWidth + 'px'}">
       <div class="gallery-image">
-        <a class="image-container" [routerLink]="[image.routerLink]">
+        <a class="image-container" [routerLink]="[image.routerLink]" [ngStyle]="{'height': imageHeight + 'px'}">
           <!-- <div class="post-image" [ngStyle]="getPostImageBackgroundStyle(post)" *ngIf="post.images && post.images.length > 0">
           </div> -->
           <img class="image" [src]="image.url" (load)="imageLoaded(image)" [ngClass]="image.imageLoaded && pageLoaded && allImagesLoaded ? 'loaded': ''"/>
@@ -26,15 +26,15 @@
             </div>
           </div>
         </a>
-        <div class="post-date" *ngIf="portfolioConfig.displayDescriptionBelowImage">{{getDateStringLong(image.date)}}</div>
-        <a [routerLink]="image.routerLink" *ngIf="portfolioConfig.displayTitleBelowImage">
-          <h2 [innerHTML]='image.title' class="post-heading wrc-heading-01"></h2>
+        <div class="post-date" *ngIf="portfolioConfig.overview.displayDescriptionBelowImage">{{getDateStringLong(image.date)}}</div>
+        <a [routerLink]="image.routerLink" *ngIf="portfolioConfig.overview.displayTitleBelowImage" class="image-title-container" [ngClass]="image.imageLoaded && pageLoaded && allImagesLoaded ? 'loaded': ''">
+          <h2 [innerHTML]='image.title' class="image-title wrc-heading-01"></h2>
         </a>
-        <div class="post-description-container" *ngIf="portfolioConfig.displayDescriptionBelowImage">
+        <div class="post-description-container" *ngIf="portfolioConfig.overview.displayDescriptionBelowImage">
           <div class="post-description" [innerHTML]='image.description'></div>
           <div class="post-description-overlay"></div>
         </div>
-        <a class="post-more-button" [routerLink]="image.routerLink" *ngIf="portfolioConfig.displayDescriptionBelowImage">Mehr erfahren</a>
+        <a class="post-more-button" [routerLink]="image.routerLink" *ngIf="portfolioConfig.overview.displayDescriptionBelowImage">Mehr erfahren</a>
       </div>
     </div>
   </div>

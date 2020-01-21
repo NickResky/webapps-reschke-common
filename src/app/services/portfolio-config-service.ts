@@ -4,7 +4,7 @@ export class PortfolioConfigService {
         columnsSmall: 2,
         columnsMedium: 3,
         columnsLarge: 5,
-        displayGrid: false,
+        displayLargeImages: false,
         displayTitleBelowImage: false,
         displayDescriptionBelowImage: false
     }

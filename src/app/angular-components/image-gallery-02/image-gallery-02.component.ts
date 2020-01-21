@@ -26,7 +26,7 @@ export class ImageGallery02Component implements OnInit {
   isBrowser = this.modelService.isPlatformBrowser();
   pageLoaded = false;
   pageInitiallyLoaded = false;
-  displayLargeImages = true;
+  displayLargeImages = this.portfolioConfig.overview.displayLargeImages;
   galleryContainerWidth = 0;
   imageWidth = 0;
   imageHeight = 0;
@@ -42,13 +42,13 @@ export class ImageGallery02Component implements OnInit {
       name: "large",
       title: "Liste",
       class: "fas fa-th-large",
-      active: true
+      active: this.portfolioConfig.overview.displayLargeImages
     },
     {
       name: "small",
       title: "Kacheln",
       class: "fas fa-th",
-      active: false
+      active: !this.portfolioConfig.overview.displayLargeImages
     }
   ]
 
@@ -150,10 +150,10 @@ export class ImageGallery02Component implements OnInit {
     if (this.displayLargeImages) {
       this.imageWidth = this.galleryContainerWidth;
     } else {
-      this.imageWidth = this.galleryContainerWidth / 2;
+      this.imageWidth = this.galleryContainerWidth / 1;
     }
 
-    if (this.appWidth > AppBreakpoints.SMALL && this.displayLargeImages) {
+    if (this.appWidth > AppBreakpoints.SMALL) {
       this.imageWidth = this.galleryContainerWidth / 2;
     }
 
@@ -164,10 +164,10 @@ export class ImageGallery02Component implements OnInit {
     if (
       this.appWidth > AppBreakpoints.LARGE
       && !this.displayLargeImages) {
-        this.imageWidth = this.galleryContainerWidth / 5;
+        this.imageWidth = this.galleryContainerWidth / 4;
     }
     this.imageWidth = this.imageWidth - 1.0;
-    this.imageHeight = (this.imageWidth / 16) * 9;
+    this.imageHeight = (this.imageWidth / 16) * 12;
   }
 
   getDateStringLong(date: Date) {

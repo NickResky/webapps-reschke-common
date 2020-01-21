@@ -3,6 +3,7 @@ import { NavigationElement } from './navigation-element';
 export interface NavigationConfigType {
     title: string,
     titleHtml: string,
+    titleCentered: boolean,
     displaySecondRow: boolean,
     pageInitiallyLoaded: boolean,
     showLoadingAnimationAfterInitialLoad: boolean,

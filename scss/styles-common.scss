@@ -77,13 +77,14 @@ $navigationSlideAnimationDuration: 0.7s;
 
 .main-content-container-padding {
     padding-left: 20px;
-    padding-right: 20px; 
+    padding-right: 20px;
+    max-width: calc(100% - 40px); 
 }
 
 .main-content-navbar-spacer {
     margin-top: $header-height + 20px;
 }
-contac
+
 .main-title, .title-medium {
     margin: 0;
     font-size: 1.9em;
@@ -97,6 +98,8 @@ contac
 
 .wrc-heading-01 {
     font-weight: $heading-01-font-weight;
+    font-size: 14px;
+    line-height: 20px;
 }
 
 .wrc-heading-02 {

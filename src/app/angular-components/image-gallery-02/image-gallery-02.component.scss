@@ -92,6 +92,8 @@
         }
     }
     .gallery-images-container {
+        @include flexbox();
+        flex-wrap: wrap;
         .gallery-image-container {   
             //color: #303030;
             // opacity: 0;
@@ -130,7 +132,7 @@
                                 font-size: 1.1em;
                                 line-height: 1em;
                                 .post-image-title-text {
-                                    padding: 5px;
+                                    padding: 10px;
                                 }
                             }
                        }
@@ -173,7 +175,7 @@
                         width: 100%;
                         height: 100%;
                         color: $main-text-color-on-dark-bg;
-                        background-color: transparent;
+                        background-color: rgba($main-text-color, 0.05);
                         @include transition(
                             background-color 0.3s ease,
                             opacity 0.3s ease
@@ -209,9 +211,19 @@
                     color: $main-background-color;
                     background-color: $main-text-color; 
                 }
-                .post-heading {
-                    margin: 10px 0 5px 0;
-                    line-height: 30px;
+                .image-title-container {
+                    .image-title {
+                        @include transition(
+                            opacity 1.5s ease
+                        );
+                        text-transform: uppercase;;
+                        opacity: 0;
+                    }
+                    &.loaded {
+                        .image-title {
+                            opacity: 1;
+                        }
+                    }
                 }
                 .post-description-container {
                     height: 150px;
@@ -256,30 +268,31 @@
             .gallery-image-container {
                 &.display-large {
                     padding-bottom: 20px;
+                }
+                &:not(.display-large) {
                     .gallery-image {
-                        .image-container {
-                            border-radius: 5px;
-                            overflow: hidden;
-                            .post-image-title-container {
-                                background-color: rgba($main-text-color, 0.02);
-                                .post-image-title {
-                                    position: absolute;
-                                    text-align: left;
+                        padding: 5px;
+                    }
+                }
+                .gallery-image {
+                    .image-container {
+                        // border-radius: 5px;
+                        overflow: hidden;
+                        .post-image-title-container {
+                            .post-image-title {
+                                min-height: 50px;
+                                opacity: 1 !important;
+                                position: absolute;
+                                text-align: left;
+                                bottom: 0;
+                                background: linear-gradient(180deg,transparent 0,rgba($main-text-color,.4) 81%);
+                                font-size: 1.4em;
+                                .post-image-title-text {
                                     bottom: 0;
-                                    background: linear-gradient(180deg,transparent 0,rgba($main-text-color,.6) 81%);
-                                    font-size: 1.4em;
+                                    position: absolute;
                                 }
                             }
                         }
-                    }  
-                }
-                &:not(.display-large) {
-                    @include childPostPaddingLeftNone($portfolio-columns-small);
-                    @include childPostPaddingRightNone($portfolio-columns-small);
-                    @include childPostBorderRightNone($portfolio-columns-small);
-                    @include childPostBorderBottomNone($portfolio-columns-small);
-                    .gallery-image {
-                        padding: 10px;
                     }
                 }
             }
@@ -295,13 +308,13 @@
     }
 }
 
-@media (min-width: $media-breakpoint-sm) {
+@media (max-width: $media-breakpoint-md) and (min-width: $media-breakpoint-sm) {
     .image-gallery-02-container {
         .gallery-images-container {
             .gallery-image-container {
                 &.display-large {
-                    @include childPostPaddingLeftNone(2);
-                    @include childPostPaddingRightNone(2);
+                    @include childPostPaddingLeftNone($portfolio-columns-small);
+                    @include childPostPaddingRightNone($portfolio-columns-small);
                     .gallery-image {
                         padding: 10px;
                         .image-container {
@@ -311,6 +324,13 @@
                                 }
                             }
                         }
+                    }
+                }
+                &:not(.display-large) {
+                    @include childPostPaddingLeftNone(2);
+                    @include childPostPaddingRightNone(2);
+                    .gallery-image {
+                        padding: 5px;
                     }
                 }
             }
@@ -376,14 +396,14 @@
     .image-gallery-02-container {
         .gallery-images-container {
             .gallery-image-container {
-                &:not(.display-large) {
+                &:not(.display-large), &.display-large {
                     @include childPostPaddingLeftNone($portfolio-columns-medium);
                     @include childPostPaddingRightNone($portfolio-columns-medium);
                     @include childPostBorderRightNone($portfolio-columns-medium);
                     @include childPostBorderBottomNone($portfolio-columns-medium);
-                } 
-                .gallery-image {
-                    padding: 10px;
+                    .gallery-image {
+                        padding: 5px;
+                    }
                 }
             }
         }
@@ -411,6 +431,7 @@
                     @include childPostPaddingRightNone($portfolio-columns-large);
                     @include childPostBorderRightNone($portfolio-columns-large);
                     @include childPostBorderBottomNone($portfolio-columns-large);.gallery-image {
+                        padding: 5px;
                         .image-container {
                             .post-image-title-container {
                                 .post-image-title {
@@ -422,6 +443,7 @@
                 }
                 &.display-large {
                     .gallery-image {
+                        padding: 20px;
                         .image-container {
                             .post-image-title-container {
                                 .post-image-title {
@@ -430,9 +452,6 @@
                             }
                         }
                     }
-                }
-                .gallery-image {
-                    padding: 20px;
                 }
             }
         }

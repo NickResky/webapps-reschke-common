@@ -135,7 +135,9 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   updateGallery() {
-    if (this.appWidth < AppBreakpoints.MEDIUM) {
+    if (this.appWidth < AppBreakpoints.SMALL) {
+      this.sliderImageShowCount = 1;
+    } else if (this.appWidth < AppBreakpoints.MEDIUM) {
       this.sliderImageShowCount = 2;
     } else if (this.appWidth < AppBreakpoints.LARGE) {
       this.sliderImageShowCount = 3;
